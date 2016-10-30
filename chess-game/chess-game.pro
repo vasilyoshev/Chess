@@ -29,3 +29,6 @@ HEADERS  += mainwindow.h \
     color.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    resource_pieces_images.qrc
