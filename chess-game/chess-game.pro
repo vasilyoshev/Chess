@@ -18,8 +18,7 @@ SOURCES += main.cpp\
     cell.cpp \
     piece.cpp \
     coordinate.cpp \
-    player.cpp \
-    pieces/piece.cpp
+    player.cpp
 
 HEADERS  += mainwindow.h \
     state.h \
@@ -27,7 +26,6 @@ HEADERS  += mainwindow.h \
     piece.h \
     coordinate.h \
     player.h \
-    color.h \
-    pieces/piece.h
+    color.h
 
 FORMS    += mainwindow.ui
