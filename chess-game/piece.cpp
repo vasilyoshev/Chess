@@ -1,7 +1,8 @@
 #include "piece.h"
 
 // Should be interface
-Piece::Piece()
+
+Piece::Piece(Color color)
 {
 
 }

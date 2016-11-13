@@ -7,7 +7,7 @@
 class Piece
 {
 public:
-    Piece();
+    Piece(Color color);
     //virtual Coordinate[] getPossibleMoves(Coordinate currentPosition)=0;
     virtual bool isKilled() = 0;
     virtual Color getColor() const = 0;
