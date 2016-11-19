@@ -7,6 +7,9 @@
 #include <QString>
 #include <QPushButton>
 
+#include "controller.h"
+#include "cellbutton.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -24,17 +27,23 @@ private:
     Ui::MainWindow *ui;
     int fieldSize;
     int offsetLeft;
-
-    QPushButton **Board;
+    CellButton **Board;
     QPushButton **BackgroundBoard;
     QLabel *TopLabels, *RightLabels, *BottomLabels, *LeftLabels;
+    vector<Coordinate> selectedCells;
+    Coordinate *selectedPieceCoordinate;
 
+    Controller controller;
+
+
+    void drawState();
     void setWindowSize();
     void createBoard();
     void createBackgroundBoard();
     void createLabels();
-
-    QString getIdxName(int row,int col);
+    void initBackgroundBoardColor();
+    QString getPieceFileName(Piece *p);
+    bool isSelected(Coordinate coordinate);
 
 private slots:
     void handleBackgroundClick();
