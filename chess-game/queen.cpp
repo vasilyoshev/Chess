@@ -45,3 +45,8 @@ std::vector<Coordinate> Queen::getPossibleMoves(Coordinate currentPosition)
 
     return result;
 }
+
+Piece* Queen::getCopy() const
+{
+    return new Queen(color);
+}

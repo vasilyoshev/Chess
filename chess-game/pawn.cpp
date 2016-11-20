@@ -16,3 +16,8 @@ std::vector<Coordinate> Pawn::getPossibleMoves(Coordinate currentPosition)
 
     return result;
 }
+
+Piece* Pawn::getCopy() const
+{
+    return new Pawn(color);
+}

@@ -22,3 +22,7 @@ std::vector<Coordinate> King::getPossibleMoves(Coordinate currentPosition)
     return result;
 }
 
+Piece* King::getCopy() const
+{
+    return new King(color);
+}

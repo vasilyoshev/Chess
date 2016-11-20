@@ -31,3 +31,9 @@ bool Coordinate::operator==(const Coordinate &other)
 {
     return other.row == row && other.column == column;
 }
+
+void Coordinate::operator=(const Coordinate &other)
+{
+    row = other.row;
+    column = other.column;
+}

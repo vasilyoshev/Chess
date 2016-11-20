@@ -39,3 +39,8 @@ std::vector<Coordinate> Bishop::getPossibleMoves(Coordinate currentPosition)
 
     return result;
 }
+
+Piece* Bishop::getCopy() const
+{
+    return new Bishop(color);
+}

@@ -15,6 +15,7 @@ private:
     SpecialMovesHandler specialMovesHandler;
 
     void initPieces();
+    void initPlayers();
     void setPawnPieces(int row, Color color);
     void setMajorPieces(int row, Color color);
 public:

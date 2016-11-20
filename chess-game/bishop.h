@@ -10,6 +10,7 @@ class Bishop : public Piece
 public:
     Bishop(Color color);
     std::vector<Coordinate> getPossibleMoves(Coordinate currentPosition);
+    Piece* getCopy() const;
 };
 
 #endif // BISHOP_H

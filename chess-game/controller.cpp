@@ -8,6 +8,7 @@ Controller::Controller()
 void Controller::initState()
 {
     initPieces();
+    initPlayers();
 }
 
 void Controller::initPieces()
@@ -52,5 +53,16 @@ const State& Controller::getState()
 
 void Controller::movePiece(Coordinate source, Coordinate target)
 {
+    state.setPiece(state.getPiece(source)->getCopy(),target);
+    state.setPiece(nullptr,source);
+
+    state.nextPlayer();
+
     // TO-DO
+}
+
+void Controller::initPlayers()
+{
+    state.initPlayer1("Vlado",cBlack);
+    state.initPlayer2("Vasko",cWhite);
 }

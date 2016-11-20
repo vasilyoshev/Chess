@@ -16,6 +16,7 @@ public:
     bool isInBoard() const;
 
     bool operator==(const Coordinate &other);
+    void operator=(const Coordinate &other);
 };
 
 #endif // COORDINATE_H

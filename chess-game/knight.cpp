@@ -30,3 +30,8 @@ std::vector<Coordinate> Knight::getPossibleMoves(Coordinate currentPosition)
 
     return result;
 }
+
+Piece* Knight::getCopy() const
+{
+    return new Knight(color);
+}

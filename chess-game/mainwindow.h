@@ -26,24 +26,35 @@ public:
 private:
     Ui::MainWindow *ui;
     int fieldSize;
-    int offsetLeft;
+    int boardOffsetLeft;
+    int boardOffsetTop;
+    int playerLabelHeight;
     CellButton **Board;
-    QPushButton **BackgroundBoard;
+    CellButton **BackgroundBoard;
     QLabel *TopLabels, *RightLabels, *BottomLabels, *LeftLabels;
+    QLabel PlayerNameLabel;
     vector<Coordinate> selectedCells;
-    Coordinate *selectedPieceCoordinate;
-
+    Coordinate selectedPieceCoordinate;
     Controller controller;
 
-
-    void drawState();
-    void setWindowSize();
+    // initialization functions
     void createBoard();
     void createBackgroundBoard();
     void createLabels();
     void initBackgroundBoardColor();
+
+    // help functions
     QString getPieceFileName(Piece *p);
     bool isSelected(Coordinate coordinate);
+    QString getBackgroundStyleSheet(QString color);
+    QString getBackgroundAndHoverStyleSheet(QString backgroundColor, QString hoverColor);
+
+    // drawing functions
+    void drawState();
+    void setWindowSize();
+    void markCells();
+    void unmarkCells();
+    void drawCurrentPlayer();
 
 private slots:
     void handleBackgroundClick();

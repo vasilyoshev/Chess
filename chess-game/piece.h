@@ -8,8 +8,6 @@
 
 class Piece
 {
-private:
-    Color color;
 public:
 
     enum PieceType {
@@ -22,12 +20,14 @@ public:
     };
 
     Piece(Color color,PieceType pieceType);
-    virtual std::vector<Coordinate> getPossibleMoves(Coordinate currentPosition)=0;
+    virtual std::vector<Coordinate> getPossibleMoves(Coordinate currentPosition) = 0;
+    virtual Piece* getCopy() const = 0;
     bool isKilled();
     Color getColor() const;
     PieceType getType() const;
 
 protected:
+    Color color;
     bool killed;
     PieceType pieceType;
 };

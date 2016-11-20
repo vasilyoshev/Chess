@@ -18,3 +18,8 @@ std::vector<Coordinate> Rook::getPossibleMoves(Coordinate currentPosition)
 
     return result;
 }
+
+Piece* Rook::getCopy() const
+{
+    return new Rook(color);
+}

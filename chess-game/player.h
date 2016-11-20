@@ -13,7 +13,12 @@ private:
     Color color;
 public:
     Player();
-    // TODO getters
+
+    void setName(string name);
+    string getName() const;
+    void setColor(Color color);
+    Color getColor() const;
+
 };
 
 #endif // PLAYER_H
