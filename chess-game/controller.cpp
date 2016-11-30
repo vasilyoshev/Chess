@@ -66,3 +66,13 @@ void Controller::initPlayers()
     state.initPlayer1("Vlado",cBlack);
     state.initPlayer2("Vasko",cWhite);
 }
+
+void Controller::setFirstPlayerColor(Color color)
+{
+    // TO-DO
+}
+
+void Controller::setGameType(TGameType gameType)
+{
+    // TO-DO
+}

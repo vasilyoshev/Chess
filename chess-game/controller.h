@@ -7,6 +7,7 @@
 #include "coordinate.h"
 #include "player.h"
 #include "specialmoveshandler.h"
+#include "gametype.h"
 
 class Controller
 {
@@ -24,6 +25,8 @@ public:
     vector<Coordinate> getValidMoves(Coordinate click);
     void initState();
     const State& getState();
+    void setFirstPlayerColor(Color color);
+    void setGameType(TGameType gameType);
 };
 
 #endif // CONTROLLER_H

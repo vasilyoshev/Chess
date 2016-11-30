@@ -1,5 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "gameoptionswindow.h"
+
+#include <QDialogButtonBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -17,6 +20,15 @@ MainWindow::MainWindow(QWidget *parent) :
     setStyleSheet("background-color : rgb(220,200,140,100%);");
 
     drawState();
+
+    GameOptionsWindow gameOptionsWindow;
+    gameOptionsWindow.setModal(true);
+    int result = gameOptionsWindow.exec();
+    if(result != 1) {
+        exit(0);
+    }
+
+    // TO-DO get the result from the options dialog and pass to the controller...
 }
 
 MainWindow::~MainWindow()

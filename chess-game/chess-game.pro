@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     knight.cpp \
     pawn.cpp \
     specialmoveshandler.cpp \
-    cellbutton.cpp
+    cellbutton.cpp \
+    gameoptionswindow.cpp
 
 HEADERS  += mainwindow.h \
     state.h \
@@ -44,9 +45,12 @@ HEADERS  += mainwindow.h \
     knight.h \
     pawn.h \
     specialmoveshandler.h \
-    cellbutton.h
+    cellbutton.h \
+    gameoptionswindow.h \
+    gametype.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    gameoptionswindow.ui
 
 RESOURCES += \
     resource_pieces_images.qrc
