@@ -9,6 +9,7 @@
 
 #include "controller.h"
 #include "cellbutton.h"
+#include "uihelperfunc.h"
 
 
 namespace Ui {
@@ -44,7 +45,6 @@ private:
     void initBackgroundBoardColor();
 
     // help functions
-    QString getPieceFileName(Piece *p);
     bool isSelected(Coordinate coordinate);
     QString getBackgroundStyleSheet(QString color);
     QString getBackgroundAndHoverStyleSheet(QString backgroundColor, QString hoverColor);

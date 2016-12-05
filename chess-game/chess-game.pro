@@ -28,7 +28,9 @@ SOURCES += main.cpp\
     pawn.cpp \
     specialmoveshandler.cpp \
     cellbutton.cpp \
-    gameoptionswindow.cpp
+    gameoptionswindow.cpp \
+    choosepiecedialog.cpp \
+    uihelperfunc.cpp
 
 HEADERS  += mainwindow.h \
     state.h \
@@ -47,10 +49,13 @@ HEADERS  += mainwindow.h \
     specialmoveshandler.h \
     cellbutton.h \
     gameoptionswindow.h \
-    gametype.h
+    gametype.h \
+    choosepiecedialog.h \
+    uihelperfunc.h
 
 FORMS    += mainwindow.ui \
-    gameoptionswindow.ui
+    gameoptionswindow.ui \
+    choosepiecedialog.ui
 
 RESOURCES += \
     resource_pieces_images.qrc

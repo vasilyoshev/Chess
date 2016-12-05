@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "gameoptionswindow.h"
+#include "choosepiecedialog.h"
 
 #include <QDialogButtonBox>
 
@@ -17,9 +18,16 @@ MainWindow::MainWindow(QWidget *parent) :
     initBackgroundBoardColor();
     createLabels();
 
-    setStyleSheet("background-color : rgb(220,200,140,100%);");
+    setStyleSheet(UIHelperFunc::getFormBackgroundStyleSheet());
 
     drawState();
+
+    /// TO-DO use the forms when necessary
+    /**
+    ChoosePieceDialog choosePieceDialog;
+    choosePieceDialog.setModal(true);
+    choosePieceDialog.exec();
+    exit(0);
 
     GameOptionsWindow gameOptionsWindow;
     gameOptionsWindow.setModal(true);
@@ -29,6 +37,8 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
     // TO-DO get the result from the options dialog and pass to the controller...
+
+    **/
 }
 
 MainWindow::~MainWindow()
@@ -91,12 +101,12 @@ void MainWindow::initBackgroundBoardColor()
     for(int i=0;i<BOARD_SIZE;i++) {
         for(int j=0;j<BOARD_SIZE;j++) {
             QString color = ( (i+j)%2 ? "rgba(130,130,130,100%)" : "rgba(220,220,220,100%)" );
-            BackgroundBoard[i][j].setStyleSheet(getBackgroundStyleSheet(color));
+            BackgroundBoard[i][j].setStyleSheet(UIHelperFunc::getBackgroundStyleSheet(color));
 
             if(controller.getState().getPiece(Coordinate(i,j))==nullptr)
-                Board[i][j].setStyleSheet(getBackgroundAndHoverStyleSheet("rgba(0,0,0,0%)","rgba(100,255,100,0%)"));
+                Board[i][j].setStyleSheet(UIHelperFunc::getBackgroundAndHoverStyleSheet("rgba(0,0,0,0%)","rgba(100,255,100,0%)"));
             else
-                Board[i][j].setStyleSheet(getBackgroundAndHoverStyleSheet("rgba(0,0,0,0%)","rgba(100,255,100,50%)"));
+                Board[i][j].setStyleSheet(UIHelperFunc::getBackgroundAndHoverStyleSheet("rgba(0,0,0,0%)","rgba(100,255,100,50%)"));
 
         }
     }
@@ -147,42 +157,6 @@ void MainWindow::handlePieceClick()
     this->setWindowTitle("PRESSED PIECE");
 }
 
-QString MainWindow::getPieceFileName(Piece *p)
-{
-    if(p==nullptr)
-        return "";
-
-    QString result;
-    switch(p->getType()) {
-    case Piece::ptKing :
-        result="Dama";
-        break;
-    case Piece::ptQueen :
-        result="Car";
-        break;
-    case Piece::ptRook :
-        result="Top";
-        break;
-    case Piece::ptBishop :
-        result="Oficer";
-        break;
-    case Piece::ptKnight :
-        result="Kon";
-        break;
-    case Piece::ptPawn :
-        result="Peshka";
-        break;
-    }
-
-    if(p->getColor()==cBlack) {
-        result += "B";
-    } else {
-        result += "W";
-    }
-
-    return result;
-}
-
 void MainWindow::createLabels()
 {
     TopLabels = new QLabel[BOARD_SIZE];
@@ -222,22 +196,12 @@ void MainWindow::createLabels()
     }
 }
 
-bool MainWindow::isSelected(Coordinate coordinate)
-{
-    for(unsigned int i=0;i<selectedCells.size();i++) {
-        if(coordinate==selectedCells[i])
-            return true;
-    }
-
-    return false;
-}
-
 void MainWindow::drawState()
 {
     for(int row=0;row<8;row++) {
         for(int col=0;col<8;col++) {
             Piece *p = controller.getState().getBoard()[row][col].getPiece();
-            QString piece = getPieceFileName(p);
+            QString piece = UIHelperFunc::getPieceFileName(p);
             if(piece == "") {
                 Board[row][col].setIcon(QIcon());
                 continue;
@@ -252,26 +216,15 @@ void MainWindow::drawState()
     drawCurrentPlayer();
 }
 
-QString MainWindow::getBackgroundStyleSheet(QString color)
-{
-    return QString("QPushButton { background-color : ")+ color + "; border: 1px solid black;}";
-}
-
-QString MainWindow::getBackgroundAndHoverStyleSheet(QString backgroundColor, QString hoverColor)
-{
-    return QString("QPushButton {background-color: "+backgroundColor+"} ")
-            +"QPushButton:hover {background-color: "+hoverColor+";}";
-}
-
 void MainWindow::markCells()
 {
     for(unsigned int i=0;i<selectedCells.size();i++) {
         int row = selectedCells[i].getRow();
         int col = selectedCells[i].getColumn();
-        BackgroundBoard[row][col].setStyleSheet(getBackgroundStyleSheet("rgba(50,255,50,100%)"));
+        BackgroundBoard[row][col].setStyleSheet(UIHelperFunc::getBackgroundStyleSheet("rgba(50,255,50,100%)"));
     }
     BackgroundBoard[selectedPieceCoordinate.getRow()][selectedPieceCoordinate.getColumn()]
-            .setStyleSheet(getBackgroundStyleSheet("rgba(100,200,100,100%)"));
+            .setStyleSheet(UIHelperFunc::getBackgroundStyleSheet("rgba(100,200,100,100%)"));
 }
 
 void MainWindow::unmarkCells()
@@ -284,13 +237,13 @@ void MainWindow::unmarkCells()
         row = selectedCells[i].getRow();
         col = selectedCells[i].getColumn();
         color = ( (row+col)%2 ? "rgba(130,130,130,100%)" : "rgba(220,220,220,100%)" );
-        BackgroundBoard[row][col].setStyleSheet(getBackgroundStyleSheet(color));
+        BackgroundBoard[row][col].setStyleSheet(UIHelperFunc::getBackgroundStyleSheet(color));
     }
     if(selectedPieceCoordinate.isInBoard()) {
         row = selectedPieceCoordinate.getRow();
         col = selectedPieceCoordinate.getColumn();
         color = ( (row+col)%2 ? "rgba(130,130,130,100%)" : "rgba(220,220,220,100%)" );
-        BackgroundBoard[row][col].setStyleSheet(getBackgroundStyleSheet(color));
+        BackgroundBoard[row][col].setStyleSheet(UIHelperFunc::getBackgroundStyleSheet(color));
     }
 }
 
@@ -319,4 +272,15 @@ void MainWindow::drawCurrentPlayer()
     PlayerNameLabel.setText(text);
     PlayerNameLabel.setGeometry(QRect(0,0,400,playerLabelHeight));
 
+}
+
+
+bool MainWindow::isSelected(Coordinate coordinate)
+{
+    for(unsigned int i=0;i<selectedCells.size();i++) {
+        if(coordinate==selectedCells[i])
+            return true;
+    }
+
+    return false;
 }

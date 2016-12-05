@@ -2,16 +2,18 @@
 #include "ui_gameoptionswindow.h"
 
 #include <QSignalMapper>
-
 #include <random>
 #include <time.h>
+
+#include "uihelperfunc.h"
 
 GameOptionsWindow::GameOptionsWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GameOptionsWindow)
 {
     ui->setupUi(this);
-    setStyleSheet("background-color : rgb(220,200,140,100%);");
+    setStyleSheet(UIHelperFunc::getFormBackgroundStyleSheet());
+
 
     srand(time(NULL));
 
@@ -118,12 +120,12 @@ void GameOptionsWindow::enableOkButton()
 }
 
 
-void GameOptionsWindow::on_lineEdit_firstPlayer_textChanged(const QString &arg1)
+void GameOptionsWindow::on_lineEdit_firstPlayer_textChanged(const QString&)
 {
     enableOkButton();
 }
 
-void GameOptionsWindow::on_lineEdit_secondPlayer_textChanged(const QString &arg1)
+void GameOptionsWindow::on_lineEdit_secondPlayer_textChanged(const QString&)
 {
     enableOkButton();
 }
