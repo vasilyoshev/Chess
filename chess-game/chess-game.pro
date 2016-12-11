@@ -11,51 +11,57 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = chess-game
 TEMPLATE = app
 
+INCLUDEPATH += pieces \
+    gui \
+    ai \
+    chess-logic \
+    chess-utils \
+    chess-state
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    state.cpp \
-    cell.cpp \
-    piece.cpp \
-    coordinate.cpp \
-    player.cpp \
-    controller.cpp \
-    king.cpp \
-    queen.cpp \
-    rook.cpp \
-    bishop.cpp \
-    knight.cpp \
-    pawn.cpp \
-    specialmoveshandler.cpp \
-    cellbutton.cpp \
-    gameoptionswindow.cpp \
-    choosepiecedialog.cpp \
-    uihelperfunc.cpp
+    chess-state/state.cpp \
+    chess-state/cell.cpp \
+    pieces/piece.cpp \
+    chess-utils/coordinate.cpp \
+    chess-state/player.cpp \
+    chess-logic/controller.cpp \
+    pieces/king.cpp \
+    pieces/queen.cpp \
+    pieces/rook.cpp \
+    pieces/bishop.cpp \
+    pieces/knight.cpp \
+    pieces/pawn.cpp \
+    chess-logic/specialmoveshandler.cpp \
+    gui/cellbutton.cpp \
+    gui/gameoptionswindow.cpp \
+    gui/choosepiecedialog.cpp \
+    gui/uihelperfunc.cpp
 
 HEADERS  += mainwindow.h \
-    state.h \
-    cell.h \
-    piece.h \
-    coordinate.h \
-    player.h \
-    color.h \
-    controller.h \
-    king.h \
-    queen.h \
-    rook.h \
-    bishop.h \
-    knight.h \
-    pawn.h \
-    specialmoveshandler.h \
-    cellbutton.h \
-    gameoptionswindow.h \
-    gametype.h \
-    choosepiecedialog.h \
-    uihelperfunc.h
+    chess-state/state.h \
+    chess-state/cell.h \
+    pieces/piece.h \
+    chess-utils/coordinate.h \
+    chess-state/player.h \
+    chess-utils/color.h \
+    chess-logic/controller.h \
+    pieces/king.h \
+    pieces/queen.h \
+    pieces/rook.h \
+    pieces/bishop.h \
+    pieces/knight.h \
+    pieces/pawn.h \
+    chess-logic/specialmoveshandler.h \
+    gui/cellbutton.h \
+    gui/gameoptionswindow.h \
+    chess-state/gametype.h \
+    gui/choosepiecedialog.h \
+    gui/uihelperfunc.h
 
 FORMS    += mainwindow.ui \
-    gameoptionswindow.ui \
-    choosepiecedialog.ui
+    gui/gameoptionswindow.ui \
+    gui/choosepiecedialog.ui
 
 RESOURCES += \
-    resource_pieces_images.qrc
+    gui/resource_pieces_images.qrc
