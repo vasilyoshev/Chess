@@ -8,12 +8,13 @@
 #include "knight.h"
 #include "pawn.h"
 
-class Cell
-{
+class Cell {
 private:
     Piece* piece;
+
 public:
     Cell();
+
     void setPiece(Piece* piece);
     Piece* getPiece() const;
 };

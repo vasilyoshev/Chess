@@ -25,13 +25,11 @@ GameOptionsWindow::GameOptionsWindow(QWidget *parent) :
     initUi();
 }
 
-GameOptionsWindow::~GameOptionsWindow()
-{
+GameOptionsWindow::~GameOptionsWindow() {
     delete ui;
 }
 
-void GameOptionsWindow::initUi()
-{
+void GameOptionsWindow::initUi() {
     // Game Type
     connect(ui->radioButton_gameType_playerVsCPU,SIGNAL(clicked()),this,
             SLOT(on_radioButton_gameType_clicked()));
@@ -62,18 +60,15 @@ void GameOptionsWindow::initUi()
     delete mapper;*/
 }
 
-TGameType GameOptionsWindow::getSelectedGameType() const
-{
+TGameType GameOptionsWindow::getSelectedGameType() const {
     return SelectedGameType;
 }
 
-Color GameOptionsWindow::getSelectedColor() const
-{
+Color GameOptionsWindow::getSelectedColor() const {
     return SelectedColor;
 }
 
-void GameOptionsWindow::on_radioButton_gameType_clicked()
-{
+void GameOptionsWindow::on_radioButton_gameType_clicked() {
     if(ui->radioButton_gameType_playerVsCPU->isChecked()) {
         isSelectedGameType = true;
         SelectedGameType = gtPlayerVsCPU;
@@ -89,8 +84,7 @@ void GameOptionsWindow::on_radioButton_gameType_clicked()
     enableOkButton();
 }
 
-void GameOptionsWindow::on_radioButton_color_clicked()
-{
+void GameOptionsWindow::on_radioButton_color_clicked() {
     if(ui->radioButton_color_white->isChecked()) {
         isSelectedColor = true;
         SelectedColor = cWhite;
@@ -105,8 +99,7 @@ void GameOptionsWindow::on_radioButton_color_clicked()
     enableOkButton();
 }
 
-void GameOptionsWindow::enableOkButton()
-{
+void GameOptionsWindow::enableOkButton() {
     bool filledNames = (!ui->lineEdit_firstPlayer->isEnabled() ||
                         (ui->lineEdit_firstPlayer->isEnabled() && ui->lineEdit_firstPlayer->text().size()!=0)) &&
             (!ui->lineEdit_secondPlayer->isEnabled() ||
@@ -120,18 +113,15 @@ void GameOptionsWindow::enableOkButton()
 }
 
 
-void GameOptionsWindow::on_lineEdit_firstPlayer_textChanged(const QString&)
-{
+void GameOptionsWindow::on_lineEdit_firstPlayer_textChanged(const QString&) {
     enableOkButton();
 }
 
-void GameOptionsWindow::on_lineEdit_secondPlayer_textChanged(const QString&)
-{
+void GameOptionsWindow::on_lineEdit_secondPlayer_textChanged(const QString&) {
     enableOkButton();
 }
 
-QString GameOptionsWindow::getFirstPlayerName() const
-{
+QString GameOptionsWindow::getFirstPlayerName() const {
     if(ui->lineEdit_firstPlayer->isEnabled()) {
         return ui->lineEdit_firstPlayer->text();
     } else {
@@ -139,8 +129,7 @@ QString GameOptionsWindow::getFirstPlayerName() const
     }
 }
 
-QString GameOptionsWindow::getSecondPlayerName() const
-{
+QString GameOptionsWindow::getSecondPlayerName() const {
     if(ui->lineEdit_secondPlayer->isEnabled()) {
         return ui->lineEdit_secondPlayer->text();
     } else {

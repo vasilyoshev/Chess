@@ -5,8 +5,7 @@
 
 #include "piece.h"
 
-class Bishop : public Piece
-{
+class Bishop : public Piece {
 public:
     Bishop(Color color);
     std::vector<Coordinate> getPossibleMoves(Coordinate currentPosition);

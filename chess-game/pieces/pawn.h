@@ -3,8 +3,7 @@
 
 #include "piece.h"
 
-class Pawn : public Piece
-{
+class Pawn : public Piece {
 public:
     Pawn(Color color);
     std::vector<Coordinate> getPossibleMoves(Coordinate currentPosition);

@@ -5,21 +5,22 @@ Rook::Rook(Color color)
 {
 }
 
-std::vector<Coordinate> Rook::getPossibleMoves(Coordinate currentPosition)
-{
+std::vector<Coordinate> Rook::getPossibleMoves(Coordinate currentPosition) {
     std::vector<Coordinate> result;
 
-    for(int i=0;i<8;i++) {
-        if(currentPosition.getRow()!=i)
-            result.push_back(Coordinate(i,currentPosition.getColumn()));
-        if(currentPosition.getColumn()!=i)
-            result.push_back(Coordinate(currentPosition.getRow(),i));
+    for(int i = 0; i < 8; i++) {
+        if(currentPosition.getRow() != i) {
+            result.push_back(Coordinate(i, currentPosition.getColumn()));
+        }
+
+        if(currentPosition.getColumn() != i) {
+            result.push_back(Coordinate(currentPosition.getRow(), i));
+        }
     }
 
     return result;
 }
 
-Piece* Rook::getCopy() const
-{
+Piece* Rook::getCopy() const {
     return new Rook(color);
 }

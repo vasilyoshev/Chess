@@ -2,11 +2,11 @@
 #define COORDINATE_H
 
 
-class Coordinate
-{
+class Coordinate {
 private:
     int row;
     int column;
+
 public:
     Coordinate();
     Coordinate(int row, int column);

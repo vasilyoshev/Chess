@@ -3,8 +3,7 @@
 
 #include "piece.h"
 
-class Queen : public Piece
-{
+class Queen : public Piece {
 public:
     Queen(Color color);
     std::vector<Coordinate> getPossibleMoves(Coordinate currentPosition);

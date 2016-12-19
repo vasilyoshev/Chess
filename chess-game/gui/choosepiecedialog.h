@@ -18,8 +18,7 @@ namespace Ui {
 class ChoosePieceDialog;
 }
 
-class ChoosePieceDialog : public QDialog
-{
+class ChoosePieceDialog : public QDialog {
     Q_OBJECT
 
 public:

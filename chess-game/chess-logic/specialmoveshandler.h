@@ -3,10 +3,8 @@
 
 #include "state.h"
 
-class SpecialMovesHandler
-{
+class SpecialMovesHandler {
 private:
-
     void filterInvalidMoves(const State &state, std::vector<Coordinate> &abstractMoves);
 
     void getSpecialMoves(King *king, const State &state, std::vector<Coordinate> &abstractMoves);

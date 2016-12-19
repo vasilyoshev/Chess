@@ -6,16 +6,17 @@
 
 using namespace std;
 
-class Player
-{
+class Player {
 private:
     string name;
     Color color;
+
 public:
     Player();
 
     void setName(string name);
     string getName() const;
+
     void setColor(Color color);
     Color getColor() const;
 

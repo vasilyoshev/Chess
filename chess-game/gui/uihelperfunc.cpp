@@ -1,14 +1,13 @@
 #include "uihelperfunc.h"
 
-UIHelperFunc::UIHelperFunc()
-{
+UIHelperFunc::UIHelperFunc() {
 
 }
 
-QString UIHelperFunc::getPieceFileName(Piece *p)
-{
-    if(p==nullptr)
+QString UIHelperFunc::getPieceFileName(Piece *p) {
+    if(p==nullptr) {
         return "";
+    }
 
     QString result;
     switch(p->getType()) {
@@ -41,18 +40,15 @@ QString UIHelperFunc::getPieceFileName(Piece *p)
     return result;
 }
 
-QString UIHelperFunc::getFormBackgroundStyleSheet()
-{
+QString UIHelperFunc::getFormBackgroundStyleSheet() {
     return "background-color : rgb(220,200,140,100%);";
 }
 
-QString UIHelperFunc::getBackgroundStyleSheet(QString color)
-{
+QString UIHelperFunc::getBackgroundStyleSheet(QString color) {
     return QString("QPushButton { background-color : ")+ color + "; border: 1px solid black;}";
 }
 
-QString UIHelperFunc::getBackgroundAndHoverStyleSheet(QString backgroundColor, QString hoverColor)
-{
+QString UIHelperFunc::getBackgroundAndHoverStyleSheet(QString backgroundColor, QString hoverColor) {
     return QString("QPushButton {background-color: "+backgroundColor+"} ")
             +"QPushButton:hover {background-color: "+hoverColor+";}";
 }

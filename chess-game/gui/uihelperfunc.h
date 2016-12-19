@@ -5,8 +5,7 @@
 #include "piece.h"
 #include "coordinate.h"
 
-class UIHelperFunc
-{
+class UIHelperFunc {
 public:
     UIHelperFunc();
 

@@ -1,16 +1,13 @@
 #include "cell.h"
 
-Cell::Cell()
-{
+Cell::Cell() {
     piece = nullptr;
 }
 
-void Cell::setPiece(Piece* piece)
-{
+void Cell::setPiece(Piece* piece) {
     this->piece = piece;
 }
 
-Piece* Cell::getPiece() const
-{
+Piece* Cell::getPiece() const {
     return piece;
 }

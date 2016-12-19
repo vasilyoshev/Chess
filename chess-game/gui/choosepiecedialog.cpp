@@ -24,8 +24,7 @@ ChoosePieceDialog::ChoosePieceDialog(QWidget *parent) :
     initChooseButton();
 }
 
-ChoosePieceDialog::~ChoosePieceDialog()
-{
+ChoosePieceDialog::~ChoosePieceDialog() {
     delete ui;
 
     delete[] Pieces;
@@ -34,8 +33,7 @@ ChoosePieceDialog::~ChoosePieceDialog()
 }
 
 
-void ChoosePieceDialog::setWindowSize()
-{
+void ChoosePieceDialog::setWindowSize() {
     QRect screen = QApplication::desktop()->screenGeometry();
 
     fieldSize = screen.height()*6/BOARD_SIZE/9;
@@ -50,8 +48,7 @@ void ChoosePieceDialog::setWindowSize()
                           formSize/1.5));
 }
 
-void ChoosePieceDialog::initCaption()
-{
+void ChoosePieceDialog::initCaption() {
     LabelCaption = new QLabel();
     LabelCaption->setParent(this);
     LabelCaption->setGeometry(QRect(
@@ -64,8 +61,7 @@ void ChoosePieceDialog::initCaption()
     LabelCaption->setAlignment(Qt::AlignCenter);
 }
 
-void ChoosePieceDialog::initPieces()
-{
+void ChoosePieceDialog::initPieces() {
     SelectedPiece = new CellButton();
     SelectedPiece->setParent(this);
     SelectedPiece->setGeometry(QRect(
@@ -119,16 +115,14 @@ void ChoosePieceDialog::initPieces()
     delete piece;
 }
 
-void ChoosePieceDialog::setPiece(Piece *piecePtr, int idx)
-{
+void ChoosePieceDialog::setPiece(Piece *piecePtr, int idx) {
     QString piece = UIHelperFunc::getPieceFileName(&*piecePtr);
     QPixmap qPixmap(":/figures/Images/"+piece+".png");
     Pieces[idx].setIcon(QIcon(qPixmap));
     Pieces[idx].setIconSize(qPixmap.rect().size());
 }
 
-void ChoosePieceDialog::initChooseButton()
-{
+void ChoosePieceDialog::initChooseButton() {
     ButtonChoose = new QPushButton();
     ButtonChoose->setParent(this);
     ButtonChoose->setGeometry(QRect(
@@ -143,8 +137,7 @@ void ChoosePieceDialog::initChooseButton()
     connect(ButtonChoose, SIGNAL (released()), this, SLOT (handleChooseClick()));
 }
 
-void ChoosePieceDialog::handlePieceClick()
-{
+void ChoosePieceDialog::handlePieceClick() {
     CellButton *cellButton = (CellButton*)sender();
 
     SelectedPiece->setIcon(cellButton->icon());
@@ -156,7 +149,6 @@ void ChoosePieceDialog::handlePieceClick()
     SelectedPiece->setStyleSheet("background-color : rgb(255,255,51,100%); border: 2px solid black;");
 }
 
-void ChoosePieceDialog::handleChooseClick()
-{
+void ChoosePieceDialog::handleChooseClick() {
 
 }

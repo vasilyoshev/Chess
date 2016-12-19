@@ -6,10 +6,8 @@
 #include "coordinate.h"
 #include "color.h"
 
-class Piece
-{
+class Piece {
 public:
-
     enum PieceType {
         ptKing,
         ptQueen,

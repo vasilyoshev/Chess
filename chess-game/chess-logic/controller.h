@@ -9,8 +9,7 @@
 #include "specialmoveshandler.h"
 #include "gametype.h"
 
-class Controller
-{
+class Controller {
 private:
     State state;
     SpecialMovesHandler specialMovesHandler;

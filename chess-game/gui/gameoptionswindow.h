@@ -11,8 +11,7 @@ namespace Ui {
 class GameOptionsWindow;
 }
 
-class GameOptionsWindow : public QDialog
-{
+class GameOptionsWindow : public QDialog {
     Q_OBJECT
 
 public:

@@ -2,8 +2,7 @@
 
 // Should be interface
 
-Piece::Piece(Color color,PieceType pieceType)
-{
+Piece::Piece(Color color, PieceType pieceType) {
     this->color = color;
     this->pieceType = pieceType;
     killed = false;
@@ -13,17 +12,14 @@ Piece::~Piece() {
 
 }
 
-bool Piece::isKilled()
-{
+bool Piece::isKilled() {
     return killed;
 }
 
-Color Piece::getColor() const
-{
+Color Piece::getColor() const {
     return color;
 }
 
-Piece::PieceType Piece::getType() const
-{
+Piece::PieceType Piece::getType() const {
     return pieceType;
 }
