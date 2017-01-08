@@ -1,4 +1,6 @@
 #include "controller.h"
+#include "piece.h"
+#include "checkchecker.h"
 
 Controller::Controller() {
     initState();
@@ -38,7 +40,7 @@ vector<Coordinate> Controller::getValidMoves(Coordinate click) {
         return vector<Coordinate>();
     }
 
-    return specialMovesHandler.getValidMoves(state,click);
+    return CheckChecker::filterCheckMoves(state, SpecialMovesHandler::getValidMoves(state, click), click);
 }
 
 const State& Controller::getState() {
@@ -46,12 +48,20 @@ const State& Controller::getState() {
 }
 
 void Controller::movePiece(Coordinate source, Coordinate target) {
-    state.setPiece(state.getPiece(source)->getCopy(), target);
+    Piece* sourcePiece = state.getPiece(source);
+    Piece* targetPiece = state.getPiece(target);
+    delete targetPiece;
+    state.setPiece(sourcePiece, target);
     state.setPiece(nullptr, source);
 
     state.nextPlayer();
-
-    // TO-DO
+    if (CheckChecker::checkForCheck(state)) {
+        state.getCurrentPlayer()->setInCheck(true);
+        state.getCurrentPlayer()->setInCheckmate(CheckChecker::checkForCheckmate(state));
+        if (CheckChecker::checkForCheckmate(state)) {
+            exit(0);
+        }
+    }
 }
 
 void Controller::initPlayers() {

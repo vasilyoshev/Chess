@@ -12,7 +12,6 @@
 class Controller {
 private:
     State state;
-    SpecialMovesHandler specialMovesHandler;
 
     void initPieces();
     void initPlayers();

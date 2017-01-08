@@ -36,7 +36,8 @@ SOURCES += main.cpp\
     gui/cellbutton.cpp \
     gui/gameoptionswindow.cpp \
     gui/choosepiecedialog.cpp \
-    gui/uihelperfunc.cpp
+    gui/uihelperfunc.cpp \
+    chess-logic/checkchecker.cpp
 
 HEADERS  += mainwindow.h \
     chess-state/state.h \
@@ -57,7 +58,8 @@ HEADERS  += mainwindow.h \
     gui/gameoptionswindow.h \
     chess-state/gametype.h \
     gui/choosepiecedialog.h \
-    gui/uihelperfunc.h
+    gui/uihelperfunc.h \
+    chess-logic/checkchecker.h
 
 FORMS    += mainwindow.ui \
     gui/gameoptionswindow.ui \

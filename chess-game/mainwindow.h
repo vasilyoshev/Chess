@@ -57,7 +57,7 @@ private:
     void drawCurrentPlayer();
 
 private slots:
-    void handleBackgroundClick();
+    void handleValidMoveClick();
     void handlePieceClick();
 
 };

@@ -91,7 +91,7 @@ void MainWindow::createBackgroundBoard()
             BackgroundBoard[i][j].setParent(this);
             BackgroundBoard[i][j].setGeometry(QRect(boardOffsetLeft+j*fieldSize,boardOffsetTop+i*fieldSize,fieldSize,fieldSize));
 
-            connect(&BackgroundBoard[i][j], SIGNAL (released()), this, SLOT (handleBackgroundClick()));
+            connect(&BackgroundBoard[i][j], SIGNAL (released()), this, SLOT (handleValidMoveClick()));
         }
     }
 }
@@ -112,7 +112,7 @@ void MainWindow::initBackgroundBoardColor()
     }
 }
 
-void MainWindow::handleBackgroundClick()
+void MainWindow::handleValidMoveClick()
 {
     CellButton *cellButton = (CellButton*)sender();
     if(isSelected(cellButton->getCoordinate())) {
@@ -134,7 +134,7 @@ void MainWindow::handlePieceClick()
     Piece *selectedPiece = controller.getState().getPiece(Coordinate(cellButton->getCoordinate().getRow(),cellButton->getCoordinate().getColumn()));
 
     if(selectedPiece==nullptr) {
-        handleBackgroundClick();
+        handleValidMoveClick();
         return;
     }
 
@@ -144,8 +144,11 @@ void MainWindow::handlePieceClick()
     if(isSelected(cellButton->getCoordinate())) {
         // TO-DO
         // takePiece method
+        controller.movePiece(selectedPieceCoordinate,cellButton->getCoordinate());
+        drawState();
+        selectedPieceCoordinate = Coordinate(-1,-1);
+        selectedCells.clear();
     } else {
-
         if(selectedPiece->getColor() == controller.getState().getCurrentPlayer()->getColor()) {
             selectedPieceCoordinate = cellButton->getCoordinate();
             selectedCells = controller.getValidMoves(cellButton->getCoordinate());

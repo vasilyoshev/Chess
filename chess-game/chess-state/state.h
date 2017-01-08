@@ -15,17 +15,21 @@ private:
 
 public:
     State();
+    State(const State& state);
 
     void setPiece(Piece* piece, Coordinate coordinate);
     Piece* getPiece(Coordinate coordinate) const;
 
-    const Player* getCurrentPlayer() const;
+    Player* getCurrentPlayer() const;
     void nextPlayer();
 
     void initPlayer1(string name, Color color);
     void initPlayer2(string name, Color color);
 
     const vector< vector<Cell> >& getBoard() const;
+
+    void setCheckStatusCurrentPlayer(bool inCheck);
+    bool getCheckStatusCurrentPlayer();
 };
 
 #endif // STATE_H

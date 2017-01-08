@@ -14,9 +14,12 @@ private:
 
 public:
     Cell();
+    Cell(const Cell& cell);
 
     void setPiece(Piece* piece);
     Piece* getPiece() const;
+
+    Cell getCopy();
 };
 
 #endif // CELL_H

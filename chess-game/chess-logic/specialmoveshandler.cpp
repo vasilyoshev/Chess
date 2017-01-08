@@ -3,11 +3,11 @@
 SpecialMovesHandler::SpecialMovesHandler() {
 }
 
-std::vector<Coordinate> SpecialMovesHandler::getValidMoves(const State &state, Coordinate click) {
-    Piece *p = state.getPiece(click);
+std::vector<Coordinate> SpecialMovesHandler::getValidMoves(const State& state, Coordinate click) {
+    Piece* p = state.getPiece(click);
     std::vector<Coordinate> result = p->getPossibleMoves(click);
 
-    filterInvalidMoves(state,result);
+    filterInvalidMoves(state, result, p->getColor());
 
     switch(p->getType()) {
     case Piece::ptKing :
@@ -33,16 +33,17 @@ std::vector<Coordinate> SpecialMovesHandler::getValidMoves(const State &state, C
     return result;
 }
 
-void SpecialMovesHandler::filterInvalidMoves(const State &state, std::vector<Coordinate> &abstractMoves) {
-    std::vector<Coordinate>::iterator it = abstractMoves.begin();
+void SpecialMovesHandler::filterInvalidMoves(const State& state, std::vector<Coordinate>& abstractMoves, const Color& attackingColor) {
+    vector<Coordinate> filtered;
 
-    for(;it!=abstractMoves.end();) {
-        if(state.getPiece(*it)!=nullptr) {
-            it = abstractMoves.erase(it);
-        } else {
-            ++it;
+    for (int i=0; i<abstractMoves.size(); i++) {
+        Piece* piece = state.getPiece(abstractMoves[i]);
+        if (piece == nullptr || piece->getColor() != attackingColor) {
+            filtered.push_back(abstractMoves[i]);
         }
     }
+
+    abstractMoves = filtered;
 }
 
 void SpecialMovesHandler::getSpecialMoves(King *king, const State &state, std::vector<Coordinate> &abstractMoves) {

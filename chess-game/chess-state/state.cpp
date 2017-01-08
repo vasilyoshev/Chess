@@ -7,6 +7,20 @@ State::State() {
     currentPlayer = &players[currentPlayerIndex];
 }
 
+State::State(const State& state) {
+    board.resize(BOARD_SIZE, vector<Cell>(BOARD_SIZE));
+    for(int row = 0; row < BOARD_SIZE; row++) {
+        for(int column = 0; column < BOARD_SIZE; column++) {
+            board[row][column] = Cell(state.getBoard()[row][column]);
+        }
+    }
+
+    currentPlayerIndex = state.currentPlayerIndex;
+    players[0] = Player(state.players[0]);
+    players[1] = Player(state.players[1]);
+    currentPlayer = &players[currentPlayerIndex];
+}
+
 void State::setPiece(Piece* piece, Coordinate coordinate) {
     if(!coordinate.isInBoard()) {
         return; // maybe exception or log error/warn message
@@ -27,7 +41,7 @@ const vector< vector<Cell> >& State::getBoard() const {
     return board;
 }
 
-const Player* State::getCurrentPlayer() const {
+Player* State::getCurrentPlayer() const {
     return currentPlayer;
 }
 
@@ -44,4 +58,12 @@ void State::initPlayer1(string name, Color color) {
 void State::initPlayer2(string name, Color color) {
     players[1].setName(name);
     players[1].setColor(color);
+}
+
+void State::setCheckStatusCurrentPlayer(bool inCheck) {
+    currentPlayer->setInCheck(inCheck);
+}
+
+bool State::getCheckStatusCurrentPlayer() {
+    return currentPlayer->isInCheck();
 }
