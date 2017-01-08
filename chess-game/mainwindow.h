@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QString>
 #include <QPushButton>
+#include <QMessageBox>
 
 #include "controller.h"
 #include "cellbutton.h"
@@ -25,18 +26,19 @@ public:
     ~MainWindow();
 
 private:
-    Ui::MainWindow *ui;
-    int fieldSize;
-    int boardOffsetLeft;
-    int boardOffsetTop;
-    int playerLabelHeight;
-    CellButton **Board;
-    CellButton **BackgroundBoard;
-    QLabel *TopLabels, *RightLabels, *BottomLabels, *LeftLabels;
-    QLabel PlayerNameLabel;
-    vector<Coordinate> selectedCells;
-    Coordinate selectedPieceCoordinate;
-    Controller controller;
+Ui::MainWindow *ui;
+int fieldSize;
+int boardOffsetLeft;
+int boardOffsetTop;
+int playerLabelHeight;
+CellButton **Board;
+CellButton **BackgroundBoard;
+QLabel *TopLabels, *RightLabels, *BottomLabels, *LeftLabels;
+QLabel PlayerNameLabel;
+QLabel PlayerCheckLabel;
+vector<Coordinate> selectedCells;
+Coordinate selectedPieceCoordinate;
+Controller controller;
 
     // initialization functions
     void createBoard();
@@ -55,6 +57,8 @@ private:
     void markCells();
     void unmarkCells();
     void drawCurrentPlayer();
+
+    void showGameOver();
 
 private slots:
     void handleValidMoveClick();

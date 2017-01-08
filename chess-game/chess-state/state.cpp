@@ -64,6 +64,6 @@ void State::setCheckStatusCurrentPlayer(bool inCheck) {
     currentPlayer->setInCheck(inCheck);
 }
 
-bool State::getCheckStatusCurrentPlayer() {
-    return currentPlayer->isInCheck();
+void State::initGameType(TGameType gameType) {
+    this->gameType = gameType;
 }

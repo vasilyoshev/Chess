@@ -6,4 +6,16 @@ enum Color {
     cWhite
 };
 
+class ColorUtils {
+public:
+    static Color getOppositeColor(Color color) {
+        if(color == cBlack) {
+            return cWhite;
+        } else {
+            return cBlack;
+        }
+    }
+};
+
+
 #endif // COLOR_H

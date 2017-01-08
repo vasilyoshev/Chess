@@ -3,6 +3,7 @@
 
 #include "cell.h"
 #include "player.h"
+#include "gametype.h"
 
 const int BOARD_SIZE = 8;
 
@@ -12,6 +13,7 @@ private:
     int currentPlayerIndex;
     Player players[2];
     Player* currentPlayer;
+    TGameType gameType;
 
 public:
     State();
@@ -25,6 +27,7 @@ public:
 
     void initPlayer1(string name, Color color);
     void initPlayer2(string name, Color color);
+    void initGameType(TGameType gameType);
 
     const vector< vector<Cell> >& getBoard() const;
 

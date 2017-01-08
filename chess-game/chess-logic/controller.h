@@ -2,6 +2,7 @@
 #define CONTROLLER_H
 
 #include <vector>
+#include <QString>
 
 #include "state.h"
 #include "coordinate.h"
@@ -23,8 +24,10 @@ public:
     vector<Coordinate> getValidMoves(Coordinate click);
     void initState();
     const State& getState();
-    void setFirstPlayerColor(Color color);
+    void setFirstPlayer(string name, Color color);
+    void setSecondPlayer(string name, Color color);
     void setGameType(TGameType gameType);
+    void initStartingPlayer();
 };
 
 #endif // CONTROLLER_H

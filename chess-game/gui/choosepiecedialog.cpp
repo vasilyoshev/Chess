@@ -5,10 +5,12 @@
 
 #include "uihelperfunc.h"
 
-const int BOARD_SIZE = 6;
+const int BOARD_SIZE = 5;
 int fieldSize;
 int boardOffsetLeft;
 int boardOffsetTop;
+
+extern CellButton* ChoosePieceDialog::SelectedPiece;
 
 ChoosePieceDialog::ChoosePieceDialog(QWidget *parent) :
     QDialog(parent),
@@ -36,7 +38,7 @@ ChoosePieceDialog::~ChoosePieceDialog() {
 void ChoosePieceDialog::setWindowSize() {
     QRect screen = QApplication::desktop()->screenGeometry();
 
-    fieldSize = screen.height()*6/BOARD_SIZE/9;
+    fieldSize = screen.height()/9;
     boardOffsetLeft = fieldSize/2;
     boardOffsetTop = fieldSize/3*2;
     int formSize=boardOffsetLeft*2+fieldSize*BOARD_SIZE;
@@ -54,7 +56,7 @@ void ChoosePieceDialog::initCaption() {
     LabelCaption->setGeometry(QRect(
                                 boardOffsetLeft,
                                 0,
-                                fieldSize*6,
+                                fieldSize*BOARD_SIZE,
                                 boardOffsetTop));
     LabelCaption->setText("Choose a piece");
     LabelCaption->setFont(QFont("Calibri",20,100));
@@ -65,7 +67,7 @@ void ChoosePieceDialog::initPieces() {
     SelectedPiece = new CellButton();
     SelectedPiece->setParent(this);
     SelectedPiece->setGeometry(QRect(
-                                boardOffsetLeft+BOARD_SIZE/2*fieldSize-fieldSize/2,
+                                boardOffsetLeft+BOARD_SIZE/2*fieldSize,
                                 boardOffsetTop+fieldSize+fieldSize/2,
                                 fieldSize,
                                 fieldSize));
@@ -110,9 +112,6 @@ void ChoosePieceDialog::initPieces() {
     piece = new Queen(cWhite);
     setPiece(piece,4);
     delete piece;
-    piece = new King(cWhite);
-    setPiece(piece,5);
-    delete piece;
 }
 
 void ChoosePieceDialog::setPiece(Piece *piecePtr, int idx) {
@@ -126,8 +125,8 @@ void ChoosePieceDialog::initChooseButton() {
     ButtonChoose = new QPushButton();
     ButtonChoose->setParent(this);
     ButtonChoose->setGeometry(QRect(
-                                boardOffsetLeft+BOARD_SIZE/2*fieldSize-fieldSize,
-                                boardOffsetTop+fieldSize+fieldSize*2,
+                                boardOffsetLeft+BOARD_SIZE/2*fieldSize - fieldSize/2,
+                                boardOffsetTop+fieldSize/1.5+fieldSize*2,
                                 fieldSize*2,
                                 fieldSize/2));
     ButtonChoose->setEnabled(false);
@@ -150,5 +149,5 @@ void ChoosePieceDialog::handlePieceClick() {
 }
 
 void ChoosePieceDialog::handleChooseClick() {
-
+    this->close();
 }

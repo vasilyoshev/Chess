@@ -8,7 +8,7 @@ Controller::Controller() {
 
 void Controller::initState() {
     initPieces();
-    initPlayers();
+//    initPlayers();
 }
 
 void Controller::initPieces() {
@@ -54,25 +54,33 @@ void Controller::movePiece(Coordinate source, Coordinate target) {
     state.setPiece(sourcePiece, target);
     state.setPiece(nullptr, source);
 
+    state.getCurrentPlayer()->setInCheck(false);
     state.nextPlayer();
     if (CheckChecker::checkForCheck(state)) {
         state.getCurrentPlayer()->setInCheck(true);
         state.getCurrentPlayer()->setInCheckmate(CheckChecker::checkForCheckmate(state));
-        if (CheckChecker::checkForCheckmate(state)) {
-            exit(0);
-        }
     }
 }
 
 void Controller::initPlayers() {
-    state.initPlayer1("Vlado", cBlack);
-    state.initPlayer2("Vasko", cWhite);
+    //state.initPlayer1("Vlado", cBlack);
+    //state.initPlayer2("Vasko", cWhite);
 }
 
-void Controller::setFirstPlayerColor(Color color) {
-    // TO-DO
+void Controller::setFirstPlayer(string name, Color color) {
+    state.initPlayer1(name,color);
+}
+
+void Controller::setSecondPlayer(string name, Color color) {
+    state.initPlayer2(name,color);
 }
 
 void Controller::setGameType(TGameType gameType) {
-    // TO-DO
+    state.initGameType(gameType);
+}
+
+void Controller::initStartingPlayer() {
+    if(state.getCurrentPlayer()->getColor() != cWhite) {
+        state.nextPlayer();
+    }
 }

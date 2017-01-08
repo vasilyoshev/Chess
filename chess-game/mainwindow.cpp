@@ -5,6 +5,8 @@
 
 #include <QDialogButtonBox>
 
+int formSize;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -20,14 +22,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setStyleSheet(UIHelperFunc::getFormBackgroundStyleSheet());
 
-    drawState();
-
     /// TO-DO use the forms when necessary
-    /**
-    ChoosePieceDialog choosePieceDialog;
+
+    /*ChoosePieceDialog choosePieceDialog;
     choosePieceDialog.setModal(true);
     choosePieceDialog.exec();
-    exit(0);
+    exit(0);*/
+
 
     GameOptionsWindow gameOptionsWindow;
     gameOptionsWindow.setModal(true);
@@ -36,9 +37,14 @@ MainWindow::MainWindow(QWidget *parent) :
         exit(0);
     }
 
+    controller.setFirstPlayer(gameOptionsWindow.getFirstPlayerName(), gameOptionsWindow.getSelectedColor());
+    controller.setSecondPlayer(gameOptionsWindow.getSecondPlayerName(), ColorUtils::getOppositeColor(gameOptionsWindow.getSelectedColor()));
+    controller.setGameType(gameOptionsWindow.getSelectedGameType());
+    controller.initStartingPlayer();
+
     // TO-DO get the result from the options dialog and pass to the controller...
 
-    **/
+    drawState();
 }
 
 MainWindow::~MainWindow()
@@ -55,7 +61,7 @@ void MainWindow::setWindowSize()
     boardOffsetLeft = fieldSize/2;
     boardOffsetTop = playerLabelHeight*2;
 
-    int formSize=boardOffsetLeft*2+fieldSize*BOARD_SIZE;
+    formSize=boardOffsetLeft*2+fieldSize*BOARD_SIZE;
 
     this->setGeometry(QRect(
                           (screen.width()-formSize)/2,
@@ -197,6 +203,14 @@ void MainWindow::createLabels()
         RightLabels[i].setFont(QFont("Calibri",15,100));
         RightLabels[i].setGeometry(QRect(boardOffsetLeft+8*fieldSize,boardOffsetTop+i*fieldSize,fieldSize/2,fieldSize));
     }
+
+    PlayerCheckLabel.setParent(this);
+    PlayerCheckLabel.setAlignment(Qt::AlignLeft);
+    PlayerCheckLabel.setFont(QFont("Calibri",20,100));
+    PlayerCheckLabel.setStyleSheet("color: rgb(255,10,50,100%);");
+    PlayerCheckLabel.setText(QString("YOU ARE IN CHESS"));
+    PlayerCheckLabel.setGeometry(QRect(formSize-250,0,250,playerLabelHeight));
+    PlayerCheckLabel.setVisible(false);
 }
 
 void MainWindow::drawState()
@@ -217,6 +231,10 @@ void MainWindow::drawState()
     }
 
     drawCurrentPlayer();
+
+    if( controller.getState().getCurrentPlayer()->isInCheckmate() ) {
+        showGameOver();
+    }
 }
 
 void MainWindow::markCells()
@@ -263,7 +281,7 @@ void MainWindow::drawCurrentPlayer()
 
     PlayerNameLabel.setParent(this);
     PlayerNameLabel.setAlignment(Qt::AlignLeft);
-    PlayerNameLabel.setFont(QFont("Calibri",15,100));
+    PlayerNameLabel.setFont(QFont("Calibri",20,100));
     if(color == cBlack) {
         PlayerNameLabel.setStyleSheet("color: rgb(0,0,0,100%);");
         text += QString("(Black)");
@@ -271,10 +289,12 @@ void MainWindow::drawCurrentPlayer()
         PlayerNameLabel.setStyleSheet("color: rgb(10,200,10,100%);");
         text += QString("(White)");
     }
-
     PlayerNameLabel.setText(text);
-    PlayerNameLabel.setGeometry(QRect(0,0,400,playerLabelHeight));
+    PlayerNameLabel.setGeometry(QRect(boardOffsetLeft,0,400,playerLabelHeight));
 
+
+    // TO-DO check if check, then show/hide label
+    PlayerCheckLabel.setVisible( controller.getState().getCurrentPlayer()->isInCheck() );
 }
 
 
@@ -287,3 +307,16 @@ bool MainWindow::isSelected(Coordinate coordinate)
 
     return false;
 }
+
+void MainWindow::showGameOver() {
+    QMessageBox msgBox;
+    msgBox.setText("Game over");
+    std::string message = controller.getState().getCurrentPlayer()->getName() + ", you won the game! Nice job!";
+    msgBox.setInformativeText(message.c_str());
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    msgBox.exec();
+
+    exit(0);
+}
+

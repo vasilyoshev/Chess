@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QAbstractButton>
 #include <QRadioButton>
+#include <string>
+
 #include "color.h"
 #include "gametype.h"
 
@@ -15,29 +17,30 @@ class GameOptionsWindow : public QDialog {
     Q_OBJECT
 
 public:
-    explicit GameOptionsWindow(QWidget *parent = 0);
+
+    explicit GameOptionsWindow(QWidget* parent = 0);
     ~GameOptionsWindow();
 
-    TGameType getSelectedGameType() const;
-    Color getSelectedColor() const;
-    QString getFirstPlayerName() const;
-    QString getSecondPlayerName() const;
+    static TGameType getSelectedGameType();
+    static Color getSelectedColor();
+    static std::string getFirstPlayerName();
+    static std::string getSecondPlayerName();
 
 private slots:
     void on_radioButton_gameType_clicked();
     void on_radioButton_color_clicked();
-
     void on_lineEdit_firstPlayer_textChanged(const QString &arg1);
-
     void on_lineEdit_secondPlayer_textChanged(const QString &arg1);
 
 private:
-    Ui::GameOptionsWindow *ui;
+    Ui::GameOptionsWindow* ui;
 
-    TGameType SelectedGameType;
-    Color SelectedColor;
-    bool isSelectedGameType;
-    bool isSelectedColor;
+static std::string Player1Name;
+static std::string Player2Name;
+static TGameType SelectedGameType;
+static Color SelectedColor;
+bool isSelectedGameType;
+bool isSelectedColor;
 
     void initUi();
     void enableOkButton();

@@ -7,6 +7,12 @@
 
 #include "uihelperfunc.h"
 
+extern TGameType GameOptionsWindow::SelectedGameType;
+extern std::string GameOptionsWindow::Player1Name;
+extern std::string GameOptionsWindow::Player2Name;
+extern Color GameOptionsWindow::SelectedColor;
+
+
 GameOptionsWindow::GameOptionsWindow(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GameOptionsWindow)
@@ -14,11 +20,9 @@ GameOptionsWindow::GameOptionsWindow(QWidget *parent) :
     ui->setupUi(this);
     setStyleSheet(UIHelperFunc::getFormBackgroundStyleSheet());
 
-
     srand(time(NULL));
 
     SelectedGameType = gtNone;
-    SelectedColor = (rand()%2==0 ? cWhite : cBlack);
     isSelectedGameType = false;
     isSelectedColor = false;
 
@@ -60,25 +64,31 @@ void GameOptionsWindow::initUi() {
     delete mapper;*/
 }
 
-TGameType GameOptionsWindow::getSelectedGameType() const {
+TGameType GameOptionsWindow::getSelectedGameType() {
     return SelectedGameType;
 }
 
-Color GameOptionsWindow::getSelectedColor() const {
+Color GameOptionsWindow::getSelectedColor() {
     return SelectedColor;
 }
 
 void GameOptionsWindow::on_radioButton_gameType_clicked() {
+    Player1Name = ui->lineEdit_firstPlayer->text().toStdString();
+
     if(ui->radioButton_gameType_playerVsCPU->isChecked()) {
         isSelectedGameType = true;
         SelectedGameType = gtPlayerVsCPU;
         ui->lineEdit_firstPlayer->setEnabled(true);
         ui->lineEdit_secondPlayer->setEnabled(false);
+
+        Player2Name = "CPU";
     } else if(ui->radioButton_gameType_playerVsPlayer->isChecked()) {
         isSelectedGameType = true;
         SelectedGameType = gtPlayerVsPlayer;
         ui->lineEdit_firstPlayer->setEnabled(true);
         ui->lineEdit_secondPlayer->setEnabled(true);
+
+        Player2Name = ui->lineEdit_secondPlayer->text().toStdString();
     }
 
     enableOkButton();
@@ -100,6 +110,13 @@ void GameOptionsWindow::on_radioButton_color_clicked() {
 }
 
 void GameOptionsWindow::enableOkButton() {
+    Player1Name = ui->lineEdit_firstPlayer->text().toStdString();
+    if(SelectedGameType==gtPlayerVsPlayer) {
+        Player2Name = ui->lineEdit_secondPlayer->text().toStdString();
+    } else {
+        Player2Name = "CPU";
+    }
+
     bool filledNames = (!ui->lineEdit_firstPlayer->isEnabled() ||
                         (ui->lineEdit_firstPlayer->isEnabled() && ui->lineEdit_firstPlayer->text().size()!=0)) &&
             (!ui->lineEdit_secondPlayer->isEnabled() ||
@@ -121,18 +138,10 @@ void GameOptionsWindow::on_lineEdit_secondPlayer_textChanged(const QString&) {
     enableOkButton();
 }
 
-QString GameOptionsWindow::getFirstPlayerName() const {
-    if(ui->lineEdit_firstPlayer->isEnabled()) {
-        return ui->lineEdit_firstPlayer->text();
-    } else {
-        return QString("");
-    }
+std::string GameOptionsWindow::getFirstPlayerName() {
+    return Player1Name;
 }
 
-QString GameOptionsWindow::getSecondPlayerName() const {
-    if(ui->lineEdit_secondPlayer->isEnabled()) {
-        return ui->lineEdit_secondPlayer->text();
-    } else {
-        return QString("CPU");
-    }
+std::string GameOptionsWindow::getSecondPlayerName() {
+    return Player2Name;
 }

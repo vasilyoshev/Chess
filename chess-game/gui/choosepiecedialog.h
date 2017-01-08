@@ -26,12 +26,12 @@ public:
     ~ChoosePieceDialog();
 
 private:
-    CellButton *Pieces;
-    CellButton *PiecesBackground;
-    CellButton *SelectedPiece;
-    QLabel *LabelCaption;
-    QPushButton *ButtonChoose;
-    Ui::ChoosePieceDialog *ui;
+CellButton *Pieces;
+CellButton *PiecesBackground;
+static CellButton *SelectedPiece;
+QLabel *LabelCaption;
+QPushButton *ButtonChoose;
+Ui::ChoosePieceDialog *ui;
 
     void setWindowSize();
     void initCaption();
