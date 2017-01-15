@@ -54,14 +54,13 @@ Controller controller;
     // drawing functions
     void drawState();
     void setWindowSize();
-    void markCells();
-    void unmarkCells();
+    void highlightCells();
     void drawCurrentPlayer();
 
     void showGameOver();
 
 private slots:
-    void handleValidMoveClick();
+    void handleBackgroundAndHighlightedFields();
     void handlePieceClick();
 
 };

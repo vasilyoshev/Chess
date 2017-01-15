@@ -42,9 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
     controller.setGameType(gameOptionsWindow.getSelectedGameType());
     controller.initStartingPlayer();
 
-    // TO-DO get the result from the options dialog and pass to the controller...
-
-    drawState();
+    drawState(); // draw initial state
 }
 
 MainWindow::~MainWindow()
@@ -52,24 +50,36 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+/**
+ * @brief MainWindow::setWindowSize
+ *
+ * Calculates the size of the labels, board, cells on the board and the window.
+ */
 void MainWindow::setWindowSize()
 {
     QRect screen = QApplication::desktop()->screenGeometry();
 
-    fieldSize = screen.height()*6/8/9;
-    playerLabelHeight = fieldSize/3;
-    boardOffsetLeft = fieldSize/2;
-    boardOffsetTop = playerLabelHeight*2;
-
-    formSize=boardOffsetLeft*2+fieldSize*BOARD_SIZE;
+    /** Assuming that the screen is wide(i.e. the width is greater than the height)
+     * we set the side of the field to be 1/12 of the height.
+     **/
+    fieldSize = screen.height() / 12;
+    playerLabelHeight = fieldSize / 3;
+    boardOffsetLeft = fieldSize / 2;
+    boardOffsetTop = playerLabelHeight * 2;
+    formSize = boardOffsetLeft * 2 + fieldSize * BOARD_SIZE;
 
     this->setGeometry(QRect(
-                          (screen.width()-formSize)/2,
-                          (screen.height()-formSize)/2,
-                          formSize,
-                          formSize+playerLabelHeight));
+                          (screen.width()-formSize)/2, // pixels from left
+                          (screen.height()-formSize)/2, // pixels from top
+                          formSize, // width
+                          formSize+playerLabelHeight)); // height
 }
 
+/**
+ * @brief MainWindow::createBoard
+ *
+ * Creates the board with buttons that are used to contain pieces.
+ */
 void MainWindow::createBoard()
 {
     Board = new CellButton*[BOARD_SIZE];
@@ -78,14 +88,19 @@ void MainWindow::createBoard()
         Board[row]=new CellButton[BOARD_SIZE];
         for(int col=0;col<BOARD_SIZE;col++) {
             Board[row][col].setParent(this);
-            Board[row][col].setCoordinate(Coordinate(row,col));
-            Board[row][col].setGeometry(QRect(boardOffsetLeft+col*fieldSize,boardOffsetTop+row*fieldSize,fieldSize,fieldSize));
+            Board[row][col].setCoordinate(Coordinate(row, col));
+            Board[row][col].setGeometry(QRect(boardOffsetLeft+col*fieldSize, boardOffsetTop+row*fieldSize, fieldSize, fieldSize));
 
             connect(&Board[row][col], SIGNAL (released()), this, SLOT (handlePieceClick()));
         }
     }
 }
 
+/**
+ * @brief MainWindow::createBoard
+ *
+ * Creates the board with buttons that are in the background i.e. that have no pieces on them.
+ */
 void MainWindow::createBackgroundBoard()
 {
     BackgroundBoard = new CellButton*[BOARD_SIZE];
@@ -93,79 +108,90 @@ void MainWindow::createBackgroundBoard()
     for(int i=0;i<BOARD_SIZE;i++) {
         BackgroundBoard[i] = new CellButton[BOARD_SIZE];
         for(int j=0;j<BOARD_SIZE;j++) {
-            BackgroundBoard[i][j].setCoordinate(Coordinate(i,j));
+            BackgroundBoard[i][j].setCoordinate(Coordinate(i, j));
             BackgroundBoard[i][j].setParent(this);
-            BackgroundBoard[i][j].setGeometry(QRect(boardOffsetLeft+j*fieldSize,boardOffsetTop+i*fieldSize,fieldSize,fieldSize));
+            BackgroundBoard[i][j].setGeometry(QRect(boardOffsetLeft+j*fieldSize, boardOffsetTop+i*fieldSize, fieldSize, fieldSize));
 
-            connect(&BackgroundBoard[i][j], SIGNAL (released()), this, SLOT (handleValidMoveClick()));
+            connect(&BackgroundBoard[i][j], SIGNAL (released()), this, SLOT (handleBackgroundAndHighlightedFields()));
         }
     }
 }
 
+/**
+ * @brief MainWindow::createBoard
+ *
+ * Sets the color of the background buttons to the traditional chess-like color.
+ * This way, the method removes any highlighted fields.
+ */
 void MainWindow::initBackgroundBoardColor()
 {
     for(int i=0;i<BOARD_SIZE;i++) {
         for(int j=0;j<BOARD_SIZE;j++) {
-            QString color = ( (i+j)%2 ? "rgba(130,130,130,100%)" : "rgba(220,220,220,100%)" );
+            QString color = ( (i+j)%2 ? "rgba(130, 130, 130, 100%)" : "rgba(220, 220, 220, 100%)" );
             BackgroundBoard[i][j].setStyleSheet(UIHelperFunc::getBackgroundStyleSheet(color));
 
-            if(controller.getState().getPiece(Coordinate(i,j))==nullptr)
-                Board[i][j].setStyleSheet(UIHelperFunc::getBackgroundAndHoverStyleSheet("rgba(0,0,0,0%)","rgba(100,255,100,0%)"));
+            if(controller.getState().getPiece(Coordinate(i, j))==nullptr)
+                Board[i][j].setStyleSheet(UIHelperFunc::getBackgroundAndHoverStyleSheet("rgba(0, 0, 0 , 0%)", "rgba(100, 255, 100, 0%)"));
             else
-                Board[i][j].setStyleSheet(UIHelperFunc::getBackgroundAndHoverStyleSheet("rgba(0,0,0,0%)","rgba(100,255,100,50%)"));
+                Board[i][j].setStyleSheet(UIHelperFunc::getBackgroundAndHoverStyleSheet("rgba(0, 0, 0, 0%)", "rgba(100, 255, 100, 50%)"));
 
         }
     }
 }
 
-void MainWindow::handleValidMoveClick()
+/**
+ * @brief MainWindow::handleBackgroundAndHighlightedFields
+ *
+ * When background field or highlighted field is clicked, this method is called.
+ * One method is used, since the actions taken when those situations occur are taken are the same.
+ */
+void MainWindow::handleBackgroundAndHighlightedFields()
 {
     CellButton *cellButton = (CellButton*)sender();
     if(isSelected(cellButton->getCoordinate())) {
-        controller.movePiece(selectedPieceCoordinate,cellButton->getCoordinate());
+        controller.movePiece(selectedPieceCoordinate, cellButton->getCoordinate());
         drawState();
     }
 
     initBackgroundBoardColor();
-    //unmarkCells();
-    selectedPieceCoordinate = Coordinate(-1,-1);
+    selectedPieceCoordinate = Coordinate(-1, -1);
     selectedCells.clear();
-
-    this->setWindowTitle("PRESSED BACKGROUND");
 }
 
+/**
+ * @brief MainWindow::handlePieceClick
+ *
+ * This method is called when a piece is clicked.
+ */
 void MainWindow::handlePieceClick()
 {
     CellButton *cellButton = (CellButton*)sender();
-    Piece *selectedPiece = controller.getState().getPiece(Coordinate(cellButton->getCoordinate().getRow(),cellButton->getCoordinate().getColumn()));
+    Piece *selectedPiece = controller.getState().getPiece(cellButton->getCoordinate());
+    bool isBackgroundClicked = (selectedPiece==nullptr ? true : false);
 
-    if(selectedPiece==nullptr) {
-        handleValidMoveClick();
-        return;
-    }
-
-    initBackgroundBoardColor();
-    //unmarkCells();
-
-    if(isSelected(cellButton->getCoordinate())) {
-        // TO-DO
-        // takePiece method
-        controller.movePiece(selectedPieceCoordinate,cellButton->getCoordinate());
-        drawState();
-        selectedPieceCoordinate = Coordinate(-1,-1);
-        selectedCells.clear();
+    if(isBackgroundClicked || isSelected(cellButton->getCoordinate())) {
+        handleBackgroundAndHighlightedFields();
     } else {
         if(selectedPiece->getColor() == controller.getState().getCurrentPlayer()->getColor()) {
             selectedPieceCoordinate = cellButton->getCoordinate();
             selectedCells = controller.getValidMoves(cellButton->getCoordinate());
 
-            markCells();
+            initBackgroundBoardColor();
+            highlightCells();
         }
     }
 
     this->setWindowTitle("PRESSED PIECE");
 }
 
+/**
+ * @brief MainWindow::createLabels
+ *
+ * Initializes the labels around the board that show the "name" of the cell.
+ * For example: a3 or b7.
+ *
+ * Also initializes the label for the "check" and "checkmate" status.
+ */
 void MainWindow::createLabels()
 {
     TopLabels = new QLabel[BOARD_SIZE];
@@ -173,8 +199,8 @@ void MainWindow::createLabels()
         TopLabels[i].setParent(this);
         TopLabels[i].setAlignment(Qt::AlignCenter);
         TopLabels[i].setText(QString('a'+i));
-        TopLabels[i].setFont(QFont("Calibri",15,100));
-        TopLabels[i].setGeometry(QRect(boardOffsetLeft+i*fieldSize,playerLabelHeight,fieldSize,playerLabelHeight));
+        TopLabels[i].setFont(QFont("Calibri", 15, 100));
+        TopLabels[i].setGeometry(QRect(boardOffsetLeft+i*fieldSize, playerLabelHeight, fieldSize, playerLabelHeight));
     }
 
     BottomLabels = new QLabel[BOARD_SIZE];
@@ -182,8 +208,8 @@ void MainWindow::createLabels()
         BottomLabels[i].setParent(this);
         BottomLabels[i].setAlignment(Qt::AlignCenter);
         BottomLabels[i].setText(QString('a'+i));
-        BottomLabels[i].setFont(QFont("Calibri",15,100));
-        BottomLabels[i].setGeometry(QRect(boardOffsetLeft+i*fieldSize,boardOffsetTop+8*fieldSize,fieldSize,playerLabelHeight));
+        BottomLabels[i].setFont(QFont("Calibri", 15, 100));
+        BottomLabels[i].setGeometry(QRect(boardOffsetLeft+i*fieldSize, boardOffsetTop+8*fieldSize, fieldSize, playerLabelHeight));
     }
 
     LeftLabels = new QLabel[BOARD_SIZE];
@@ -191,8 +217,8 @@ void MainWindow::createLabels()
         LeftLabels[i].setParent(this);
         LeftLabels[i].setAlignment(Qt::AlignCenter);
         LeftLabels[i].setText(QString('8'-i));
-        LeftLabels[i].setFont(QFont("Calibri",15,100));
-        LeftLabels[i].setGeometry(QRect(0,boardOffsetLeft+i*fieldSize,fieldSize/2,fieldSize));
+        LeftLabels[i].setFont(QFont("Calibri", 15, 100));
+        LeftLabels[i].setGeometry(QRect(0, boardOffsetLeft+i*fieldSize, fieldSize/2, fieldSize));
     }
 
     RightLabels = new QLabel[BOARD_SIZE];
@@ -200,19 +226,24 @@ void MainWindow::createLabels()
         RightLabels[i].setParent(this);
         RightLabels[i].setAlignment(Qt::AlignCenter);
         RightLabels[i].setText(QString('8'-i));
-        RightLabels[i].setFont(QFont("Calibri",15,100));
-        RightLabels[i].setGeometry(QRect(boardOffsetLeft+8*fieldSize,boardOffsetTop+i*fieldSize,fieldSize/2,fieldSize));
+        RightLabels[i].setFont(QFont("Calibri", 15, 100));
+        RightLabels[i].setGeometry(QRect(boardOffsetLeft+8*fieldSize, boardOffsetTop+i*fieldSize, fieldSize/2, fieldSize));
     }
 
     PlayerCheckLabel.setParent(this);
     PlayerCheckLabel.setAlignment(Qt::AlignLeft);
-    PlayerCheckLabel.setFont(QFont("Calibri",20,100));
-    PlayerCheckLabel.setStyleSheet("color: rgb(255,10,50,100%);");
+    PlayerCheckLabel.setFont(QFont("Calibri", 20, 100));
+    PlayerCheckLabel.setStyleSheet("color: rgb(255, 10, 50, 100%);");
     PlayerCheckLabel.setText(QString("YOU ARE IN CHESS"));
-    PlayerCheckLabel.setGeometry(QRect(formSize-250,0,250,playerLabelHeight));
+    PlayerCheckLabel.setGeometry(QRect(formSize-250, 0, 250, playerLabelHeight));
     PlayerCheckLabel.setVisible(false);
 }
 
+/**
+ * @brief MainWindow::drawState
+ *
+ * Draws the current state: all pieces currently on the board, the status of the game, and which player is on turn.
+ */
 void MainWindow::drawState()
 {
     for(int row=0;row<8;row++) {
@@ -237,37 +268,29 @@ void MainWindow::drawState()
     }
 }
 
-void MainWindow::markCells()
+/**
+ * @brief MainWindow::highlightCells
+ *
+ * Highlights the selected cells of possible moves.
+ *
+ * This method assumes that the array "selectedCells" is already filled.
+ */
+void MainWindow::highlightCells()
 {
     for(unsigned int i=0;i<selectedCells.size();i++) {
         int row = selectedCells[i].getRow();
         int col = selectedCells[i].getColumn();
-        BackgroundBoard[row][col].setStyleSheet(UIHelperFunc::getBackgroundStyleSheet("rgba(50,255,50,100%)"));
+        BackgroundBoard[row][col].setStyleSheet(UIHelperFunc::getBackgroundStyleSheet("rgba(50, 255, 50, 100%)"));
     }
     BackgroundBoard[selectedPieceCoordinate.getRow()][selectedPieceCoordinate.getColumn()]
-            .setStyleSheet(UIHelperFunc::getBackgroundStyleSheet("rgba(100,200,100,100%)"));
+            .setStyleSheet(UIHelperFunc::getBackgroundStyleSheet("rgba(100, 200, 100, 100%)"));
 }
 
-void MainWindow::unmarkCells()
-{
-    int row;
-    int col;
-    QString color;
-
-    for(unsigned int i=0;i<selectedCells.size();i++) {
-        row = selectedCells[i].getRow();
-        col = selectedCells[i].getColumn();
-        color = ( (row+col)%2 ? "rgba(130,130,130,100%)" : "rgba(220,220,220,100%)" );
-        BackgroundBoard[row][col].setStyleSheet(UIHelperFunc::getBackgroundStyleSheet(color));
-    }
-    if(selectedPieceCoordinate.isInBoard()) {
-        row = selectedPieceCoordinate.getRow();
-        col = selectedPieceCoordinate.getColumn();
-        color = ( (row+col)%2 ? "rgba(130,130,130,100%)" : "rgba(220,220,220,100%)" );
-        BackgroundBoard[row][col].setStyleSheet(UIHelperFunc::getBackgroundStyleSheet(color));
-    }
-}
-
+/**
+ * @brief MainWindow::drawCurrentPlayer
+ *
+ * Shows which player is currently on turn.
+ */
 void MainWindow::drawCurrentPlayer()
 {
     const Player *player = controller.getState().getCurrentPlayer();
@@ -281,23 +304,29 @@ void MainWindow::drawCurrentPlayer()
 
     PlayerNameLabel.setParent(this);
     PlayerNameLabel.setAlignment(Qt::AlignLeft);
-    PlayerNameLabel.setFont(QFont("Calibri",20,100));
+    PlayerNameLabel.setFont(QFont("Calibri", 20, 100));
     if(color == cBlack) {
-        PlayerNameLabel.setStyleSheet("color: rgb(0,0,0,100%);");
+        PlayerNameLabel.setStyleSheet("color: rgb(0, 0, 0, 100%);");
         text += QString("(Black)");
     } else {
-        PlayerNameLabel.setStyleSheet("color: rgb(10,200,10,100%);");
+        PlayerNameLabel.setStyleSheet("color: rgb(10, 200, 10, 100%);");
         text += QString("(White)");
     }
     PlayerNameLabel.setText(text);
-    PlayerNameLabel.setGeometry(QRect(boardOffsetLeft,0,400,playerLabelHeight));
+    PlayerNameLabel.setGeometry(QRect(boardOffsetLeft, 0, 400, playerLabelHeight));
 
 
     // TO-DO check if check, then show/hide label
     PlayerCheckLabel.setVisible( controller.getState().getCurrentPlayer()->isInCheck() );
 }
 
-
+/**
+ * @brief MainWindow::isSelected
+ * @param coordinate The coordinates to be checked.
+ * @return Returns true if selected, false otherwise.
+ *
+ * Checks if the cell at the provided coordinates is highlighted(selected).
+ */
 bool MainWindow::isSelected(Coordinate coordinate)
 {
     for(unsigned int i=0;i<selectedCells.size();i++) {
@@ -308,6 +337,11 @@ bool MainWindow::isSelected(Coordinate coordinate)
     return false;
 }
 
+/**
+ * @brief MainWindow::showGameOver
+ *
+ * Opens a dialog that alerts for a finished game and shows additional information about the game.
+ */
 void MainWindow::showGameOver() {
     QMessageBox msgBox;
     msgBox.setText("Game over");

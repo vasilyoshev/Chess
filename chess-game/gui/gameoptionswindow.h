@@ -13,6 +13,13 @@ namespace Ui {
 class GameOptionsWindow;
 }
 
+/**
+ * @brief The GameOptionsWindow class
+ *
+ * This class is used to show a dialog at the start of the application.
+ *
+ * This dialog helps to setup the game, like choosing the name of the players and choosing the game mode.
+ */
 class GameOptionsWindow : public QDialog {
     Q_OBJECT
 

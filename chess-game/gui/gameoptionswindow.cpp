@@ -33,45 +33,54 @@ GameOptionsWindow::~GameOptionsWindow() {
     delete ui;
 }
 
+/**
+ * @brief GameOptionsWindow::initUi
+ *
+ * Initializes signals, slots and ui components.
+ */
 void GameOptionsWindow::initUi() {
     // Game Type
-    connect(ui->radioButton_gameType_playerVsCPU,SIGNAL(clicked()),this,
+    connect(ui->radioButton_gameType_playerVsCPU, SIGNAL(clicked()), this,
             SLOT(on_radioButton_gameType_clicked()));
-    connect(ui->radioButton_gameType_playerVsPlayer,SIGNAL(clicked()),this,
+    connect(ui->radioButton_gameType_playerVsPlayer, SIGNAL(clicked()), this,
             SLOT(on_radioButton_gameType_clicked()));
     // Color
-    connect(ui->radioButton_color_white,SIGNAL(clicked()),this,
+    connect(ui->radioButton_color_white, SIGNAL(clicked()), this,
             SLOT(on_radioButton_color_clicked()));
-    connect(ui->radioButton_color_black,SIGNAL(clicked()),this,
+    connect(ui->radioButton_color_black, SIGNAL(clicked()), this,
             SLOT(on_radioButton_color_clicked()));
-    connect(ui->radioButton_color_random,SIGNAL(clicked()),this,
+    connect(ui->radioButton_color_random, SIGNAL(clicked()), this,
             SLOT(on_radioButton_color_clicked()));
 
     ui->buttonBox->buttons().at(0)->setEnabled(false);
 
     ui->lineEdit_firstPlayer->setEnabled(false);
     ui->lineEdit_secondPlayer->setEnabled(false);
-
-
-    /*QSignalMapper* mapper = new QSignalMapper(this);
-    connect(ui->lineEdit_firstPlayer, SIGNAL(textChanged(QString)), mapper, SLOT(map()));
-    connect(ui->lineEdit_secondPlayer, SIGNAL(textChanged(QString)), mapper, SLOT(map()));
-    mapper->setMapping(ui->lineEdit_firstPlayer, "");
-    mapper->setMapping(ui->lineEdit_secondPlayer, "");
-
-    connect(mapper, SIGNAL(mapped(int)), this, SLOT(on_lineEdit_textChanged(QString)));
-
-    delete mapper;*/
 }
 
+/**
+ * @brief GameOptionsWindow::getSelectedGameType
+ * @return Returns the selected game type.
+ */
 TGameType GameOptionsWindow::getSelectedGameType() {
     return SelectedGameType;
 }
 
+/**
+ * @brief GameOptionsWindow::getSelectedColor
+ * @return Returns the selected color of the first player.
+ */
 Color GameOptionsWindow::getSelectedColor() {
     return SelectedColor;
 }
 
+/**
+ * @brief GameOptionsWindow::on_radioButton_gameType_clicked
+ *
+ * Event trigered when a button in the game type radio group is clicked.
+ *
+ * This method enables/disables appropriate fields and stores the current selected game type.
+ */
 void GameOptionsWindow::on_radioButton_gameType_clicked() {
     Player1Name = ui->lineEdit_firstPlayer->text().toStdString();
 
@@ -94,6 +103,13 @@ void GameOptionsWindow::on_radioButton_gameType_clicked() {
     enableOkButton();
 }
 
+/**
+ * @brief GameOptionsWindow::on_radioButton_gameType_clicked
+ *
+ * Event trigered when a button in the color radio group is clicked.
+ *
+ * This method enables/disables appropriate fields and stores the current selected color of first player.
+ */
 void GameOptionsWindow::on_radioButton_color_clicked() {
     if(ui->radioButton_color_white->isChecked()) {
         isSelectedColor = true;
@@ -109,6 +125,12 @@ void GameOptionsWindow::on_radioButton_color_clicked() {
     enableOkButton();
 }
 
+/**
+ * @brief GameOptionsWindow::enableOkButton
+ *
+ * Enables the OK button if all fields are validly filled.
+ * Disables the OK button otherwise.
+ */
 void GameOptionsWindow::enableOkButton() {
     Player1Name = ui->lineEdit_firstPlayer->text().toStdString();
     if(SelectedGameType==gtPlayerVsPlayer) {
@@ -129,19 +151,36 @@ void GameOptionsWindow::enableOkButton() {
     }
 }
 
-
+/**
+ * @brief GameOptionsWindow::on_lineEdit_firstPlayer_textChanged
+ *
+ * Fires event to check if the field is filled.
+ */
 void GameOptionsWindow::on_lineEdit_firstPlayer_textChanged(const QString&) {
     enableOkButton();
 }
 
+/**
+ * @brief GameOptionsWindow::on_lineEdit_firstPlayer_textChanged
+ *
+ * Fires event to check if the field is filled.
+ */
 void GameOptionsWindow::on_lineEdit_secondPlayer_textChanged(const QString&) {
     enableOkButton();
 }
 
+/**
+ * @brief GameOptionsWindow::getFirstPlayerName
+ * @return Returns the name of the first player.
+ */
 std::string GameOptionsWindow::getFirstPlayerName() {
     return Player1Name;
 }
 
+/**
+ * @brief GameOptionsWindow::getSecondPlayerName
+ * @return Returns the name of the second player.
+ */
 std::string GameOptionsWindow::getSecondPlayerName() {
     return Player2Name;
 }

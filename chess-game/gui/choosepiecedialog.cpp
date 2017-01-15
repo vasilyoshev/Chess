@@ -34,22 +34,31 @@ ChoosePieceDialog::~ChoosePieceDialog() {
     delete SelectedPiece;
 }
 
-
+/**
+ * @brief ChoosePieceDialog::setWindowSize
+ *
+ * Initializes the size of the dialog.
+ */
 void ChoosePieceDialog::setWindowSize() {
     QRect screen = QApplication::desktop()->screenGeometry();
 
-    fieldSize = screen.height()/9;
-    boardOffsetLeft = fieldSize/2;
-    boardOffsetTop = fieldSize/3*2;
-    int formSize=boardOffsetLeft*2+fieldSize*BOARD_SIZE;
+    fieldSize = screen.height() / 9;
+    boardOffsetLeft = fieldSize / 2;
+    boardOffsetTop = fieldSize / 3 * 2;
+    int formSize = boardOffsetLeft * 2 + fieldSize * BOARD_SIZE;
 
     this->setGeometry(QRect(
-                          (screen.width()-formSize)/2,
-                          (screen.height()-formSize)/2,
+                          (screen.width() - formSize) /2 ,
+                          (screen.height() - formSize) / 2,
                           formSize,
-                          formSize/1.5));
+                          formSize / 1.5));
 }
 
+/**
+ * @brief ChoosePieceDialog::initCaption
+ *
+ * Initializes a Label with caption of the dialog.
+ */
 void ChoosePieceDialog::initCaption() {
     LabelCaption = new QLabel();
     LabelCaption->setParent(this);
@@ -63,6 +72,11 @@ void ChoosePieceDialog::initCaption() {
     LabelCaption->setAlignment(Qt::AlignCenter);
 }
 
+/**
+ * @brief ChoosePieceDialog::initPieces
+ *
+ * Initializes the pieces on the fields.
+ */
 void ChoosePieceDialog::initPieces() {
     SelectedPiece = new CellButton();
     SelectedPiece->setParent(this);
@@ -114,6 +128,13 @@ void ChoosePieceDialog::initPieces() {
     delete piece;
 }
 
+/**
+ * @brief ChoosePieceDialog::setPiece
+ * @param piecePtr Piece type.
+ * @param idx Index of field to be put.
+ *
+ * Sets the given piece image on the provided index.
+ */
 void ChoosePieceDialog::setPiece(Piece *piecePtr, int idx) {
     QString piece = UIHelperFunc::getPieceFileName(&*piecePtr);
     QPixmap qPixmap(":/figures/Images/"+piece+".png");
@@ -121,6 +142,11 @@ void ChoosePieceDialog::setPiece(Piece *piecePtr, int idx) {
     Pieces[idx].setIconSize(qPixmap.rect().size());
 }
 
+/**
+ * @brief ChoosePieceDialog::initChooseButton
+ *
+ * Button that submits the choose action of the user.
+ */
 void ChoosePieceDialog::initChooseButton() {
     ButtonChoose = new QPushButton();
     ButtonChoose->setParent(this);
@@ -136,6 +162,11 @@ void ChoosePieceDialog::initChooseButton() {
     connect(ButtonChoose, SIGNAL (released()), this, SLOT (handleChooseClick()));
 }
 
+/**
+ * @brief ChoosePieceDialog::handlePieceClick
+ *
+ * This method highlights the piece being clicked.
+ */
 void ChoosePieceDialog::handlePieceClick() {
     CellButton *cellButton = (CellButton*)sender();
 
@@ -148,6 +179,11 @@ void ChoosePieceDialog::handlePieceClick() {
     SelectedPiece->setStyleSheet("background-color : rgb(255,255,51,100%); border: 2px solid black;");
 }
 
+/**
+ * @brief ChoosePieceDialog::handleChooseClick
+ *
+ * When the user clickes the submit button, the dialog closes, and the game continues.
+ */
 void ChoosePieceDialog::handleChooseClick() {
     this->close();
 }

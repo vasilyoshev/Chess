@@ -5,6 +5,12 @@
 #include "piece.h"
 #include "coordinate.h"
 
+/**
+ * @brief The UIHelperFunc class
+ *
+ * This class is used as a namepace to store helper functions that the UI can use in order to visualize
+ * appropriate and consistent data.
+ */
 class UIHelperFunc {
 public:
     UIHelperFunc();
