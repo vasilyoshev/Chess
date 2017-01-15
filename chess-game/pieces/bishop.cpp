@@ -7,11 +7,44 @@ Bishop::Bishop(Color color)
 
 }
 
-std::vector<Coordinate> Bishop::getPossibleMoves(Coordinate currentPosition) {
-    std::vector<Coordinate> result;
-    int sRow;
-    int sColumn;
+std::vector< std::vector<Coordinate> > Bishop::getPossibleMoves(Coordinate currentPosition) {
+    std::vector<Coordinate> upLeft;
+    std::vector<Coordinate> upRight;
+    std::vector<Coordinate> downLeft;
+    std::vector<Coordinate> downRight;
 
+    int row = currentPosition.getRow();
+    int col = currentPosition.getColumn();
+
+    //Up right diagonal
+    for (int j = col + 1, i = row + 1; j < 8 && i < 8; j++, i++) {
+        downRight.push_back(Coordinate(i, j));
+    }
+
+    // Up right diagonal
+    for (int j = col - 1, i = row + 1; j > -1 && i < 8; j--, i++) {
+        upRight.push_back(Coordinate(i, j));
+    }
+
+    //Up left diagonal
+    for (int j = col - 1, i = row - 1; j > -1 && i > -1; j--, i--) {
+        upLeft.push_back(Coordinate(i, j));
+    }
+
+    //Down left diagonal
+    for (int j = col + 1, i = row - 1; j < 8 && i > -1; j++, i--) {
+        downLeft.push_back(Coordinate(i, j));
+    }
+
+    std::vector< std::vector<Coordinate> > result;
+    result.push_back(upLeft);
+    result.push_back(upRight);
+    result.push_back(downLeft);
+    result.push_back(downRight);
+
+    return result;
+
+/*
     // LeftTop to RightBottom diagonal
     sRow = currentPosition.getRow() - min(currentPosition.getRow(), currentPosition.getColumn());
     sColumn = currentPosition.getColumn() - min(currentPosition.getRow(), currentPosition.getColumn());
@@ -36,6 +69,8 @@ std::vector<Coordinate> Bishop::getPossibleMoves(Coordinate currentPosition) {
     }
 
     return result;
+    */
+
 }
 
 Piece* Bishop::getCopy() const {

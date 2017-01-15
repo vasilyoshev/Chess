@@ -6,7 +6,7 @@
 class Knight : public Piece {
 public:
     Knight(Color color);
-    std::vector<Coordinate> getPossibleMoves(Coordinate currentPosition);
+    std::vector< std::vector<Coordinate> > getPossibleMoves(Coordinate currentPosition);
     Piece* getCopy() const;
 };
 

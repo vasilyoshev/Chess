@@ -19,7 +19,7 @@ public:
 
     Piece(Color color,PieceType pieceType);
     virtual ~Piece();
-    virtual std::vector<Coordinate> getPossibleMoves(Coordinate currentPosition) = 0;
+    virtual std::vector< std::vector<Coordinate> > getPossibleMoves(Coordinate currentPosition) = 0;
     virtual Piece* getCopy() const = 0;
     bool isKilled();
     Color getColor() const;

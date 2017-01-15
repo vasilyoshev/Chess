@@ -4,28 +4,29 @@ Knight::Knight(Color color)
     :Piece(color,ptKnight) {
 }
 
-std::vector<Coordinate> Knight::getPossibleMoves(Coordinate currentPosition) {
-    std::vector<Coordinate> result;
+std::vector< std::vector<Coordinate> > Knight::getPossibleMoves(Coordinate currentPosition) {
+    std::vector<Coordinate> moves;
 
-    result.push_back(Coordinate(currentPosition.getRow() - 2, currentPosition.getColumn() - 1));
-    result.push_back(Coordinate(currentPosition.getRow() - 2, currentPosition.getColumn() + 1));
-    result.push_back(Coordinate(currentPosition.getRow() - 1, currentPosition.getColumn() - 2));
-    result.push_back(Coordinate(currentPosition.getRow() -1, currentPosition.getColumn() + 2));
-    result.push_back(Coordinate(currentPosition.getRow() +1, currentPosition.getColumn() - 2));
-    result.push_back(Coordinate(currentPosition.getRow() +1, currentPosition.getColumn() + 2));
-    result.push_back(Coordinate(currentPosition.getRow() +2, currentPosition.getColumn() - 1));
-    result.push_back(Coordinate(currentPosition.getRow() +2, currentPosition.getColumn() + 1));
+    moves.push_back(Coordinate(currentPosition.getRow() - 2, currentPosition.getColumn() - 1));
+    moves.push_back(Coordinate(currentPosition.getRow() - 2, currentPosition.getColumn() + 1));
+    moves.push_back(Coordinate(currentPosition.getRow() - 1, currentPosition.getColumn() - 2));
+    moves.push_back(Coordinate(currentPosition.getRow() -1, currentPosition.getColumn() + 2));
+    moves.push_back(Coordinate(currentPosition.getRow() +1, currentPosition.getColumn() - 2));
+    moves.push_back(Coordinate(currentPosition.getRow() +1, currentPosition.getColumn() + 2));
+    moves.push_back(Coordinate(currentPosition.getRow() +2, currentPosition.getColumn() - 1));
+    moves.push_back(Coordinate(currentPosition.getRow() +2, currentPosition.getColumn() + 1));
 
     // Remove positions outside the board
-    std::vector<Coordinate>::iterator it = result.begin();
-    for(; it != result.end();) {
+    std::vector<Coordinate>::iterator it = moves.begin();
+    for(; it != moves.end();) {
         if(!it->isInBoard()) {
-            it = result.erase(it);
+            it = moves.erase(it);
         } else {
             ++it;
         }
     }
-
+    std::vector< std::vector<Coordinate> > result;
+    result.push_back(moves);
     return result;
 }
 

@@ -1,34 +1,31 @@
 #include "pawn.h"
 
 Pawn::Pawn(Color color)
-    :Piece(color,ptPawn) {
+    :Piece(color, ptPawn) {
     has_moved = false;
 }
 
-std::vector<Coordinate> Pawn::getPossibleMoves(Coordinate currentPosition) {
-    std::vector<Coordinate> result;
+std::vector< std::vector<Coordinate> > Pawn::getPossibleMoves(Coordinate currentPosition) {
+    std::vector<Coordinate> moves;
 
     if(getColor() == cBlack) {
-        if (has_moved) {
-            result.push_back(Coordinate(currentPosition.getRow() + 1, currentPosition.getColumn()));
-        } else {
-            result.push_back(Coordinate(currentPosition.getRow() + 2, currentPosition.getColumn()));
-            result.push_back(Coordinate(currentPosition.getRow() + 1, currentPosition.getColumn()));
-            has_moved = true;
+        moves.push_back(Coordinate(currentPosition.getRow() + 1, currentPosition.getColumn()));
+        if (!has_moved) {
+            moves.push_back(Coordinate(currentPosition.getRow() + 2, currentPosition.getColumn()));
         }
     } else {
-        if (has_moved) {
-            result.push_back(Coordinate(currentPosition.getRow() - 1, currentPosition.getColumn()));
-        } else {
-            result.push_back(Coordinate(currentPosition.getRow() - 2, currentPosition.getColumn()));
-            result.push_back(Coordinate(currentPosition.getRow() - 1, currentPosition.getColumn()));
-            has_moved = true;
+        moves.push_back(Coordinate(currentPosition.getRow() - 1, currentPosition.getColumn()));
+        if (!has_moved) {
+            moves.push_back(Coordinate(currentPosition.getRow() - 2, currentPosition.getColumn()));
         }
     }
-
+    std::vector< std::vector< Coordinate> > result;
+    result.push_back(moves);
     return result;
 }
 
 Piece* Pawn::getCopy() const {
-    return new Pawn(color);
+    Pawn* copy = new Pawn(color);
+    copy->has_moved = this->has_moved;
+    return copy;
 }
