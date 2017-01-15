@@ -18,6 +18,12 @@ namespace Ui {
 class ChoosePieceDialog;
 }
 
+/**
+ * @brief The ChoosePieceDialog class
+ *
+ * This class is used to show a dialog window that appears when the user wants to choose a piece
+ * that will replace the pawn which has reached the end of the grid.
+ */
 class ChoosePieceDialog : public QDialog {
     Q_OBJECT
 

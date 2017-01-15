@@ -5,22 +5,23 @@
 
 #include "coordinate.h"
 
+/**
+ * @brief The CellButton class
+ *
+ * This class is used to add a single coordinate property to the buttons used on the grid of fields.
+ *
+ * It inherits the funcionalities of QPushButton and adds only a Coordinate field. It is useful when a particular button is clicked
+ * and the UI logic wants to know at which position the button is.
+ */
 class CellButton : public QPushButton {
 private:
     Coordinate coordinate;
-    void (*hoverEnterEvent)();
-    void (*hoverLeaveEvent)();
-
-protected:
-    void enterEvent(QEvent *e);
-    void leaveEvent(QEvent *e);
 
 public:
     CellButton();
 
     void setCoordinate(Coordinate coordinate);
     Coordinate getCoordinate() const;
-//    void setHoverEvents(void (*hoverEnterEvent)(),void (*hoverLeaveEvent)());
 };
 
 #endif // CELLBUTTON_H
