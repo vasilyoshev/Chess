@@ -7,10 +7,7 @@ std::vector<Coordinate> SpecialMovesHandler::getValidMoves(const State& state, C
     Piece* p = state.getPiece(click);
     std::vector< vector<Coordinate> > result = p->getPossibleMoves(click);
     std::vector<Coordinate> moves;
-    if (p->getType() != Piece::ptPawn)
-        moves = filterInvalidMoves(state, result, p->getColor());
-    else
-        moves = filterPawn(state, result, p->getColor());
+    moves = filterInvalidMoves(state, result, p->getColor());
     switch(p->getType()) {
     case Piece::ptKing :
         getSpecialMoves((King*)p, state, moves);
@@ -33,16 +30,6 @@ std::vector<Coordinate> SpecialMovesHandler::getValidMoves(const State& state, C
     }
 
     return moves;
-}
-
-std::vector<Coordinate> SpecialMovesHandler::filterPawn(const State& state, std::vector< std::vector<Coordinate> > & abstractMoves, const Color& attackingColor) {
-    vector<Coordinate> filtered;
-
-    for (int i = 0; i < abstractMoves.size(); i++) {
-        filtered.push_back(abstractMoves[i][0]);
-    }
-
-    return filtered;
 }
 
 std::vector<Coordinate> SpecialMovesHandler::filterInvalidMoves(const State& state, std::vector< std::vector<Coordinate> >& abstractMoves, const Color& attackingColor) {
