@@ -4,8 +4,6 @@
 #include "piece.h"
 
 class Pawn : public Piece {
-private:
-    bool has_moved;
 
 public:
     Pawn(Color color);

@@ -80,5 +80,59 @@ void SpecialMovesHandler::getSpecialMoves(Knight *knight, const State &state, st
 }
 
 void SpecialMovesHandler::getSpecialMoves(Pawn *pawn, const State &state, std::vector<Coordinate> &abstractMoves) {
-    // TO-DO
+    int size = abstractMoves.size();
+    if (size == 0) return;
+    bool bothHorizontal = abstractMoves[0].getColumn() == abstractMoves[1].getColumn();
+
+    Coordinate first = abstractMoves[0];
+    Coordinate second = abstractMoves[1];
+
+    if (size == 2 && bothHorizontal) {
+        if (state.getPiece(first) != NULL)
+            abstractMoves.clear();
+        else if (state.getPiece(second) != NULL)
+            abstractMoves.pop_back();
+    } else if (size == 2) {
+        //if first element is forward
+        if (first.getColumn() == second.getColumn() - 1 || first.getColumn() == second.getColumn() + 1) {
+            if (state.getPiece(first) != NULL)
+                abstractMoves.erase(abstractMoves.begin());
+            if (state.getPiece(second) == NULL)
+                abstractMoves.pop_back();
+        } else {
+            if (state.getPiece(first) == NULL)
+                abstractMoves.erase(abstractMoves.begin());
+            if (state.getPiece(second) == NULL)
+                        abstractMoves.pop_back();
+        }
+    }
+
+    if (size == 3 && bothHorizontal) {
+        if (state.getPiece(first) != NULL)
+            abstractMoves.clear();
+        else if (state.getPiece(second) != NULL)
+            abstractMoves.erase(abstractMoves.begin() + 1);
+
+        if (state.getPiece(abstractMoves[size - 1]) == NULL)
+            abstractMoves.pop_back();
+    } else if (size == 3) {
+        if (state.getPiece(first) != NULL)
+            abstractMoves.erase(abstractMoves.begin());
+        if (state.getPiece(abstractMoves[size - 2]) == NULL)
+            abstractMoves.erase(abstractMoves.end() - 1);
+        if (state.getPiece(abstractMoves[size - 1]) == NULL)
+            abstractMoves.pop_back();
+    }
+
+    if (size == 4) {
+        if (state.getPiece(abstractMoves[0]) != NULL) {
+            abstractMoves.erase(abstractMoves.begin(), abstractMoves.begin() + 2);
+        } else if (state.getPiece(abstractMoves[1]) != NULL) {
+            abstractMoves.erase(abstractMoves.begin() + 1);
+        }
+        if (state.getPiece(abstractMoves[size - 2]) == NULL)
+            abstractMoves.erase(abstractMoves.end() - 1);
+        if (state.getPiece(abstractMoves[size - 1]) == NULL)
+            abstractMoves.pop_back();
+    }
 }

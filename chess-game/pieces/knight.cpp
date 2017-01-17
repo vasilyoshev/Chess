@@ -26,7 +26,10 @@ std::vector< std::vector<Coordinate> > Knight::getPossibleMoves(Coordinate curre
         }
     }
     std::vector< std::vector<Coordinate> > result;
-    result.push_back(moves);
+    std::vector<Coordinate>::const_iterator begin = moves.begin();
+    for (int i = 0; i < moves.size(); i++) {
+        result.push_back(std::vector<Coordinate>(begin + i, begin + i + 1));
+    }
     return result;
 }
 
