@@ -118,14 +118,14 @@ void SpecialMovesHandler::getSpecialMoves(Pawn *pawn, const State &state, std::v
         else if (state.getPiece(second) != NULL)
             abstractMoves.erase(abstractMoves.begin() + 1);
 
-        if (state.getPiece(abstractMoves[size - 1]) == NULL)
+        if (state.getPiece(abstractMoves[abstractMoves.size() - 1]) == NULL)
             abstractMoves.pop_back();
     } else if (size == 3) {
         if (state.getPiece(first) != NULL)
             abstractMoves.erase(abstractMoves.begin());
-        if (state.getPiece(abstractMoves[size - 2]) == NULL)
-            abstractMoves.erase(abstractMoves.end() - 1);
-        if (state.getPiece(abstractMoves[size - 1]) == NULL)
+        if (state.getPiece(abstractMoves[abstractMoves.size() - 2]) == NULL)
+            abstractMoves.erase(abstractMoves.end() - 2);
+        if (state.getPiece(abstractMoves[abstractMoves.size() - 1]) == NULL)
             abstractMoves.pop_back();
     }
 
@@ -135,9 +135,9 @@ void SpecialMovesHandler::getSpecialMoves(Pawn *pawn, const State &state, std::v
         } else if (state.getPiece(abstractMoves[1]) != NULL) {
             abstractMoves.erase(abstractMoves.begin() + 1);
         }
-        if (state.getPiece(abstractMoves[size - 2]) == NULL)
-            abstractMoves.erase(abstractMoves.end() - 1);
-        if (state.getPiece(abstractMoves[size - 1]) == NULL)
+        if (state.getPiece(abstractMoves[abstractMoves.size() - 2]) == NULL)
+            abstractMoves.erase(abstractMoves.end() - 2);
+        if (state.getPiece(abstractMoves[abstractMoves.size() - 1]) == NULL)
             abstractMoves.pop_back();
     }
 }
