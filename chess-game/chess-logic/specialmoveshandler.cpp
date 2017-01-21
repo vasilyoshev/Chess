@@ -25,13 +25,14 @@ std::vector<Coordinate> SpecialMovesHandler::getValidMoves(const State& state, C
         getSpecialMoves((Knight*)p, state, moves);
         break;
     case Piece::ptPawn :
-        getSpecialMoves((Pawn*)p, state, moves);
+        getSpecialMoves((Pawn*)p, state, moves, click);
         break;
     }
 
     return moves;
 }
 
+// cannot step on the same color, cannot jump over pieces, can step on the first of other colors
 std::vector<Coordinate> SpecialMovesHandler::filterInvalidMoves(const State& state, std::vector< std::vector<Coordinate> >& abstractMoves, const Color& attackingColor) {
     vector<Coordinate> filtered;
 
@@ -52,7 +53,7 @@ std::vector<Coordinate> SpecialMovesHandler::filterInvalidMoves(const State& sta
 }
 
 void SpecialMovesHandler::getSpecialMoves(King *king, const State &state, std::vector<Coordinate> &abstractMoves) {
-    // TO-DO
+
 }
 
 void SpecialMovesHandler::getSpecialMoves(Queen *queen, const State &state, std::vector<Coordinate> &abstractMoves) {
@@ -71,8 +72,30 @@ void SpecialMovesHandler::getSpecialMoves(Knight *knight, const State &state, st
     // TO-DO
 }
 
-void SpecialMovesHandler::getSpecialMoves(Pawn *pawn, const State &state, std::vector<Coordinate> &abstractMoves) {
-    int size = abstractMoves.size();
+void SpecialMovesHandler::getSpecialMoves(Pawn *pawn, const State &state, std::vector<Coordinate> &abstractMoves, Coordinate pawnCoordinate) {
+    Coordinate move;
+    //for every move
+    for (int i = 0; i < abstractMoves.size(); i++) {
+        move = abstractMoves[i];
+        //if move is diagonal
+        if (pawnCoordinate.getColumn() != move.getColumn()) {
+            Piece* piece = state.getPiece(move);
+            if (piece == NULL) {
+                abstractMoves.erase(abstractMoves.begin() + i);
+                i--;
+            }
+          //if move is one forward
+        } else {
+            Piece* piece = state.getPiece(move);
+            if (piece != NULL) {
+                abstractMoves.erase(abstractMoves.begin() + i);
+                i--;
+            }
+        }
+    }
+
+
+    /*int size = abstractMoves.size();
     if (size == 0) return;
     bool bothHorizontal = abstractMoves[0].getColumn() == abstractMoves[1].getColumn();
 
@@ -126,5 +149,5 @@ void SpecialMovesHandler::getSpecialMoves(Pawn *pawn, const State &state, std::v
             abstractMoves.erase(abstractMoves.end() - 2);
         if (state.getPiece(abstractMoves[abstractMoves.size() - 1]) == NULL)
             abstractMoves.pop_back();
-    }
+    }*/
 }

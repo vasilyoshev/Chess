@@ -12,7 +12,7 @@ private:
     static void getSpecialMoves(Rook *rook, const State &state, std::vector<Coordinate> &abstractMoves);
     static void getSpecialMoves(Bishop *bishop, const State &state, std::vector<Coordinate> &abstractMoves);
     static void getSpecialMoves(Knight *knight, const State &state, std::vector<Coordinate> &abstractMoves);
-    static void getSpecialMoves(Pawn *pawn, const State &state, std::vector<Coordinate> &abstractMoves);
+    static void getSpecialMoves(Pawn *pawn, const State &state, std::vector<Coordinate> &abstractMoves, Coordinate pawnCoordinate);
 
 public:
     SpecialMovesHandler();

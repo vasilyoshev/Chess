@@ -3,6 +3,7 @@
 King::King(Color color)
     : Piece(color,ptKing)
 {
+    hasMoved = false;
 }
 
 std::vector< std::vector<Coordinate> > King::getPossibleMoves(Coordinate currentPosition)
@@ -18,6 +19,18 @@ std::vector< std::vector<Coordinate> > King::getPossibleMoves(Coordinate current
         }
     }
 
+    if(getColor() == cBlack) {
+        if (!hasMoved){
+            moves.push_back(Coordinate(0, 2)); // left
+            moves.push_back(Coordinate(0, 6)); // right
+        }
+    } else {
+        if (!hasMoved){
+            moves.push_back(Coordinate(7, 2)); // left
+            moves.push_back(Coordinate(7, 6)); // right
+        }
+    }
+
     std::vector< std::vector<Coordinate> > result;
     std::vector<Coordinate>::const_iterator begin = moves.begin();
     for (int i = 0; i < moves.size(); i++) {
@@ -28,5 +41,7 @@ std::vector< std::vector<Coordinate> > King::getPossibleMoves(Coordinate current
 
 Piece* King::getCopy() const
 {
-    return new King(color);
+    King* newKing = new King(color);
+    newKing->hasMoved=this->hasMoved;
+    return newKing;
 }

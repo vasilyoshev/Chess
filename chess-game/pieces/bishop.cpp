@@ -16,14 +16,14 @@ std::vector< std::vector<Coordinate> > Bishop::getPossibleMoves(Coordinate curre
     int row = currentPosition.getRow();
     int col = currentPosition.getColumn();
 
-    //Up right diagonal
+    //down right diagonal
     for (int j = col + 1, i = row + 1; j < 8 && i < 8; j++, i++) {
         downRight.push_back(Coordinate(i, j));
     }
 
-    // Up right diagonal
+    // down left diagonal
     for (int j = col - 1, i = row + 1; j > -1 && i < 8; j--, i++) {
-        upRight.push_back(Coordinate(i, j));
+        downLeft.push_back(Coordinate(i, j));
     }
 
     //Up left diagonal
@@ -31,16 +31,20 @@ std::vector< std::vector<Coordinate> > Bishop::getPossibleMoves(Coordinate curre
         upLeft.push_back(Coordinate(i, j));
     }
 
-    //Down left diagonal
+    //up right diagonal
     for (int j = col + 1, i = row - 1; j < 8 && i > -1; j++, i--) {
-        downLeft.push_back(Coordinate(i, j));
+        upRight.push_back(Coordinate(i, j));
     }
 
     std::vector< std::vector<Coordinate> > result;
-    result.push_back(upLeft);
-    result.push_back(upRight);
-    result.push_back(downLeft);
-    result.push_back(downRight);
+    if (upLeft.size() != 0)
+        result.push_back(upLeft);
+    if (upRight.size() != 0)
+        result.push_back(upRight);
+    if (downLeft.size() != 0)
+        result.push_back(downLeft);
+    if (downRight.size() != 0)
+        result.push_back(downRight);
 
     return result;
 

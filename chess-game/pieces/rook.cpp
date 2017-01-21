@@ -30,22 +30,11 @@ std::vector< std::vector<Coordinate> > Rook::getPossibleMoves(Coordinate current
         right.push_back(Coordinate(row, i));
     }
 
-    //moes left
+    //mvoes left
     for (int i = col - 1; i > -1; i--) {
         left.push_back(Coordinate(row, i));
     }
 
-/*
-    for(int i = 0; i < 8; i++) {
-        if(currentPosition.getRow() != i) {
-            result.push_back(Coordinate(i, currentPosition.getColumn()));
-        }
-
-        if(currentPosition.getColumn() != i) {
-            result.push_back(Coordinate(currentPosition.getRow(), i));
-        }
-    }
-*/
     std::vector< std::vector<Coordinate> > result;
     result.push_back(up);
     result.push_back(down);
