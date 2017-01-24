@@ -13,7 +13,7 @@ std::vector< std::vector<Coordinate> > Pawn::getPossibleMoves(Coordinate current
     if(getColor() == cBlack) {
         if (row < 7)
             forward.push_back(Coordinate(currentPosition.getRow() + 1, currentPosition.getColumn()));
-        if (row == 1)
+        if (!hasMoved)
             forward.push_back(Coordinate(currentPosition.getRow() + 2, currentPosition.getColumn()));
         if (col > 0 && row < 7)
             diagonals.push_back(Coordinate(currentPosition.getRow() + 1, currentPosition.getColumn() - 1));
@@ -22,7 +22,7 @@ std::vector< std::vector<Coordinate> > Pawn::getPossibleMoves(Coordinate current
     } else {
         if (row < 7)
             forward.push_back(Coordinate(currentPosition.getRow() - 1, currentPosition.getColumn()));
-        if (row == 6)
+        if (!hasMoved)
             forward.push_back(Coordinate(currentPosition.getRow() - 2, currentPosition.getColumn()));
         if (col > 0 && row < 7)
             diagonals.push_back(Coordinate(currentPosition.getRow() - 1, currentPosition.getColumn() - 1));

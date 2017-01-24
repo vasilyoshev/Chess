@@ -23,3 +23,7 @@ Color Piece::getColor() const {
 Piece::PieceType Piece::getType() const {
     return pieceType;
 }
+
+void Piece::setMoved() {
+    hasMoved = true;
+}

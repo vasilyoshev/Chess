@@ -47,18 +47,35 @@ const State& Controller::getState() {
     return state;
 }
 
+bool Controller::isLeftCastle(Coordinate source, Coordinate target) {
+    return sourcePiece->getType()==ptKing && target.getColumn()==source.getColumn()-2;
+}
+
+bool Controller::isRightCastle(Coordinate source, Coordinate target) {
+    return sourcePiece->getType()==ptKing && target.getColumn()==source.getColumn()+2;
+}
+
 void Controller::movePiece(Coordinate source, Coordinate target) {
     Piece* sourcePiece = state.getPiece(source);
-    Piece* targetPiece = state.getPiece(target);
-    delete targetPiece;
-    state.setPiece(sourcePiece, target);
-    state.setPiece(nullptr, source);
 
-    state.getCurrentPlayer()->setInCheck(false);
-    state.nextPlayer();
-    if (CheckChecker::checkForCheck(state)) {
-        state.getCurrentPlayer()->setInCheck(true);
-        state.getCurrentPlayer()->setInCheckmate(CheckChecker::checkForCheckmate(state));
+    if(isLeftCastle(source,target)) {
+
+    } else if(isRightCastle(source,target)) {
+
+    } else {
+        Piece* targetPiece = state.getPiece(target);
+        delete targetPiece;
+        state.setPiece(sourcePiece, target);
+        state.setPiece(nullptr, source);
+
+        sourcePiece->setMoved();
+
+        state.getCurrentPlayer()->setInCheck(false);
+        state.nextPlayer();
+        if (CheckChecker::checkForCheck(state)) {
+            state.getCurrentPlayer()->setInCheck(true);
+            state.getCurrentPlayer()->setInCheckmate(CheckChecker::checkForCheckmate(state));
+        }
     }
 }
 

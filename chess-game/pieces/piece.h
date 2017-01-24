@@ -24,11 +24,13 @@ public:
     bool isKilled();
     Color getColor() const;
     PieceType getType() const;
+    void setMoved();
 
 protected:
     Color color;
     bool killed;
     PieceType pieceType;
+    bool hasMoved;
 };
 
 #endif // PIECE_H

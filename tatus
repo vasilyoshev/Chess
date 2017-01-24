@@ -1,0 +1,114 @@
+[1mdiff --git a/chess-game/chess-logic/controller.cpp b/chess-game/chess-logic/controller.cpp[m
+[1mindex 3fd58cb..92135ea 100644[m
+[1m--- a/chess-game/chess-logic/controller.cpp[m
+[1m+++ b/chess-game/chess-logic/controller.cpp[m
+[36m@@ -47,18 +47,35 @@[m [mconst State& Controller::getState() {[m
+     return state;[m
+ }[m
+ [m
+[32m+[m[32mbool Controller::isLeftCastle(Coordinate source, Coordinate target) {[m
+[32m+[m[32m    return sourcePiece->getType()==ptKing && target.getColumn()==source.getColumn()-2;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32mbool Controller::isRightCastle(Coordinate source, Coordinate target) {[m
+[32m+[m[32m    return sourcePiece->getType()==ptKing && target.getColumn()==source.getColumn()+2;[m
+[32m+[m[32m}[m
+[32m+[m
+ void Controller::movePiece(Coordinate source, Coordinate target) {[m
+     Piece* sourcePiece = state.getPiece(source);[m
+[31m-    Piece* targetPiece = state.getPiece(target);[m
+[31m-    delete targetPiece;[m
+[31m-    state.setPiece(sourcePiece, target);[m
+[31m-    state.setPiece(nullptr, source);[m
+[31m-[m
+[31m-    state.getCurrentPlayer()->setInCheck(false);[m
+[31m-    state.nextPlayer();[m
+[31m-    if (CheckChecker::checkForCheck(state)) {[m
+[31m-        state.getCurrentPlayer()->setInCheck(true);[m
+[31m-        state.getCurrentPlayer()->setInCheckmate(CheckChecker::checkForCheckmate(state));[m
+[32m+[m
+[32m+[m[32m    if(isLeftCastle(source,target)) {[m
+[32m+[m
+[32m+[m[32m    } else if(isRightCastle(source,target)) {[m
+[32m+[m
+[32m+[m[32m    } else {[m
+[32m+[m[32m        Piece* targetPiece = state.getPiece(target);[m
+[32m+[m[32m        delete targetPiece;[m
+[32m+[m[32m        state.setPiece(sourcePiece, target);[m
+[32m+[m[32m        state.setPiece(nullptr, source);[m
+[32m+[m
+[32m+[m[32m        sourcePiece->setMoved();[m
+[32m+[m
+[32m+[m[32m        state.getCurrentPlayer()->setInCheck(false);[m
+[32m+[m[32m        state.nextPlayer();[m
+[32m+[m[32m        if (CheckChecker::checkForCheck(state)) {[m
+[32m+[m[32m            state.getCurrentPlayer()->setInCheck(true);[m
+[32m+[m[32m            state.getCurrentPlayer()->setInCheckmate(CheckChecker::checkForCheckmate(state));[m
+[32m+[m[32m        }[m
+     }[m
+ }[m
+ [m
+[1mdiff --git a/chess-game/pieces/king.h b/chess-game/pieces/king.h[m
+[1mindex 816ef1e..d11f03b 100644[m
+[1m--- a/chess-game/pieces/king.h[m
+[1m+++ b/chess-game/pieces/king.h[m
+[36m@@ -8,7 +8,6 @@[m [mpublic:[m
+     King(Color color);[m
+     std::vector< std::vector<Coordinate> > getPossibleMoves(Coordinate currentPosition);[m
+     Piece* getCopy() const;[m
+[31m-    bool hasMoved;[m
+ };[m
+ [m
+ #endif // KING_H[m
+[1mdiff --git a/chess-game/pieces/pawn.cpp b/chess-game/pieces/pawn.cpp[m
+[1mindex 1724ed4..0f37193 100644[m
+[1m--- a/chess-game/pieces/pawn.cpp[m
+[1m+++ b/chess-game/pieces/pawn.cpp[m
+[36m@@ -13,7 +13,7 @@[m [mstd::vector< std::vector<Coordinate> > Pawn::getPossibleMoves(Coordinate current[m
+     if(getColor() == cBlack) {[m
+         if (row < 7)[m
+             forward.push_back(Coordinate(currentPosition.getRow() + 1, currentPosition.getColumn()));[m
+[31m-        if (row == 1)[m
+[32m+[m[32m        if (!hasMoved)[m
+             forward.push_back(Coordinate(currentPosition.getRow() + 2, currentPosition.getColumn()));[m
+         if (col > 0 && row < 7)[m
+             diagonals.push_back(Coordinate(currentPosition.getRow() + 1, currentPosition.getColumn() - 1));[m
+[36m@@ -22,7 +22,7 @@[m [mstd::vector< std::vector<Coordinate> > Pawn::getPossibleMoves(Coordinate current[m
+     } else {[m
+         if (row < 7)[m
+             forward.push_back(Coordinate(currentPosition.getRow() - 1, currentPosition.getColumn()));[m
+[31m-        if (row == 6)[m
+[32m+[m[32m        if (!hasMoved)[m
+             forward.push_back(Coordinate(currentPosition.getRow() - 2, currentPosition.getColumn()));[m
+         if (col > 0 && row < 7)[m
+             diagonals.push_back(Coordinate(currentPosition.getRow() - 1, currentPosition.getColumn() - 1));[m
+[1mdiff --git a/chess-game/pieces/piece.cpp b/chess-game/pieces/piece.cpp[m
+[1mindex 5a06480..631fe19 100644[m
+[1m--- a/chess-game/pieces/piece.cpp[m
+[1m+++ b/chess-game/pieces/piece.cpp[m
+[36m@@ -23,3 +23,7 @@[m [mColor Piece::getColor() const {[m
+ Piece::PieceType Piece::getType() const {[m
+     return pieceType;[m
+ }[m
+[32m+[m
+[32m+[m[32mvoid Piece::setMoved() {[m
+[32m+[m[32m    hasMoved = true;[m
+[32m+[m[32m}[m
+[1mdiff --git a/chess-game/pieces/piece.h b/chess-game/pieces/piece.h[m
+[1mindex 40087d0..1edbcca 100644[m
+[1m--- a/chess-game/pieces/piece.h[m
+[1m+++ b/chess-game/pieces/piece.h[m
+[36m@@ -24,11 +24,13 @@[m [mpublic:[m
+     bool isKilled();[m
+     Color getColor() const;[m
+     PieceType getType() const;[m
+[32m+[m[32m    void setMoved();[m
+ [m
+ protected:[m
+     Color color;[m
+     bool killed;[m
+     PieceType pieceType;[m
+[32m+[m[32m    bool hasMoved;[m
+ };[m
+ [m
+ #endif // PIECE_H[m
