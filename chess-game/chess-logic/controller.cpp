@@ -47,20 +47,20 @@ const State& Controller::getState() {
     return state;
 }
 
-bool Controller::isLeftCastle(Coordinate source, Coordinate target) {
-    return sourcePiece->getType()==ptKing && target.getColumn()==source.getColumn()-2;
+bool Controller::isLeftCastle(Piece::PieceType pieceType, Coordinate source, Coordinate target) {
+    return pieceType==Piece::PieceType::ptKing && target.getColumn()==source.getColumn()-2;
 }
 
-bool Controller::isRightCastle(Coordinate source, Coordinate target) {
-    return sourcePiece->getType()==ptKing && target.getColumn()==source.getColumn()+2;
+bool Controller::isRightCastle(Piece::PieceType pieceType, Coordinate source, Coordinate target) {
+    return pieceType==Piece::PieceType::ptKing && target.getColumn()==source.getColumn()+2;
 }
 
 void Controller::movePiece(Coordinate source, Coordinate target) {
     Piece* sourcePiece = state.getPiece(source);
 
-    if(isLeftCastle(source,target)) {
+    if(isLeftCastle(sourcePiece->getType(), source, target)) {
 
-    } else if(isRightCastle(source,target)) {
+    } else if(isRightCastle(sourcePiece->getType(), source, target)) {
 
     } else {
         Piece* targetPiece = state.getPiece(target);

@@ -9,6 +9,7 @@
 #include "player.h"
 #include "specialmoveshandler.h"
 #include "gametype.h"
+#include "piece.h"
 
 class Controller {
 private:
@@ -18,6 +19,9 @@ private:
     void initPlayers();
     void setPawnPieces(int row, Color color);
     void setMajorPieces(int row, Color color);
+    bool isLeftCastle(Piece::PieceType pieceType, Coordinate source, Coordinate target);
+    bool isRightCastle(Piece::PieceType pieceType, Coordinate source, Coordinate target);
+
 public:
     Controller();
     void movePiece(Coordinate source, Coordinate target);

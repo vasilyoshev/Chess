@@ -180,8 +180,6 @@ void MainWindow::handlePieceClick()
             highlightCells();
         }
     }
-
-    this->setWindowTitle("PRESSED PIECE");
 }
 
 /**
@@ -304,7 +302,9 @@ void MainWindow::drawCurrentPlayer()
 
     PlayerNameLabel.setParent(this);
     PlayerNameLabel.setAlignment(Qt::AlignLeft);
-    PlayerNameLabel.setFont(QFont("Calibri", 20, 100));
+    QRect screen = QApplication::desktop()->screenGeometry();
+    double fontCoefficient = screen.height()*1.0/1080;
+    PlayerNameLabel.setFont(QFont("Calibri", 20*fontCoefficient, 100));
     if(color == cBlack) {
         PlayerNameLabel.setStyleSheet("color: rgb(0, 0, 0, 100%);");
         text += QString("(Black)");
