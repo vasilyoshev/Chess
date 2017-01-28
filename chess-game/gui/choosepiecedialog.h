@@ -27,17 +27,21 @@ class ChoosePieceDialog;
 class ChoosePieceDialog : public QDialog {
     Q_OBJECT
 
-public:
+public:    
+
     explicit ChoosePieceDialog(QWidget *parent = 0);
     ~ChoosePieceDialog();
+
+    static Piece::PieceType getSelectedPieceType();
 
 private:
 CellButton *Pieces;
 CellButton *PiecesBackground;
-static CellButton *SelectedPiece;
+CellButton *SelectedPiece;
 QLabel *LabelCaption;
 QPushButton *ButtonChoose;
 Ui::ChoosePieceDialog *ui;
+static Piece::PieceType selectedPieceType;
 
     void setWindowSize();
     void initCaption();

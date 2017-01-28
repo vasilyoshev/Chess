@@ -22,14 +22,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setStyleSheet(UIHelperFunc::getFormBackgroundStyleSheet());
 
-    /// TO-DO use the forms when necessary
-
-    /*ChoosePieceDialog choosePieceDialog;
-    choosePieceDialog.setModal(true);
-    choosePieceDialog.exec();
-    exit(0);*/
-
-
     GameOptionsWindow gameOptionsWindow;
     gameOptionsWindow.setModal(true);
     int result = gameOptionsWindow.exec();
@@ -241,6 +233,9 @@ void MainWindow::createLabels()
  * @brief MainWindow::drawState
  *
  * Draws the current state: all pieces currently on the board, the status of the game, and which player is on turn.
+ *
+ * Checks wether the game is in Checkmate state or it has a pawn promotion.
+ *
  */
 void MainWindow::drawState()
 {
@@ -263,6 +258,17 @@ void MainWindow::drawState()
 
     if( controller.getState().getCurrentPlayer()->isInCheckmate() ) {
         showGameOver();
+    } else if( controller.isInPownPromotion() )  {
+        ChoosePieceDialog choosePieceDialog;
+        choosePieceDialog.setModal(true);
+
+        while( choosePieceDialog.exec()!=1 ) {
+            // endless
+        }
+
+        controller.promotePawn( ChoosePieceDialog::getSelectedPieceType() ); // pawnPromotion should return false after this command
+
+        drawState();
     }
 }
 
@@ -353,4 +359,3 @@ void MainWindow::showGameOver() {
 
     exit(0);
 }
-

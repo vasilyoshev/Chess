@@ -4,6 +4,7 @@
 #include <QPushButton>
 
 #include "coordinate.h"
+#include "piece.h"
 
 /**
  * @brief The CellButton class
@@ -16,12 +17,15 @@
 class CellButton : public QPushButton {
 private:
     Coordinate coordinate;
+    Piece::PieceType pieceType;
 
 public:
     CellButton();
 
     void setCoordinate(Coordinate coordinate);
     Coordinate getCoordinate() const;
+    void setPieceType(Piece::PieceType pieceType);
+    Piece::PieceType getPieceType() const;
 };
 
 #endif // CELLBUTTON_H

@@ -12,3 +12,13 @@ void CellButton::setCoordinate(Coordinate coordinate) {
 Coordinate CellButton::getCoordinate() const {
     return coordinate;
 }
+
+void CellButton::setPieceType(Piece::PieceType pieceType)
+{
+    this->pieceType = pieceType;
+}
+
+Piece::PieceType CellButton::getPieceType() const
+{
+    return pieceType;
+}
