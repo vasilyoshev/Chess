@@ -72,47 +72,45 @@ void Controller::movePiece(Coordinate source, Coordinate target) {
 
         state.getCurrentPlayer()->setInCheck(false);
 
-        checkAndSetPawnPromotion(sourcePiece, target);
-        if(!state.isInPawnPromotion()) {
+        checkAndSetPownPromotion(sourcePiece, target);
+        if(!state.isInPownPromotion()) {
             changePlayer();
         }
     }
 }
 
-void Controller::checkAndSetPawnPromotion(Piece* sourcePiece, Coordinate& pieceCoordinate) {
+void Controller::checkAndSetPownPromotion(Piece* sourcePiece, Coordinate& pieceCoordinate) {
     if (sourcePiece->getType() == Piece::PieceType::ptPawn &&
             ((sourcePiece->getColor() == cWhite && pieceCoordinate.getRow() == 0) ||
              (sourcePiece->getColor() == cBlack && pieceCoordinate.getRow() == 7))) {
-        state.setInPawnPromotion(true);
-        // TODO maybe this is not needed written it in a hurry
-        Coordinate* coor = new Coordinate(pieceCoordinate.getRow(), pieceCoordinate.getColumn());
-        state.setPawnInPromotionCoordinates(coor);
+        state.setInPownPromotion(true);
+        state.setPownInPromotionCoordinates(&pieceCoordinate);
     }
 }
 
-void Controller::promotePawn(Piece::PieceType pieceType) {
-    Coordinate* pawnCoordinate = state.getPawnInPromotionCoordinates();
+void Controller::promotePown(Piece::PieceType pieceType) {
+    Coordinate* pownCoordinate = state.getPownInPromotionCoordinates();
 
-    Piece* pawn = state.getPiece(*pawnCoordinate);
+    Piece* pawn = state.getPiece(*pownCoordinate);
     Color pawnColor = pawn->getColor();
     delete pawn;
 
     if (pieceType == Piece::PieceType::ptQueen) {
-        state.setPiece(new Queen(pawnColor), *pawnCoordinate);
+        state.setPiece(new Queen(pawnColor), *pownCoordinate);
     } else if (pieceType == Piece::PieceType::ptKnight) {
-        state.setPiece(new Knight(pawnColor), *pawnCoordinate);
+        state.setPiece(new Knight(pawnColor), *pownCoordinate);
     } else if (pieceType == Piece::PieceType::ptRook) {
-        state.setPiece(new Rook(pawnColor), *pawnCoordinate);
+        state.setPiece(new Rook(pawnColor), *pownCoordinate);
     } else if (pieceType == Piece::PieceType::ptBishop) {
-        state.setPiece(new Bishop(pawnColor), *pawnCoordinate);
+        state.setPiece(new Bishop(pawnColor), *pownCoordinate);
     }
 
-    state.setInPawnPromotion(false);
+    state.setInPownPromotion(false);
     changePlayer();
 }
 
 bool Controller::isInPownPromotion(){
-    return state.isInPawnPromotion();
+    return state.isInPownPromotion();
 }
 
 void Controller::changePlayer() {

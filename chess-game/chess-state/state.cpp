@@ -5,13 +5,13 @@ State::State() {
 
     currentPlayerIndex = 0;
     currentPlayer = &players[currentPlayerIndex];
-    inPawnPromotion = false;
-    pawnInPromotionCoordinates = NULL;
+    inPownPromotion = false;
+    pownInPromotionCoordinates = NULL;
 }
 
 State::~State() {
-    if (pawnInPromotionCoordinates != NULL) {
-        delete pawnInPromotionCoordinates;
+    if (pownInPromotionCoordinates != NULL) {
+        delete pownInPromotionCoordinates;
     }
 }
 
@@ -27,8 +27,8 @@ State::State(const State& state) {
     players[0] = Player(state.players[0]);
     players[1] = Player(state.players[1]);
     currentPlayer = &players[currentPlayerIndex];
-    inPawnPromotion = state.isInPawnPromotion();
-    pawnInPromotionCoordinates = NULL;
+    inPownPromotion = state.isInPownPromotion();
+    pownInPromotionCoordinates = NULL;
 }
 
 void State::setPiece(Piece* piece, Coordinate coordinate) {
@@ -74,25 +74,25 @@ void State::setCheckStatusCurrentPlayer(bool inCheck) {
     currentPlayer->setInCheck(inCheck);
 }
 
-bool State::isInPawnPromotion() const {
-    return inPawnPromotion;
+bool State::isInPownPromotion() const {
+    return inPownPromotion;
 }
 
-bool State::setInPawnPromotion(bool inPawnPromotion) {
-    if (!inPawnPromotion && pawnInPromotionCoordinates != NULL) {
-        delete pawnInPromotionCoordinates;
+bool State::setInPownPromotion(bool inPownPromotion) {
+    if (!inPownPromotion && pownInPromotionCoordinates != NULL) {
+        delete pownInPromotionCoordinates;
     }
-    this->inPawnPromotion = inPawnPromotion;
+    this->inPownPromotion = inPownPromotion;
 }
 
 void State::initGameType(TGameType gameType) {
     this->gameType = gameType;
 }
 
-Coordinate* State::getPawnInPromotionCoordinates() {
-    return pawnInPromotionCoordinates;
+Coordinate* State::getPownInPromotionCoordinates() {
+    return pownInPromotionCoordinates;
 }
 
-void State::setPawnInPromotionCoordinates(Coordinate* pawnInPromotionCoordinates) {
-    pawnInPromotionCoordinates = pawnInPromotionCoordinates;
+void State::setPownInPromotionCoordinates(Coordinate* pownInPromotionCoordinates) {
+    this->pownInPromotionCoordinates = pownInPromotionCoordinates;
 }

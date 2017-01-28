@@ -266,7 +266,7 @@ void MainWindow::drawState()
             // endless
         }
 
-        controller.promotePawn( ChoosePieceDialog::getSelectedPieceType() ); // pawnPromotion should return false after this command
+        controller.promotePown( ChoosePieceDialog::getSelectedPieceType() ); // pawnPromotion should return false after this command
 
         drawState();
     }

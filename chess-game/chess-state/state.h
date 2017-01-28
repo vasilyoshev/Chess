@@ -14,8 +14,8 @@ private:
     Player players[2];
     Player* currentPlayer;
     TGameType gameType;
-    bool inPawnPromotion;
-    Coordinate* pawnInPromotionCoordinates;
+    bool inPownPromotion;
+    Coordinate* pownInPromotionCoordinates;
 public:
     State();
     ~State();
@@ -36,11 +36,11 @@ public:
     void setCheckStatusCurrentPlayer(bool inCheck);
     bool getCheckStatusCurrentPlayer();
 
-    bool isInPawnPromotion() const;
-    bool setInPawnPromotion(bool inPawnPromotion);
+    bool isInPownPromotion() const;
+    bool setInPownPromotion(bool inPownPromotion);
 
-    void setPawnInPromotionCoordinates(Coordinate* pawnInPromotionCoordinates);
-    Coordinate* getPawnInPromotionCoordinates();
+    void setPownInPromotionCoordinates(Coordinate* pownInPromotionCoordinates);
+    Coordinate* getPownInPromotionCoordinates();
 };
 
 #endif // STATE_H
