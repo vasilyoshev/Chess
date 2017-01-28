@@ -71,11 +71,55 @@ void Controller::movePiece(Coordinate source, Coordinate target) {
         sourcePiece->setMoved();
 
         state.getCurrentPlayer()->setInCheck(false);
-        state.nextPlayer();
-        if (CheckChecker::checkForCheck(state)) {
-            state.getCurrentPlayer()->setInCheck(true);
-            state.getCurrentPlayer()->setInCheckmate(CheckChecker::checkForCheckmate(state));
+
+        checkAndSetPawnPromotion(sourcePiece, target);
+        if(!state.isInPawnPromotion()) {
+            changePlayer();
         }
+    }
+}
+
+void Controller::checkAndSetPawnPromotion(Piece* sourcePiece, Coordinate& pieceCoordinate) {
+    if (sourcePiece->getType() == Piece::PieceType::ptPawn &&
+            ((sourcePiece->getColor() == cWhite && pieceCoordinate.getRow() == 0) ||
+             (sourcePiece->getColor() == cBlack && pieceCoordinate.getRow() == 7))) {
+        state.setInPawnPromotion(true);
+        // TODO maybe this is not needed written it in a hurry
+        Coordinate* coor = new Coordinate(pieceCoordinate.getRow(), pieceCoordinate.getColumn());
+        state.setPawnInPromotionCoordinates(coor);
+    }
+}
+
+void Controller::promotePawn(Piece::PieceType pieceType) {
+    Coordinate* pawnCoordinate = state.getPawnInPromotionCoordinates();
+
+    Piece* pawn = state.getPiece(*pawnCoordinate);
+    Color pawnColor = pawn->getColor();
+    delete pawn;
+
+    if (pieceType == Piece::PieceType::ptQueen) {
+        state.setPiece(new Queen(pawnColor), *pawnCoordinate);
+    } else if (pieceType == Piece::PieceType::ptKnight) {
+        state.setPiece(new Knight(pawnColor), *pawnCoordinate);
+    } else if (pieceType == Piece::PieceType::ptRook) {
+        state.setPiece(new Rook(pawnColor), *pawnCoordinate);
+    } else if (pieceType == Piece::PieceType::ptBishop) {
+        state.setPiece(new Bishop(pawnColor), *pawnCoordinate);
+    }
+
+    state.setInPawnPromotion(false);
+    changePlayer();
+}
+
+bool Controller::isInPownPromotion(){
+    return state.isInPawnPromotion();
+}
+
+void Controller::changePlayer() {
+    state.nextPlayer();
+    if (CheckChecker::checkForCheck(state)) {
+        state.getCurrentPlayer()->setInCheck(true);
+        state.getCurrentPlayer()->setInCheckmate(CheckChecker::checkForCheckmate(state));
     }
 }
 

@@ -14,9 +14,11 @@ private:
     Player players[2];
     Player* currentPlayer;
     TGameType gameType;
-
+    bool inPawnPromotion;
+    Coordinate* pawnInPromotionCoordinates;
 public:
     State();
+    ~State();
     State(const State& state);
 
     void setPiece(Piece* piece, Coordinate coordinate);
@@ -33,6 +35,12 @@ public:
 
     void setCheckStatusCurrentPlayer(bool inCheck);
     bool getCheckStatusCurrentPlayer();
+
+    bool isInPawnPromotion() const;
+    bool setInPawnPromotion(bool inPawnPromotion);
+
+    void setPawnInPromotionCoordinates(Coordinate* pawnInPromotionCoordinates);
+    Coordinate* getPawnInPromotionCoordinates();
 };
 
 #endif // STATE_H

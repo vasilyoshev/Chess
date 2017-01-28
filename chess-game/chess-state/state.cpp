@@ -5,6 +5,14 @@ State::State() {
 
     currentPlayerIndex = 0;
     currentPlayer = &players[currentPlayerIndex];
+    inPawnPromotion = false;
+    pawnInPromotionCoordinates = NULL;
+}
+
+State::~State() {
+    if (pawnInPromotionCoordinates != NULL) {
+        delete pawnInPromotionCoordinates;
+    }
 }
 
 State::State(const State& state) {
@@ -19,6 +27,8 @@ State::State(const State& state) {
     players[0] = Player(state.players[0]);
     players[1] = Player(state.players[1]);
     currentPlayer = &players[currentPlayerIndex];
+    inPawnPromotion = state.isInPawnPromotion();
+    pawnInPromotionCoordinates = NULL;
 }
 
 void State::setPiece(Piece* piece, Coordinate coordinate) {
@@ -64,6 +74,25 @@ void State::setCheckStatusCurrentPlayer(bool inCheck) {
     currentPlayer->setInCheck(inCheck);
 }
 
+bool State::isInPawnPromotion() const {
+    return inPawnPromotion;
+}
+
+bool State::setInPawnPromotion(bool inPawnPromotion) {
+    if (!inPawnPromotion && pawnInPromotionCoordinates != NULL) {
+        delete pawnInPromotionCoordinates;
+    }
+    this->inPawnPromotion = inPawnPromotion;
+}
+
 void State::initGameType(TGameType gameType) {
     this->gameType = gameType;
+}
+
+Coordinate* State::getPawnInPromotionCoordinates() {
+    return pawnInPromotionCoordinates;
+}
+
+void State::setPawnInPromotionCoordinates(Coordinate* pawnInPromotionCoordinates) {
+    pawnInPromotionCoordinates = pawnInPromotionCoordinates;
 }

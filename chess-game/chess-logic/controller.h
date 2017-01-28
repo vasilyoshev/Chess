@@ -21,6 +21,8 @@ private:
     void setMajorPieces(int row, Color color);
     bool isLeftCastle(Piece::PieceType pieceType, Coordinate source, Coordinate target);
     bool isRightCastle(Piece::PieceType pieceType, Coordinate source, Coordinate target);
+    void changePlayer();
+    void checkAndSetPawnPromotion(Piece* sourcePiece, Coordinate& pieceCoordinate);
 
 public:
     Controller();
@@ -32,6 +34,8 @@ public:
     void setSecondPlayer(string name, Color color);
     void setGameType(TGameType gameType);
     void initStartingPlayer();
+    void promotePawn(Piece::PieceType pieceType);
+    bool isInPownPromotion();
 };
 
 #endif // CONTROLLER_H
