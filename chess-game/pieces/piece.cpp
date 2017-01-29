@@ -27,3 +27,7 @@ Piece::PieceType Piece::getType() const {
 void Piece::setMoved() {
     hasMoved = true;
 }
+
+bool Piece::getMoved() {
+    return hasMoved;
+}

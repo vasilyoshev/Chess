@@ -10,7 +10,7 @@ std::vector<Coordinate> SpecialMovesHandler::getValidMoves(const State& state, C
     moves = filterInvalidMoves(state, result, p->getColor());
     switch(p->getType()) {
     case Piece::ptKing :
-        getSpecialMoves((King*)p, state, moves);
+        getSpecialMoves((King*)p, state, moves, click);
         break;
     case Piece::ptQueen :
         getSpecialMoves((Queen*)p, state, moves);
@@ -52,8 +52,29 @@ std::vector<Coordinate> SpecialMovesHandler::filterInvalidMoves(const State& sta
     return filtered;
 }
 
-void SpecialMovesHandler::getSpecialMoves(King *king, const State &state, std::vector<Coordinate> &abstractMoves) {
-
+void SpecialMovesHandler::getSpecialMoves(King *king, const State &state, std::vector<Coordinate> &abstractMoves, Coordinate kingCoordinate) {
+    // if king and rook haven't moved & no pieces between king and rook
+    for (int i = 0; i < abstractMoves.size(); i++) {
+        Coordinate move = abstractMoves[i];
+        // check right castling
+        if (move.getColumn() == kingCoordinate.getColumn() + 2) {
+            Piece* rightRook = state.getPiece(Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() + 3));
+            // check if rook has moved or king is in check
+            if (rightRook->getType() != Piece::ptRook || rightRook->getMoved() || state.getCheckStatusCurrentPlayer()) {
+                abstractMoves.erase(abstractMoves.begin() + i);
+                i--;
+            }
+        // check left castling
+        } else if (move.getColumn() == kingCoordinate.getColumn() - 2) {
+            Piece* leftRook = state.getPiece(Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() - 4));
+            Piece* colOne = state.getPiece(Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() - 3));
+            // check if rook has moved or king is in check or if column next to rook is free
+            if (leftRook->getType() != Piece::ptRook || leftRook->getMoved() || state.getCheckStatusCurrentPlayer() || colOne != NULL) {
+                abstractMoves.erase(abstractMoves.begin() + i);
+                i--;
+            }
+        }
+    }
 }
 
 void SpecialMovesHandler::getSpecialMoves(Queen *queen, const State &state, std::vector<Coordinate> &abstractMoves) {
@@ -93,61 +114,4 @@ void SpecialMovesHandler::getSpecialMoves(Pawn *pawn, const State &state, std::v
             }
         }
     }
-
-
-    /*int size = abstractMoves.size();
-    if (size == 0) return;
-    bool bothHorizontal = abstractMoves[0].getColumn() == abstractMoves[1].getColumn();
-
-    Coordinate first = abstractMoves[0];
-    Coordinate second = abstractMoves[1];
-
-    if (size == 2 && bothHorizontal) {
-        if (state.getPiece(first) != NULL)
-            abstractMoves.clear();
-        else if (state.getPiece(second) != NULL)
-            abstractMoves.pop_back();
-    } else if (size == 2) {
-        //if first element is forward
-        if (first.getColumn() == second.getColumn() - 1 || first.getColumn() == second.getColumn() + 1) {
-            if (state.getPiece(first) != NULL)
-                abstractMoves.erase(abstractMoves.begin());
-            if (state.getPiece(second) == NULL)
-                abstractMoves.pop_back();
-        } else {
-            if (state.getPiece(first) == NULL)
-                abstractMoves.erase(abstractMoves.begin());
-            if (state.getPiece(second) == NULL)
-                        abstractMoves.pop_back();
-        }
-    }
-
-    if (size == 3 && bothHorizontal) {
-        if (state.getPiece(first) != NULL)
-            abstractMoves.clear();
-        else if (state.getPiece(second) != NULL)
-            abstractMoves.erase(abstractMoves.begin() + 1);
-
-        if (state.getPiece(abstractMoves[abstractMoves.size() - 1]) == NULL)
-            abstractMoves.pop_back();
-    } else if (size == 3) {
-        if (state.getPiece(first) != NULL)
-            abstractMoves.erase(abstractMoves.begin());
-        if (state.getPiece(abstractMoves[abstractMoves.size() - 2]) == NULL)
-            abstractMoves.erase(abstractMoves.end() - 2);
-        if (state.getPiece(abstractMoves[abstractMoves.size() - 1]) == NULL)
-            abstractMoves.pop_back();
-    }
-
-    if (size == 4) {
-        if (state.getPiece(abstractMoves[0]) != NULL) {
-            abstractMoves.erase(abstractMoves.begin(), abstractMoves.begin() + 2);
-        } else if (state.getPiece(abstractMoves[1]) != NULL) {
-            abstractMoves.erase(abstractMoves.begin() + 1);
-        }
-        if (state.getPiece(abstractMoves[abstractMoves.size() - 2]) == NULL)
-            abstractMoves.erase(abstractMoves.end() - 2);
-        if (state.getPiece(abstractMoves[abstractMoves.size() - 1]) == NULL)
-            abstractMoves.pop_back();
-    }*/
 }

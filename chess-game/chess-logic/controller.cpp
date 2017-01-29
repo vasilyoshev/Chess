@@ -59,9 +59,31 @@ void Controller::movePiece(Coordinate source, Coordinate target) {
     Piece* sourcePiece = state.getPiece(source);
 
     if(isLeftCastle(sourcePiece->getType(), source, target)) {
+        Coordinate rookSource = Coordinate(target.getRow(), target.getColumn() - 2);
+        Coordinate rookTarget = Coordinate(target.getRow(), target.getColumn() + 1);
+        Piece* rook = state.getPiece(rookSource);
 
+        state.setPiece(sourcePiece, target);
+        state.setPiece(nullptr, source);
+        state.setPiece(rook, rookTarget);
+        state.setPiece(nullptr, rookSource);
+
+        sourcePiece->setMoved();
+        rook->setMoved();
+        changePlayer();
     } else if(isRightCastle(sourcePiece->getType(), source, target)) {
+        Coordinate rookSource = Coordinate(target.getRow(), target.getColumn() + 1);
+        Coordinate rookTarget = Coordinate(target.getRow(), target.getColumn() - 1);
+        Piece* rook = state.getPiece(rookSource);
 
+        state.setPiece(sourcePiece, target);
+        state.setPiece(nullptr, source);
+        state.setPiece(rook, rookTarget);
+        state.setPiece(nullptr, rookSource);
+
+        sourcePiece->setMoved();
+        rook->setMoved();
+        changePlayer();
     } else {
         Piece* targetPiece = state.getPiece(target);
         delete targetPiece;
@@ -72,14 +94,14 @@ void Controller::movePiece(Coordinate source, Coordinate target) {
 
         state.getCurrentPlayer()->setInCheck(false);
 
-        checkAndSetPownPromotion(sourcePiece, target);
+        checkAndSetPawnPromotion(sourcePiece, target);
         if(!state.isInPownPromotion()) {
             changePlayer();
         }
     }
 }
 
-void Controller::checkAndSetPownPromotion(Piece* sourcePiece, Coordinate& pieceCoordinate) {
+void Controller::checkAndSetPawnPromotion(Piece* sourcePiece, Coordinate& pieceCoordinate) {
     if (sourcePiece->getType() == Piece::PieceType::ptPawn &&
             ((sourcePiece->getColor() == cWhite && pieceCoordinate.getRow() == 0) ||
              (sourcePiece->getColor() == cBlack && pieceCoordinate.getRow() == 7))) {

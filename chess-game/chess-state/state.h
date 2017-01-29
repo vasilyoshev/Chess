@@ -34,7 +34,7 @@ public:
     const vector< vector<Cell> >& getBoard() const;
 
     void setCheckStatusCurrentPlayer(bool inCheck);
-    bool getCheckStatusCurrentPlayer();
+    bool getCheckStatusCurrentPlayer() const;
 
     bool isInPownPromotion() const;
     bool setInPownPromotion(bool inPownPromotion);

@@ -25,6 +25,7 @@ public:
     Color getColor() const;
     PieceType getType() const;
     void setMoved();
+    bool getMoved();
 
 protected:
     Color color;

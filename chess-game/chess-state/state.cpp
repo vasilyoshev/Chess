@@ -74,6 +74,10 @@ void State::setCheckStatusCurrentPlayer(bool inCheck) {
     currentPlayer->setInCheck(inCheck);
 }
 
+bool State::getCheckStatusCurrentPlayer() const {
+    return currentPlayer->isInCheck();
+}
+
 bool State::isInPownPromotion() const {
     return inPownPromotion;
 }
