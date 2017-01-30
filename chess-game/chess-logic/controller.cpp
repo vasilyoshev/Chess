@@ -165,3 +165,7 @@ void Controller::initStartingPlayer() {
         state.nextPlayer();
     }
 }
+
+void Controller::getAi(){
+   // ai.getNextAiTurn(); // error here. ai not declared
+}

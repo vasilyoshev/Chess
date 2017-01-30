@@ -11,10 +11,14 @@
 #include "gametype.h"
 #include "piece.h"
 
+#include "ai.h"
+
 class Controller {
 private:
     State state;
 
+    /* Ai ai; // error here
+    */
     void initPieces();
     void initPlayers();
     void setPawnPieces(int row, Color color);
@@ -36,6 +40,9 @@ public:
     void initStartingPlayer();
     void promotePown(Piece::PieceType pieceType);
     bool isInPownPromotion();
+
+    void getAi();
+
 };
 
 #endif // CONTROLLER_H
