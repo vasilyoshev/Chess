@@ -11,7 +11,7 @@
 #include "controller.h"
 #include "cellbutton.h"
 #include "uihelperfunc.h"
-
+#include "ai.h"
 
 namespace Ui {
 class MainWindow;

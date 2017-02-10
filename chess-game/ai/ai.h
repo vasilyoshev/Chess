@@ -4,13 +4,12 @@
 #include <vector>
 #include <QString>
 
-#include "controller.h"
-#include "color.h"
 
 class Ai{
 
     private:
-    //  Controller controller; //error here
+
+    // Controller controller; //error here
 
     void getRandomTurn();
     void getRandomValidPiece();
@@ -19,7 +18,7 @@ class Ai{
     public:
 
     Ai();
- // Ai(Controller controller, Color color); //error here
+    // Ai(Controller controller, Color color); //error here
 
     void getNextAiTurn();
     void getAiTurn();

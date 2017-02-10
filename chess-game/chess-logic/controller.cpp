@@ -1,6 +1,9 @@
+
+
 #include "controller.h"
 #include "piece.h"
 #include "checkchecker.h"
+#include "ai.h"
 
 Controller::Controller() {
     initState();
@@ -167,5 +170,5 @@ void Controller::initStartingPlayer() {
 }
 
 void Controller::getAi(){
-   // ai.getNextAiTurn(); // error here. ai not declared
+   // ai.getNextAiTurn(); // passes value from getAiTurn
 }

@@ -23,9 +23,9 @@ SOURCES += main.cpp\
     chess-state/state.cpp \
     chess-state/cell.cpp \
     pieces/piece.cpp \
+    chess-logic/controller.cpp \
     chess-utils/coordinate.cpp \
     chess-state/player.cpp \
-    chess-logic/controller.cpp \
     pieces/king.cpp \
     pieces/queen.cpp \
     pieces/rook.cpp \
@@ -38,7 +38,7 @@ SOURCES += main.cpp\
     gui/choosepiecedialog.cpp \
     gui/uihelperfunc.cpp \
     chess-logic/checkchecker.cpp \
-    chess-logic/ai.cpp
+    ai/ai.cpp
 
 HEADERS  += mainwindow.h \
     chess-state/state.h \
@@ -61,7 +61,7 @@ HEADERS  += mainwindow.h \
     gui/choosepiecedialog.h \
     gui/uihelperfunc.h \
     chess-logic/checkchecker.h \
-    chess-logic/ai.h
+    ai/ai.h
 
 FORMS    += mainwindow.ui \
     gui/gameoptionswindow.ui \
@@ -69,3 +69,6 @@ FORMS    += mainwindow.ui \
 
 RESOURCES += \
     gui/resource_pieces_images.qrc
+
+DISTFILES += \
+    ai/placeholder.txt

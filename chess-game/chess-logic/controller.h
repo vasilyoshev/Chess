@@ -4,6 +4,7 @@
 #include <vector>
 #include <QString>
 
+#include "ai/ai.h"
 #include "state.h"
 #include "coordinate.h"
 #include "player.h"
@@ -11,14 +12,12 @@
 #include "gametype.h"
 #include "piece.h"
 
-#include "ai.h"
 
 class Controller {
 private:
     State state;
+    Ai ai; // error here
 
-    /* Ai ai; // error here
-    */
     void initPieces();
     void initPlayers();
     void setPawnPieces(int row, Color color);
@@ -41,7 +40,7 @@ public:
     void promotePown(Piece::PieceType pieceType);
     bool isInPownPromotion();
 
-    void getAi();
+   void getAi();
 
 };
 
