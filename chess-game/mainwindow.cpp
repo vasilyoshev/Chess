@@ -40,6 +40,22 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+
+    // Board
+
+    for(int i=0;i<BOARD_SIZE;i++) {
+        delete[] Board[i];
+        delete[] BackgroundBoard[i];
+    }
+    delete[] Board;
+    delete[] BackgroundBoard;
+
+    // Labels
+
+    delete[] TopLabels;
+    delete[] BottomLabels;
+    delete[] LeftLabels;
+    delete[] RightLabels;
 }
 
 /**
