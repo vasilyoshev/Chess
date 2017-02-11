@@ -1,4 +1,5 @@
 #include "specialmoveshandler.h"
+#include "checkchecker.h"
 
 SpecialMovesHandler::SpecialMovesHandler() {
 }
@@ -53,14 +54,15 @@ std::vector<Coordinate> SpecialMovesHandler::filterInvalidMoves(const State& sta
 }
 
 void SpecialMovesHandler::getSpecialMoves(King *king, const State &state, std::vector<Coordinate> &abstractMoves, Coordinate kingCoordinate) {
-    // if king and rook haven't moved & no pieces between king and rook
+    // if king and rook haven't been moved and there are no pieces between them
     for (int i = 0; i < abstractMoves.size(); i++) {
         Coordinate move = abstractMoves[i];
         // check right castling
         if (move.getColumn() == kingCoordinate.getColumn() + 2) {
+            // TODO check if the piece pointer is null
             Piece* rightRook = state.getPiece(Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() + 3));
             // check if rook has moved or king is in check
-            if (rightRook->getType() != Piece::ptRook || rightRook->getMoved() || state.getCheckStatusCurrentPlayer()) {
+            if (rightRook->getType() != Piece::ptRook || rightRook->getMoved() || state.getCheckStatusCurrentPlayer() || CheckChecker::checkForCheck(state, Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() + 1), ColorUtils::getOppositeColor(king->getColor()))) {
                 abstractMoves.erase(abstractMoves.begin() + i);
                 i--;
             }
@@ -69,7 +71,7 @@ void SpecialMovesHandler::getSpecialMoves(King *king, const State &state, std::v
             Piece* leftRook = state.getPiece(Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() - 4));
             Piece* colOne = state.getPiece(Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() - 3));
             // check if rook has moved or king is in check or if column next to rook is free
-            if (leftRook->getType() != Piece::ptRook || leftRook->getMoved() || state.getCheckStatusCurrentPlayer() || colOne != NULL) {
+            if (leftRook->getType() != Piece::ptRook || leftRook->getMoved() || state.getCheckStatusCurrentPlayer() || colOne != NULL || CheckChecker::checkForCheck(state, Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() - 1), ColorUtils::getOppositeColor(king->getColor()))) {
                 abstractMoves.erase(abstractMoves.begin() + i);
                 i--;
             }

@@ -40,7 +40,7 @@ bool CheckChecker::checkForCheckmate(const State& state) {
     return true;
 }
 
-bool CheckChecker::checkForCheck(const State& state, const Coordinate& king, const Color& attackingColor) {
+bool CheckChecker::checkForCheck(const State& state, const Coordinate& position, const Color& attackingColor) {
     for (int row = 0; row < BOARD_SIZE; row++) {
         for (int column = 0; column < BOARD_SIZE; column++) {
             Piece* piece = state.getBoard()[row][column].getPiece();
@@ -49,7 +49,7 @@ bool CheckChecker::checkForCheck(const State& state, const Coordinate& king, con
                 vector<Coordinate> attackingPositions = SpecialMovesHandler::getValidMoves(state, Coordinate(row, column));
 
                 for (int i=0; i<attackingPositions.size(); i++) {
-                    if (attackingPositions[i] == king) {
+                    if (attackingPositions[i] == position) {
                         return true;
                     }
                 }
