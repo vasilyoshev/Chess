@@ -62,7 +62,7 @@ void SpecialMovesHandler::getSpecialMoves(King *king, const State &state, std::v
             // TODO check if the piece pointer is null
             Piece* rightRook = state.getPiece(Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() + 3));
             // check if he position the king is skipping is controlled by enemy figure
-            bool isControlled = CheckChecker::checkForCheck(state, Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() + 1), ColorUtils::getOppositeColor(king->getColor()));
+            bool isControlled = CheckChecker::isPositionUnderAttack(state, Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() + 1), ColorUtils::getOppositeColor(king->getColor()));
             // check if rook has moved or king is in check
             if (rightRook == NULL || rightRook->getType() != Piece::ptRook || rightRook->getMoved() || state.getCheckStatusCurrentPlayer() || isControlled) {
                 abstractMoves.erase(abstractMoves.begin() + i);
@@ -73,7 +73,7 @@ void SpecialMovesHandler::getSpecialMoves(King *king, const State &state, std::v
             Piece* leftRook = state.getPiece(Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() - 4));
             Piece* colOne = state.getPiece(Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() - 3));
             // check if he position the king is skipping is controlled by enemy figure
-            bool isControlled = CheckChecker::checkForCheck(state, Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() - 1), ColorUtils::getOppositeColor(king->getColor()));
+            bool isControlled = CheckChecker::isPositionUnderAttack(state, Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() - 1), ColorUtils::getOppositeColor(king->getColor()));
             // check if rook has moved or king is in check or if column next to rook is free
             if (leftRook == NULL || leftRook->getType() != Piece::ptRook || leftRook->getMoved() || state.getCheckStatusCurrentPlayer() || colOne != NULL || isControlled) {
                 abstractMoves.erase(abstractMoves.begin() + i);

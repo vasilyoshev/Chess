@@ -5,17 +5,19 @@
 #include "coordinate.h"
 #include "color.h"
 
+/**
+ * @brief The CheckChecker class provides functions for checking if the game is in check or chackmate.
+ * It also can filter moves which make the current player under check.
+ */
 class CheckChecker {
 private:
     static Coordinate locateCurrentPlayerKing(const State& state);
-    static bool checkForCheckmate(const State& state, const Coordinate& king, const Color& attackingColor);
-    static Color getOtherPlayerColor(const State& state);
 
 public:
     static bool checkForCheck(const State& state);
-    static bool checkForCheck(const State& state, const Coordinate& position, const Color& attackingColor);
+    static bool isPositionUnderAttack(const State& state, const Coordinate& position, const Color& attackingColor);
     static bool checkForCheckmate(const State& state);
-    static vector<Coordinate> filterCheckMoves(const State& state, vector<Coordinate> possibleMoves, const Coordinate& piece);
+    static vector<Coordinate> filterCheckMoves(const State& state, const vector<Coordinate>& possibleMoves, const Coordinate& pieceCoordinates);
 };
 
 #endif // CHECKCHECKER_H

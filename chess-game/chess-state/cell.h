@@ -8,6 +8,9 @@
 #include "knight.h"
 #include "pawn.h"
 
+/**
+ * @brief The Cell class represents a cell in the board.
+ */
 class Cell {
 private:
     Piece* piece;
@@ -18,8 +21,6 @@ public:
 
     void setPiece(Piece* piece);
     Piece* getPiece() const;
-
-    Cell getCopy();
 };
 
 #endif // CELL_H
