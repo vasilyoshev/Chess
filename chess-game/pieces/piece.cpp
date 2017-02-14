@@ -9,7 +9,6 @@ Piece::Piece(Color color, PieceType pieceType) {
 }
 
 Piece::~Piece() {
-
 }
 
 bool Piece::isKilled() {

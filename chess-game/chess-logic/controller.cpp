@@ -46,11 +46,12 @@ vector<Coordinate> Controller::getValidMoves(Coordinate click) {
 const State& Controller::getState() {
     return state;
 }
-
+//check if move is for queenside castling
 bool Controller::isLeftCastle(Piece::PieceType pieceType, Coordinate source, Coordinate target) {
     return pieceType==Piece::PieceType::ptKing && target.getColumn()==source.getColumn()-2;
 }
 
+//check if move is for kingside castling
 bool Controller::isRightCastle(Piece::PieceType pieceType, Coordinate source, Coordinate target) {
     return pieceType==Piece::PieceType::ptKing && target.getColumn()==source.getColumn()+2;
 }
@@ -58,32 +59,47 @@ bool Controller::isRightCastle(Piece::PieceType pieceType, Coordinate source, Co
 void Controller::movePiece(Coordinate source, Coordinate target) {
     Piece* sourcePiece = state.getPiece(source);
 
+    //if move is queenside castling
     if(isLeftCastle(sourcePiece->getType(), source, target)) {
         Coordinate rookSource = Coordinate(target.getRow(), target.getColumn() - 2);
         Coordinate rookTarget = Coordinate(target.getRow(), target.getColumn() + 1);
         Piece* rook = state.getPiece(rookSource);
 
+        //move king to new position
         state.setPiece(sourcePiece, target);
         state.setPiece(nullptr, source);
+
+        //move rook to new position
         state.setPiece(rook, rookTarget);
         state.setPiece(nullptr, rookSource);
 
+        //set flags for king and rook
         sourcePiece->setMoved();
         rook->setMoved();
+
         changePlayer();
+
+      //if move is kingside castling
     } else if(isRightCastle(sourcePiece->getType(), source, target)) {
         Coordinate rookSource = Coordinate(target.getRow(), target.getColumn() + 1);
         Coordinate rookTarget = Coordinate(target.getRow(), target.getColumn() - 1);
         Piece* rook = state.getPiece(rookSource);
 
+        //move king to new position
         state.setPiece(sourcePiece, target);
         state.setPiece(nullptr, source);
+
+        //move rook to new position
         state.setPiece(rook, rookTarget);
         state.setPiece(nullptr, rookSource);
 
+        //set flags for king and rook
         sourcePiece->setMoved();
         rook->setMoved();
+
         changePlayer();
+
+      //if move is not castling
     } else {
         Piece* targetPiece = state.getPiece(target);
         delete targetPiece;
@@ -95,7 +111,7 @@ void Controller::movePiece(Coordinate source, Coordinate target) {
         state.getCurrentPlayer()->setInCheck(false);
 
         checkAndSetPawnPromotion(sourcePiece, target);
-        if(!state.isInPownPromotion()) {
+        if(!state.isInPawnPromotion()) {
             changePlayer();
         }
     }
@@ -105,13 +121,13 @@ void Controller::checkAndSetPawnPromotion(Piece* sourcePiece, Coordinate& pieceC
     if (sourcePiece->getType() == Piece::PieceType::ptPawn &&
             ((sourcePiece->getColor() == cWhite && pieceCoordinate.getRow() == 0) ||
              (sourcePiece->getColor() == cBlack && pieceCoordinate.getRow() == 7))) {
-        state.setInPownPromotion(true);
-        state.setPownInPromotionCoordinates(&pieceCoordinate);
+        state.setInPawnPromotion(true);
+        state.setPawnInPromotionCoordinates(&pieceCoordinate);
     }
 }
 
 void Controller::promotePown(Piece::PieceType pieceType) {
-    Coordinate* pownCoordinate = state.getPownInPromotionCoordinates();
+    Coordinate* pownCoordinate = state.getPawnInPromotionCoordinates();
 
     Piece* pawn = state.getPiece(*pownCoordinate);
     Color pawnColor = pawn->getColor();
@@ -127,12 +143,12 @@ void Controller::promotePown(Piece::PieceType pieceType) {
         state.setPiece(new Bishop(pawnColor), *pownCoordinate);
     }
 
-    state.setInPownPromotion(false);
+    state.setInPawnPromotion(false);
     changePlayer();
 }
 
 bool Controller::isInPownPromotion(){
-    return state.isInPownPromotion();
+    return state.isInPawnPromotion();
 }
 
 void Controller::changePlayer() {

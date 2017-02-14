@@ -2,8 +2,7 @@
 #include "piece.h"
 
 Rook::Rook(Color color)
-    :Piece(color,ptRook)
-{
+    :Piece(color,ptRook) {
 }
 
 std::vector< std::vector<Coordinate> > Rook::getPossibleMoves(Coordinate currentPosition) {
@@ -30,16 +29,18 @@ std::vector< std::vector<Coordinate> > Rook::getPossibleMoves(Coordinate current
         right.push_back(Coordinate(row, i));
     }
 
-    //mvoes left
+    //moves left
     for (int i = col - 1; i > -1; i--) {
         left.push_back(Coordinate(row, i));
     }
 
     std::vector< std::vector<Coordinate> > result;
+
     result.push_back(up);
     result.push_back(down);
     result.push_back(right);
     result.push_back(left);
+
     return result;
 }
 

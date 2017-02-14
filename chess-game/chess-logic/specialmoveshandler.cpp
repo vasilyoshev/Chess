@@ -33,7 +33,7 @@ std::vector<Coordinate> SpecialMovesHandler::getValidMoves(const State& state, C
     return moves;
 }
 
-// cannot step on the same color, cannot jump over pieces, can step on the first of other colors
+//cannot step on the same color, cannot jump over pieces, can step on the first of other colors
 std::vector<Coordinate> SpecialMovesHandler::filterInvalidMoves(const State& state, std::vector< std::vector<Coordinate> >& abstractMoves, const Color& attackingColor) {
     vector<Coordinate> filtered;
 
@@ -54,28 +54,33 @@ std::vector<Coordinate> SpecialMovesHandler::filterInvalidMoves(const State& sta
 }
 
 void SpecialMovesHandler::getSpecialMoves(King *king, const State &state, std::vector<Coordinate> &abstractMoves, Coordinate kingCoordinate) {
-    // if king and rook haven't been moved and there are no pieces between them
+    //if king and rook haven't been moved and there are no pieces between them
     for (int i = 0; i < abstractMoves.size(); i++) {
         Coordinate move = abstractMoves[i];
-        // check right castling
-        if (move.getColumn() == kingCoordinate.getColumn() + 2 && !king->getMoved()) {
-            // TODO check if the piece pointer is null
+        //if move is for kingside castling
+        if (move.getColumn() == kingCoordinate.getColumn() + 2) {
             Piece* rightRook = state.getPiece(Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() + 3));
-            // check if he position the king is skipping is controlled by enemy figure
-            bool isControlled = CheckChecker::isPositionUnderAttack(state, Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() + 1), ColorUtils::getOppositeColor(king->getColor()));
-            // check if rook has moved or king is in check
-            if (rightRook == NULL || rightRook->getType() != Piece::ptRook || rightRook->getMoved() || state.getCheckStatusCurrentPlayer() || isControlled) {
+            //check if position skipped by king is controlled enemy figure
+            bool isControlled = CheckChecker::isPositionUnderAttack(state,
+                                                                    Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() + 1),
+                                                                    ColorUtils::getOppositeColor(king->getColor()));
+            //check if rook has moved or king is in check or isControlled
+            if (rightRook == NULL || rightRook->getType() != Piece::ptRook || rightRook->getMoved()
+                    || state.getCheckStatusCurrentPlayer() || isControlled) {
                 abstractMoves.erase(abstractMoves.begin() + i);
                 i--;
             }
-        // check left castling
-        } else if (move.getColumn() == kingCoordinate.getColumn() - 2 && !king->getMoved()) {
+        //if move is for queenside castling
+        } else if (move.getColumn() == kingCoordinate.getColumn() - 2) {
             Piece* leftRook = state.getPiece(Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() - 4));
             Piece* colOne = state.getPiece(Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() - 3));
-            // check if he position the king is skipping is controlled by enemy figure
-            bool isControlled = CheckChecker::isPositionUnderAttack(state, Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() - 1), ColorUtils::getOppositeColor(king->getColor()));
-            // check if rook has moved or king is in check or if column next to rook is free
-            if (leftRook == NULL || leftRook->getType() != Piece::ptRook || leftRook->getMoved() || state.getCheckStatusCurrentPlayer() || colOne != NULL || isControlled) {
+            //check if position skipped by king is controlled enemy figure
+            bool isControlled = CheckChecker::isPositionUnderAttack(state,
+                                                                    Coordinate(kingCoordinate.getRow(),kingCoordinate.getColumn() - 1),
+                                                                    ColorUtils::getOppositeColor(king->getColor()));
+            //check if rook has moved or king is in check or isControlled
+            if (leftRook == NULL || leftRook->getType() != Piece::ptRook || leftRook->getMoved()
+                    || state.getCheckStatusCurrentPlayer() || colOne != NULL || isControlled) {
                 abstractMoves.erase(abstractMoves.begin() + i);
                 i--;
             }
@@ -101,19 +106,20 @@ void SpecialMovesHandler::getSpecialMoves(Knight *knight, const State &state, st
 
 void SpecialMovesHandler::getSpecialMoves(Pawn *pawn, const State &state, std::vector<Coordinate> &abstractMoves, Coordinate pawnCoordinate) {
     Coordinate move;
-    //for every move
     for (int i = 0; i < abstractMoves.size(); i++) {
         move = abstractMoves[i];
         //if move is diagonal
         if (pawnCoordinate.getColumn() != move.getColumn()) {
             Piece* piece = state.getPiece(move);
+            //if cell is empty erase move
             if (piece == NULL) {
                 abstractMoves.erase(abstractMoves.begin() + i);
                 i--;
             }
-          //if move is one forward
+          //if move is forward
         } else {
             Piece* piece = state.getPiece(move);
+            //if cell is not empty erase move
             if (piece != NULL) {
                 abstractMoves.erase(abstractMoves.begin() + i);
                 i--;
