@@ -1,6 +1,10 @@
 #ifndef GAMETYPE_H
 #define GAMETYPE_H
 
+/**
+ * @brief The TGameType enum
+ * Enumerates the possible game types
+ */
 enum TGameType {
     gtNone,
     gtPlayerVsCPU,

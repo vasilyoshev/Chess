@@ -18,7 +18,7 @@ public:
     /**
      * @brief getOppositeColor
      *
-     * Returns the opposit color to the provided one.
+     * Returns the opposite color to the provided one.
      *
      * @param color the provided color
      * @return the oposite of the provided color

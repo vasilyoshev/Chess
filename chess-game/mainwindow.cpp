@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
     controller.setFirstPlayer(gameOptionsWindow.getFirstPlayerName(), gameOptionsWindow.getSelectedColor());
     controller.setSecondPlayer(gameOptionsWindow.getSecondPlayerName(), ColorUtils::getOppositeColor(gameOptionsWindow.getSelectedColor()));
     controller.setGameType(gameOptionsWindow.getSelectedGameType());
-    controller.initStartingPlayer();
+    controller.setWhitePlayerInTurn();
 
     drawState(); // draw initial state
 }
@@ -138,7 +138,7 @@ void MainWindow::initBackgroundBoardColor()
             QString color = ( (i+j)%2 ? "rgba(130, 130, 130, 100%)" : "rgba(220, 220, 220, 100%)" );
             BackgroundBoard[i][j].setStyleSheet(UIHelperFunc::getBackgroundStyleSheet(color));
 
-            if(controller.getState().getPiece(Coordinate(i, j))==nullptr)
+            if(controller.getPiece(Coordinate(i, j))==nullptr)
                 Board[i][j].setStyleSheet(UIHelperFunc::getBackgroundAndHoverStyleSheet("rgba(0, 0, 0 , 0%)", "rgba(100, 255, 100, 0%)"));
             else
                 Board[i][j].setStyleSheet(UIHelperFunc::getBackgroundAndHoverStyleSheet("rgba(0, 0, 0, 0%)", "rgba(100, 255, 100, 50%)"));
@@ -174,13 +174,13 @@ void MainWindow::handleBackgroundAndHighlightedFields()
 void MainWindow::handlePieceClick()
 {
     CellButton *cellButton = (CellButton*)sender();
-    Piece *selectedPiece = controller.getState().getPiece(cellButton->getCoordinate());
+    Piece* selectedPiece = controller.getPiece(cellButton->getCoordinate());
     bool isBackgroundClicked = (selectedPiece==nullptr ? true : false);
 
     if(isBackgroundClicked || isSelected(cellButton->getCoordinate())) {
         handleBackgroundAndHighlightedFields();
     } else {
-        if(selectedPiece->getColor() == controller.getState().getCurrentPlayer()->getColor()) {
+        if(selectedPiece->getColor() == controller.getCurrentPlayer()->getColor()) {
             selectedPieceCoordinate = cellButton->getCoordinate();
             selectedCells = controller.getValidMoves(cellButton->getCoordinate());
 
@@ -257,7 +257,7 @@ void MainWindow::drawState()
 {
     for(int row=0;row<8;row++) {
         for(int col=0;col<8;col++) {
-            Piece *p = controller.getState().getBoard()[row][col].getPiece();
+            Piece *p = controller.getPiece(Coordinate(row, col));
             QString piece = UIHelperFunc::getPieceFileName(p);
             if(piece == "") {
                 Board[row][col].setIcon(QIcon());
@@ -272,7 +272,7 @@ void MainWindow::drawState()
 
     drawCurrentPlayer();
 
-    if( controller.getState().getCurrentPlayer()->isInCheckmate() ) {
+    if( controller.getCurrentPlayer()->isInCheckmate() ) {
         showGameOver();
     } else if( controller.isInPownPromotion() )  {
         ChoosePieceDialog choosePieceDialog;
@@ -313,7 +313,7 @@ void MainWindow::highlightCells()
  */
 void MainWindow::drawCurrentPlayer()
 {
-    const Player *player = controller.getState().getCurrentPlayer();
+    const Player *player = controller.getCurrentPlayer();
     QString PlayerName = "";
     Color color = cWhite;
     if(player!=nullptr) {
@@ -339,7 +339,7 @@ void MainWindow::drawCurrentPlayer()
 
 
     // TO-DO check if check, then show/hide label
-    PlayerCheckLabel.setVisible( controller.getState().getCurrentPlayer()->isInCheck() );
+    PlayerCheckLabel.setVisible( controller.getCurrentPlayer()->isInCheck() );
 }
 
 /**
@@ -367,7 +367,7 @@ bool MainWindow::isSelected(Coordinate coordinate)
 void MainWindow::showGameOver() {
     QMessageBox msgBox;
     msgBox.setText("Game over");
-    std::string message = controller.getState().getCurrentPlayer()->getName() + ", you won the game! Nice job!";
+    std::string message = controller.getCurrentPlayer()->getName() + ", you won the game! Nice job!";
     msgBox.setInformativeText(message.c_str());
     msgBox.setStandardButtons(QMessageBox::Ok);
     msgBox.setDefaultButton(QMessageBox::Ok);

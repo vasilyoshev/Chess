@@ -13,14 +13,12 @@
 
 #include "ai.h"
 
+/**
+ * @brief The Controller class responsible for making all changes to the state.
+ */
 class Controller {
 private:
     State state;
-
-    /* Ai ai; // error here
-    */
-    void initPieces();
-    void initPlayers();
     void setPawnPieces(int row, Color color);
     void setMajorPieces(int row, Color color);
     bool isLeftCastle(Piece::PieceType pieceType, Coordinate source, Coordinate target);
@@ -28,21 +26,22 @@ private:
     void changePlayer();
     void checkAndSetPawnPromotion(Piece* sourcePiece, Coordinate& pieceCoordinate);
 
+    void doCastle(Piece* sourcePiece, Coordinate source, Coordinate rookTarget, Coordinate target, Coordinate rookSource);
+
 public:
     Controller();
     void movePiece(Coordinate source, Coordinate target);
     vector<Coordinate> getValidMoves(Coordinate click);
-    void initState();
-    const State& getState();
+    Piece* getPiece(Coordinate coordinate);
+    Player* getCurrentPlayer();
     void setFirstPlayer(string name, Color color);
     void setSecondPlayer(string name, Color color);
     void setGameType(TGameType gameType);
-    void initStartingPlayer();
+    void setWhitePlayerInTurn();
     void promotePown(Piece::PieceType pieceType);
     bool isInPownPromotion();
 
     void getAi();
-
 };
 
 #endif // CONTROLLER_H

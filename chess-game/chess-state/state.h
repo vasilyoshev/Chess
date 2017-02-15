@@ -7,6 +7,9 @@
 
 const int BOARD_SIZE = 8;
 
+/**
+ * @brief The State class contains the state of the game
+ */
 class State {
 private:
     vector< vector<Cell> > board;
@@ -16,6 +19,11 @@ private:
     TGameType gameType;
     bool inPawnPromotion;
     Coordinate* pawnInPromotionCoordinates;
+
+    void initPieces();
+    void setPawnPieces(int row, Color color);
+    void setMajorPieces(int row, Color color);
+
 public:
     State();
     ~State();
@@ -36,7 +44,7 @@ public:
     void setCheckStatusCurrentPlayer(bool inCheck);
     bool getCheckStatusCurrentPlayer() const;
 
-    bool isInPawnPromotion() const;
+    bool isInPownPromotion() const;
     bool setInPawnPromotion(bool inPawnPromotion);
 
     void setPawnInPromotionCoordinates(Coordinate* pawnInPromotionCoordinates);

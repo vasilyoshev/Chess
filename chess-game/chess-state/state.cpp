@@ -2,6 +2,7 @@
 
 State::State() {
     board.resize(BOARD_SIZE, vector<Cell>(BOARD_SIZE));
+    initPieces();
 
     currentPlayerIndex = 0;
     currentPlayer = &players[currentPlayerIndex];
@@ -27,8 +28,33 @@ State::State(const State& state) {
     players[0] = Player(state.players[0]);
     players[1] = Player(state.players[1]);
     currentPlayer = &players[currentPlayerIndex];
-    inPawnPromotion = state.isInPawnPromotion();
+    inPawnPromotion = state.isInPownPromotion();
     pawnInPromotionCoordinates = NULL;
+}
+
+
+void State::setPawnPieces(int row, Color color) {
+    for(int column = 0; column < 8; column++) {
+        setPiece(new Pawn(color), Coordinate(row, column));
+    }
+}
+
+void State::setMajorPieces(int row, Color color) {
+    setPiece(new Rook(color), Coordinate(row, 0));
+    setPiece(new Knight(color), Coordinate(row, 1));
+    setPiece(new Bishop(color), Coordinate(row, 2));
+    setPiece(new Queen(color), Coordinate(row, 3));
+    setPiece(new King(color), Coordinate(row, 4));
+    setPiece(new Bishop(color), Coordinate(row, 5));
+    setPiece(new Knight(color), Coordinate(row, 6));
+    setPiece(new Rook(color), Coordinate(row, 7));
+}
+
+void State::initPieces() {
+    setMajorPieces(0, cBlack);
+    setPawnPieces(1, cBlack);
+    setPawnPieces(6, cWhite);
+    setMajorPieces(7, cWhite);
 }
 
 void State::setPiece(Piece* piece, Coordinate coordinate) {
@@ -78,7 +104,7 @@ bool State::getCheckStatusCurrentPlayer() const {
     return currentPlayer->isInCheck();
 }
 
-bool State::isInPawnPromotion() const {
+bool State::isInPownPromotion() const {
     return inPawnPromotion;
 }
 
