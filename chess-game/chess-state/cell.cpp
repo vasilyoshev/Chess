@@ -11,7 +11,6 @@ Cell::Cell() {
 
 /**
  * @brief Cell::Cell
- *
  * Copy constructor
  *
  * @param cell
@@ -26,7 +25,6 @@ Cell::Cell(const Cell& cell) {
 
 /**
  * @brief Cell::setPiece
- *
  * Sets a piece into the cell
  *
  * @param piece the piece to set

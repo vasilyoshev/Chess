@@ -23,10 +23,9 @@ private:
     void setMajorPieces(int row, Color color);
     bool isLeftCastle(Piece::PieceType pieceType, Coordinate source, Coordinate target);
     bool isRightCastle(Piece::PieceType pieceType, Coordinate source, Coordinate target);
+    void doCastle(Piece* sourcePiece, Coordinate source, Coordinate rookTarget, Coordinate target, Coordinate rookSource);
     void changePlayer();
     void checkAndSetPawnPromotion(Piece* sourcePiece, Coordinate& pieceCoordinate);
-
-    void doCastle(Piece* sourcePiece, Coordinate source, Coordinate rookTarget, Coordinate target, Coordinate rookSource);
 
 public:
     Controller();

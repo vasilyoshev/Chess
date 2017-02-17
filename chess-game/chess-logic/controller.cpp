@@ -47,11 +47,13 @@ Player* Controller::getCurrentPlayer() {
     return state.getCurrentPlayer();
 }
 
+// TODO Vasko fill the documentation like the other functions
 //check if move is for queenside castling
 bool Controller::isLeftCastle(Piece::PieceType pieceType, Coordinate source, Coordinate target) {
     return pieceType==Piece::PieceType::ptKing && target.getColumn()==source.getColumn()-2;
 }
 
+// TODO Vasko fill the documentation like the other functions
 //check if move is for kingside castling
 bool Controller::isRightCastle(Piece::PieceType pieceType, Coordinate source, Coordinate target) {
     return pieceType==Piece::PieceType::ptKing && target.getColumn()==source.getColumn()+2;
@@ -112,7 +114,7 @@ void Controller::movePiece(Coordinate source, Coordinate target) {
 
         // checking if after the move a pown is in promotion
         checkAndSetPawnPromotion(sourcePiece, target);
-        if(!state.isInPownPromotion()) {
+        if(!state.isInPawnPromotion()) {
             // change player if there is no pown in promotion
             changePlayer();
         }
@@ -132,7 +134,7 @@ void Controller::checkAndSetPawnPromotion(Piece* sourcePiece, Coordinate& pieceC
             ((sourcePiece->getColor() == cWhite && pieceCoordinate.getRow() == 0) ||
              (sourcePiece->getColor() == cBlack && pieceCoordinate.getRow() == 7))) {
         state.setInPawnPromotion(true);
-        state.setPawnInPromotionCoordinates(&pieceCoordinate); // caches the coordinates for later
+        state.setPawnInPromotionCoordinates(pieceCoordinate); // caches the coordinates for later
     }
 }
 
@@ -143,24 +145,25 @@ void Controller::checkAndSetPawnPromotion(Piece* sourcePiece, Coordinate& pieceC
  * @param pieceType the type of piece that should be created in the place of the pown which is in promotion
  */
 void Controller::promotePown(Piece::PieceType pieceType) {
-    Coordinate* pownCoordinate = state.getPawnInPromotionCoordinates();
+    Coordinate pownCoordinate = state.getPawnInPromotionCoordinates();
 
-    Piece* pawn = state.getPiece(*pownCoordinate);
+    Piece* pawn = state.getPiece(pownCoordinate);
     Color pawnColor = pawn->getColor();
     delete pawn; // removin the pown
 
     // creating the new piece
     if (pieceType == Piece::PieceType::ptQueen) {
-        state.setPiece(new Queen(pawnColor), *pownCoordinate);
+        state.setPiece(new Queen(pawnColor), pownCoordinate);
     } else if (pieceType == Piece::PieceType::ptKnight) {
-        state.setPiece(new Knight(pawnColor), *pownCoordinate);
+        state.setPiece(new Knight(pawnColor), pownCoordinate);
     } else if (pieceType == Piece::PieceType::ptRook) {
-        state.setPiece(new Rook(pawnColor), *pownCoordinate);
+        state.setPiece(new Rook(pawnColor), pownCoordinate);
     } else if (pieceType == Piece::PieceType::ptBishop) {
-        state.setPiece(new Bishop(pawnColor), *pownCoordinate);
+        state.setPiece(new Bishop(pawnColor), pownCoordinate);
     }
 
     state.setInPawnPromotion(false);
+    state.setPawnInPromotionCoordinates(Coordinate(-1, -1));
     changePlayer();
 }
 
@@ -170,7 +173,7 @@ void Controller::promotePown(Piece::PieceType pieceType) {
  * @return true if there is a pown in promotion (in first or last row depending on the color)
  */
 bool Controller::isInPownPromotion(){
-    return state.isInPownPromotion();
+    return state.isInPawnPromotion();
 }
 
 /**
@@ -196,7 +199,7 @@ void Controller::changePlayer() {
  * @param color the color of the player
  */
 void Controller::setFirstPlayer(string name, Color color) {
-    state.initPlayer1(name,color);
+    state.setPlayer1(name,color);
 }
 
 /**
@@ -207,7 +210,7 @@ void Controller::setFirstPlayer(string name, Color color) {
  * @param color the color of the player
  */
 void Controller::setSecondPlayer(string name, Color color) {
-    state.initPlayer2(name,color);
+    state.setPlayer2(name,color);
 }
 
 /**
@@ -217,7 +220,7 @@ void Controller::setSecondPlayer(string name, Color color) {
  * @param gameType the game type
  */
 void Controller::setGameType(TGameType gameType) {
-    state.initGameType(gameType);
+    state.setGameType(gameType);
 }
 
 /**

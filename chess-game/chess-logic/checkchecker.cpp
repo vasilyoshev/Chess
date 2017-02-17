@@ -30,7 +30,7 @@ bool CheckChecker::checkForCheck(const State& state) {
  * @param state a game state
  * @return true if the current player is in checkmate, false otherwise
  */
-bool CheckChecker::checkForCheckmate(const State& state) {
+bool CheckChecker::checkForCheckmate(State& state) {
     if(!checkForCheck(state)) {
         return false;
     }
@@ -40,7 +40,7 @@ bool CheckChecker::checkForCheckmate(const State& state) {
     //checking if the current player can make a valid move with his pieces
     for (int row = 0; row < BOARD_SIZE; row++) {
         for (int column = 0; column < BOARD_SIZE; column++) {
-            Piece* piece = state.getBoard()[row][column].getPiece();
+            Piece* piece = state.getPiece(Coordinate(row, column));
 
             if (piece != NULL && piece->getColor() == currentPlayerColor) {
                 Coordinate coordinate = Coordinate(row, column);
@@ -70,7 +70,7 @@ bool CheckChecker::checkForCheckmate(const State& state) {
 bool CheckChecker::isPositionUnderAttack(const State& state, const Coordinate& position, const Color& attackingColor) {
     for (int row = 0; row < BOARD_SIZE; row++) {
         for (int column = 0; column < BOARD_SIZE; column++) {
-            Piece* piece = state.getBoard()[row][column].getPiece();
+            Piece* piece = state.getPiece(Coordinate(row, column));
 
             if (piece != NULL && piece->getColor() == attackingColor) {
                 vector<Coordinate> attackingPositions = SpecialMovesHandler::getValidMoves(state, Coordinate(row, column));
@@ -96,13 +96,11 @@ bool CheckChecker::isPositionUnderAttack(const State& state, const Coordinate& p
  * @return the coordinates of the king of the current player
  */
 Coordinate CheckChecker::locateCurrentPlayerKing(const State& state) {
-    vector< vector<Cell> > board  = state.getBoard();
     Color currentPlayerColor = state.getCurrentPlayer()->getColor();
 
-    for (int row = 0; row < 8; row++) {
-        for (int column = 0; column < 8; column++) {
-            Cell currentCell = board[row][column];
-            Piece* piece = currentCell.getPiece();
+    for (int row = 0; row < BOARD_SIZE; row++) {
+        for (int column = 0; column < BOARD_SIZE; column++) {
+            Piece* piece = state.getPiece(Coordinate(row, column));
 
             if (piece != NULL && piece->getType() == Piece::ptKing && piece->getColor() == currentPlayerColor) {
                 return Coordinate(row, column);
@@ -124,7 +122,7 @@ Coordinate CheckChecker::locateCurrentPlayerKing(const State& state) {
  * @param pieceCoordinates the selected piece coordinates
  * @return the provided moves without the ones which put the current player under check
  */
-vector<Coordinate> CheckChecker::filterCheckMoves(const State& state,
+vector<Coordinate> CheckChecker::filterCheckMoves(State& state,
                                                   const vector<Coordinate>& possibleMoves,
                                                   const Coordinate& pieceCoordinates) {
     vector<Coordinate> filtered;
