@@ -37,8 +37,8 @@ std::vector<Coordinate> SpecialMovesHandler::getValidMoves(const State& state, C
 std::vector<Coordinate> SpecialMovesHandler::filterInvalidMoves(const State& state, std::vector< std::vector<Coordinate> >& abstractMoves, const Color& attackingColor) {
     vector<Coordinate> filtered;
 
-    for (int i = 0; i < abstractMoves.size(); i++) {
-        for (int j = 0; j < abstractMoves[i].size(); j++) {
+    for (std::size_t i = 0; i < abstractMoves.size(); i++) {
+        for (std::size_t j = 0; j < abstractMoves[i].size(); j++) {
             Piece* piece = state.getPiece(abstractMoves[i][j]);
             if (piece == NULL) {
                 filtered.push_back(abstractMoves[i][j]);
@@ -55,7 +55,7 @@ std::vector<Coordinate> SpecialMovesHandler::filterInvalidMoves(const State& sta
 
 void SpecialMovesHandler::getSpecialMoves(King *king, const State &state, std::vector<Coordinate> &abstractMoves, Coordinate kingCoordinate) {
     //if king and rook haven't been moved and there are no pieces between them
-    for (int i = 0; i < abstractMoves.size(); i++) {
+    for (std::size_t i = 0; i < abstractMoves.size(); i++) {
         Coordinate move = abstractMoves[i];
         //if move is for kingside castling
         if (move.getColumn() == kingCoordinate.getColumn() + 2) {
@@ -106,7 +106,7 @@ void SpecialMovesHandler::getSpecialMoves(Knight *knight, const State &state, st
 
 void SpecialMovesHandler::getSpecialMoves(Pawn *pawn, const State &state, std::vector<Coordinate> &abstractMoves, Coordinate pawnCoordinate) {
     Coordinate move;
-    for (int i = 0; i < abstractMoves.size(); i++) {
+    for (std::size_t i = 0; i < abstractMoves.size(); i++) {
         move = abstractMoves[i];
         //if move is diagonal
         if (pawnCoordinate.getColumn() != move.getColumn()) {

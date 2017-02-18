@@ -12,8 +12,8 @@ std::vector< std::vector<Coordinate> > King::getPossibleMoves(Coordinate current
         for(int row=currentPosition.getRow()-1;row<=currentPosition.getRow()+1;row++) {
 
             //if move coincides with king position OR if move is out of bounds -> continue
-            if(col==currentPosition.getColumn() && row==currentPosition.getRow() ||
-                    col<0 || col>=8 || row<0 || row>=8)
+            if((col==currentPosition.getColumn() && row==currentPosition.getRow()) ||
+                    (col<0 || col>=8 || row<0 || row>=8))
                 continue;
 
             moves.push_back(Coordinate(row,col));
@@ -37,7 +37,7 @@ std::vector< std::vector<Coordinate> > King::getPossibleMoves(Coordinate current
 
     //split every move in a separate vector and add it to the result to be returned
     std::vector<Coordinate>::const_iterator begin = moves.begin();
-    for (int i = 0; i < moves.size(); i++) {
+    for (std::size_t i = 0; i < moves.size(); i++) {
         result.push_back(std::vector<Coordinate>(begin + i, begin + i + 1));
     }
     return result;

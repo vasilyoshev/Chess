@@ -38,7 +38,7 @@ std::vector< std::vector<Coordinate> > Pawn::getPossibleMoves(Coordinate current
 
     //split diagonal moves into separate vectors and add them to result
     std::vector<Coordinate>::const_iterator begin = diagonals.begin();
-    for (int i = 0; i < diagonals.size(); i++) {
+    for (std::size_t i = 0; i < diagonals.size(); i++) {
         result.push_back(std::vector<Coordinate>(begin + i, begin + i + 1));
     }
 

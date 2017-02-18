@@ -75,7 +75,7 @@ bool CheckChecker::isPositionUnderAttack(const State& state, const Coordinate& p
             if (piece != NULL && piece->getColor() == attackingColor) {
                 vector<Coordinate> attackingPositions = SpecialMovesHandler::getValidMoves(state, Coordinate(row, column));
 
-                for (int i=0; i<attackingPositions.size(); i++) {
+                for (std::size_t i=0; i<attackingPositions.size(); i++) {
                     if (attackingPositions[i] == position) {
                         return true;
                     }
@@ -127,7 +127,7 @@ vector<Coordinate> CheckChecker::filterCheckMoves(State& state,
                                                   const Coordinate& pieceCoordinates) {
     vector<Coordinate> filtered;
 
-    for (int i = 0; i < possibleMoves.size(); i++) {
+    for (std::size_t i = 0; i < possibleMoves.size(); i++) {
         Coordinate target = possibleMoves[i];
 
         // copy the state

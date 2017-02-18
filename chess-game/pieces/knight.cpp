@@ -29,7 +29,7 @@ std::vector< std::vector<Coordinate> > Knight::getPossibleMoves(Coordinate curre
 
     //split every move in a separate vector and add it to the result to be returned
     std::vector<Coordinate>::const_iterator begin = moves.begin();
-    for (int i = 0; i < moves.size(); i++) {
+    for (std::size_t i = 0; i < moves.size(); i++) {
         result.push_back(std::vector<Coordinate>(begin + i, begin + i + 1));
     }
     return result;
