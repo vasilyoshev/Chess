@@ -24,7 +24,6 @@ public:
     virtual ~Piece();
     virtual std::vector< std::vector<Coordinate> > getPossibleMoves(Coordinate currentPosition) = 0;
     virtual Piece* getCopy() const = 0;
-    bool isKilled();
     Color getColor() const;
     PieceType getType() const;
     void setMoved();
@@ -32,7 +31,6 @@ public:
 
 protected:
     Color color;
-    bool killed;
     PieceType pieceType;
     bool hasMoved;
 };

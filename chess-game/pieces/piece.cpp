@@ -8,7 +8,6 @@
 Piece::Piece(Color color, PieceType pieceType) {
     this->color = color;
     this->pieceType = pieceType;
-    killed = false;
 }
 
 /**
@@ -22,9 +21,6 @@ Piece::~Piece() {
  *
  * @return true if piece is killed
  */
-bool Piece::isKilled() {
-    return killed;
-}
 
 /**
  * @brief Piece::getColor
