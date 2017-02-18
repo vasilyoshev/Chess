@@ -1,9 +1,20 @@
 #include "pawn.h"
 
+/**
+ * @brief Pawn::Pawn
+ */
 Pawn::Pawn(Color color)
     :Piece(color, ptPawn) {
 }
 
+/**
+ * @brief Pawn::getPossibleMoves
+ *
+ * Gets all possible moves for this type of Piece.
+ *
+ * @param currentPosition - the position for which the possible moves are to be checked.
+ * @return vector of vectors, where every vector holds all moves in a given direction.
+ */
 std::vector< std::vector<Coordinate> > Pawn::getPossibleMoves(Coordinate currentPosition) {
     std::vector<Coordinate> diagonals;
     std::vector<Coordinate> forward;
@@ -45,6 +56,13 @@ std::vector< std::vector<Coordinate> > Pawn::getPossibleMoves(Coordinate current
     return result;
 }
 
+/**
+ * @brief Pawn::getCopy
+ *
+ * Generates a copy for this piece.
+ *
+ * @return Copy of the piece.
+ */
 Piece* Pawn::getCopy() const {
     return new Pawn(color);
 }

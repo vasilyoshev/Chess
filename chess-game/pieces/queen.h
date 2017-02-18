@@ -3,6 +3,9 @@
 
 #include "piece.h"
 
+/**
+ * @brief The Queen class provides all possible moves for queen pieces.
+ */
 class Queen : public Piece {
 public:
     Queen(Color color);

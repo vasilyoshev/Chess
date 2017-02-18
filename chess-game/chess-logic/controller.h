@@ -37,7 +37,7 @@ public:
     void setSecondPlayer(string name, Color color);
     void setGameType(TGameType gameType);
     void setWhitePlayerInTurn();
-    void promotePown(Piece::PieceType pieceType);
+    void promotePawn(Piece::PieceType pieceType);
     bool isInPownPromotion();
 
     void getAi();

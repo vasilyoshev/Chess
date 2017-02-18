@@ -5,6 +5,9 @@
 
 #include "piece.h"
 
+/**
+ * @brief The Bishop class provides all possible moves for bishop pieces.
+ */
 class Bishop : public Piece {
 public:
     Bishop(Color color);

@@ -1,12 +1,22 @@
 #include "bishop.h"
 
 #define min(a,b) (a<b ? a : b)
-
+/**
+ * @brief Bishop::Bishop
+ */
 Bishop::Bishop(Color color)
     :Piece(color,ptBishop) {
 
 }
 
+/**
+ * @brief Bishop::getPossibleMoves
+ *
+ * Gets all possible moves for this type of Piece.
+ *
+ * @param currentPosition - the position for which the possible moves are to be checked.
+ * @return vector of vectors, where every vector holds all moves in a given direction.
+ */
 std::vector< std::vector<Coordinate> > Bishop::getPossibleMoves(Coordinate currentPosition) {
     std::vector<Coordinate> upLeft;
     std::vector<Coordinate> upRight;
@@ -50,6 +60,13 @@ std::vector< std::vector<Coordinate> > Bishop::getPossibleMoves(Coordinate curre
     return result;
 }
 
+/**
+ * @brief Bishop::getCopy
+ *
+ * Generates a copy for this piece.
+ *
+ * @return Copy of the piece.
+ */
 Piece* Bishop::getCopy() const {
     return new Bishop(color);
 }

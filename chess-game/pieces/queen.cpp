@@ -2,10 +2,21 @@
 
 #define min(a,b) (a<b ? a : b)
 
+/**
+ * @brief Queen::Queen
+ */
 Queen::Queen(Color color)
     :Piece(color,ptQueen) {
 }
 
+/**
+ * @brief Queen::getPossibleMoves
+ *
+ * Gets all possible moves for this type of Piece.
+ *
+ * @param currentPosition - the position for which the possible moves are to be checked.
+ * @return vector of vectors, where every vector holds all moves in a given direction.
+ */
 std::vector< std::vector<Coordinate> > Queen::getPossibleMoves(Coordinate currentPosition) {
     std::vector<Coordinate> upLeft;
     std::vector<Coordinate> upRight;
@@ -73,6 +84,13 @@ std::vector< std::vector<Coordinate> > Queen::getPossibleMoves(Coordinate curren
     return result;
 }
 
+/**
+ * @brief Queen::getCopy
+ *
+ * Generates a copy for this piece.
+ *
+ * @return Copy of the piece.
+ */
 Piece* Queen::getCopy() const {
     return new Queen(color);
 }

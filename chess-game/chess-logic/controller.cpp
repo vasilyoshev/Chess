@@ -47,19 +47,43 @@ Player* Controller::getCurrentPlayer() {
     return state.getCurrentPlayer();
 }
 
-// TODO Vasko fill the documentation like the other functions
-//check if move is for queenside castling
+/**
+ * @brief Controller::isLeftCastle
+ *
+ * @param pieceType - type of the piece
+ * @param source - coordinates of source position
+ * @param target - coordinates of target position
+ *
+ * @return true if the selected move is for queenside castling
+ */
 bool Controller::isLeftCastle(Piece::PieceType pieceType, Coordinate source, Coordinate target) {
     return pieceType==Piece::PieceType::ptKing && target.getColumn()==source.getColumn()-2;
 }
 
-// TODO Vasko fill the documentation like the other functions
-//check if move is for kingside castling
+/**
+ * @brief Controller::isLeftCastle
+ *
+ * @param pieceType - type of the piece
+ * @param source - coordinates of source position
+ * @param target - coordinates of target position
+ *
+ * @return true if the selected move is for kingside castling
+ */
 bool Controller::isRightCastle(Piece::PieceType pieceType, Coordinate source, Coordinate target) {
     return pieceType==Piece::PieceType::ptKing && target.getColumn()==source.getColumn()+2;
 }
 
-// TODO Vasko fill the documentation like the other functions
+/**
+ * @brief Controller::doCastle
+ *
+ * Performs the castling move.
+ *
+ * @param sourcePiece - king piece
+ * @param source - coordinates of king source
+ * @param rookTarget - coordinates of rook target
+ * @param target - coordinates of king target
+ * @param rookSource - coordinates of rook source
+ */
 void Controller::doCastle(Piece* sourcePiece, Coordinate source, Coordinate rookTarget, Coordinate target, Coordinate rookSource)
 {
     Piece* rook = state.getPiece(rookSource);
@@ -139,27 +163,27 @@ void Controller::checkAndSetPawnPromotion(Piece* sourcePiece, Coordinate& pieceC
 }
 
 /**
- * @brief Controller::promotePown
- * Changes the pown which is in promotion to the provided type
+ * @brief Controller::promotePawn
+ * Changes the pawn which is in promotion to the provided type
  *
- * @param pieceType the type of piece that should be created in the place of the pown which is in promotion
+ * @param pieceType the type of piece that should be created in the place of the pawn which is in promotion
  */
-void Controller::promotePown(Piece::PieceType pieceType) {
-    Coordinate pownCoordinate = state.getPawnInPromotionCoordinates();
+void Controller::promotePawn(Piece::PieceType pieceType) {
+    Coordinate pawnCoordinate = state.getPawnInPromotionCoordinates();
 
-    Piece* pawn = state.getPiece(pownCoordinate);
+    Piece* pawn = state.getPiece(pawnCoordinate);
     Color pawnColor = pawn->getColor();
     delete pawn; // removin the pown
 
     // creating the new piece
     if (pieceType == Piece::PieceType::ptQueen) {
-        state.setPiece(new Queen(pawnColor), pownCoordinate);
+        state.setPiece(new Queen(pawnColor), pawnCoordinate);
     } else if (pieceType == Piece::PieceType::ptKnight) {
-        state.setPiece(new Knight(pawnColor), pownCoordinate);
+        state.setPiece(new Knight(pawnColor), pawnCoordinate);
     } else if (pieceType == Piece::PieceType::ptRook) {
-        state.setPiece(new Rook(pawnColor), pownCoordinate);
+        state.setPiece(new Rook(pawnColor), pawnCoordinate);
     } else if (pieceType == Piece::PieceType::ptBishop) {
-        state.setPiece(new Bishop(pawnColor), pownCoordinate);
+        state.setPiece(new Bishop(pawnColor), pawnCoordinate);
     }
 
     state.setInPawnPromotion(false);

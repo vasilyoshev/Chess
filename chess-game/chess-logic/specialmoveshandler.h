@@ -2,7 +2,9 @@
 #define SPECAILMOVESHANDLER_H
 
 #include "state.h"
-
+/**
+ * @brief The SpecialMovesHandler class provides functions for special moves like castling.
+ */
 class SpecialMovesHandler {
 private:
     static std::vector<Coordinate> filterInvalidMoves(const State& state, std::vector< std::vector<Coordinate> >& abstractMoves, const Color& attackingColor);

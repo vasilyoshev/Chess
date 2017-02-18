@@ -1,9 +1,20 @@
 #include "knight.h"
 
+/**
+ * @brief Knight::Knight
+ */
 Knight::Knight(Color color)
     :Piece(color,ptKnight) {
 }
 
+/**
+ * @brief Knight::getPossibleMoves
+ *
+ * Gets all possible moves for this type of Piece.
+ *
+ * @param currentPosition - the position for which the possible moves are to be checked.
+ * @return vector of vectors, where every vector holds all moves in a given direction.
+ */
 std::vector< std::vector<Coordinate> > Knight::getPossibleMoves(Coordinate currentPosition) {
     std::vector<Coordinate> moves;
     //get all possible moves
@@ -35,6 +46,13 @@ std::vector< std::vector<Coordinate> > Knight::getPossibleMoves(Coordinate curre
     return result;
 }
 
+/**
+ * @brief Knight::getCopy
+ *
+ * Generates a copy for this piece.
+ *
+ * @return Copy of the piece.
+ */
 Piece* Knight::getCopy() const {
     return new Knight(color);
 }

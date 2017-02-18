@@ -1,10 +1,21 @@
 #include "rook.h"
 #include "piece.h"
 
+/**
+ * @brief Rook::Rook
+ */
 Rook::Rook(Color color)
     :Piece(color,ptRook) {
 }
 
+/**
+ * @brief Rook::getPossibleMoves
+ *
+ * Gets all possible moves for this type of Piece.
+ *
+ * @param currentPosition - the position for which the possible moves are to be checked.
+ * @return vector of vectors, where every vector holds all moves in a given direction.
+ */
 std::vector< std::vector<Coordinate> > Rook::getPossibleMoves(Coordinate currentPosition) {
     std::vector<Coordinate> up;
     std::vector<Coordinate> down;
@@ -44,6 +55,13 @@ std::vector< std::vector<Coordinate> > Rook::getPossibleMoves(Coordinate current
     return result;
 }
 
+/**
+ * @brief Rook::getCopy
+ *
+ * Generates a copy for this piece.
+ *
+ * @return Copy of the piece.
+ */
 Piece* Rook::getCopy() const {
     return new Rook(color);
 }

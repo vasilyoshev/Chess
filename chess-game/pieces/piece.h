@@ -6,6 +6,9 @@
 #include "coordinate.h"
 #include "color.h"
 
+/**
+ * @brief The Piece class provides methods and fields common for all pieces.
+ */
 class Piece {
 public:
     enum PieceType {

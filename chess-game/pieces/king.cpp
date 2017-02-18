@@ -1,10 +1,21 @@
 #include "king.h"
 
+/**
+ * @brief King::King
+ */
 King::King(Color color)
     : Piece(color,ptKing) {
     hasMoved = false;
 }
 
+/**
+ * @brief King::getPossibleMoves
+ *
+ * Gets all possible moves for this type of Piece.
+ *
+ * @param currentPosition - the position for which the possible moves are to be checked.
+ * @return vector of vectors, where every vector holds all moves in a given direction.
+ */
 std::vector< std::vector<Coordinate> > King::getPossibleMoves(Coordinate currentPosition) {
     std::vector<Coordinate> moves;
     //add possible moves to vector
@@ -42,7 +53,13 @@ std::vector< std::vector<Coordinate> > King::getPossibleMoves(Coordinate current
     }
     return result;
 }
-
+/**
+ * @brief King::getCopy
+ *
+ * Generates a copy for this piece.
+ *
+ * @return Copy of the piece.
+ */
 Piece* King::getCopy() const
 {
     King* newKing = new King(color);

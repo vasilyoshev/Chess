@@ -4,26 +4,26 @@
 SpecialMovesHandler::SpecialMovesHandler() {
 }
 
+/**
+ * @brief SpecialMovesHandler::getValidMoves
+ *
+ * Gets all moves for the selected piece in the current state.
+ *
+ * @param state - the game state
+ * @param click - coordinates of the clicked field
+ *
+ * @return all valid moves for a selected piece
+ */
 std::vector<Coordinate> SpecialMovesHandler::getValidMoves(const State& state, Coordinate click) {
     Piece* p = state.getPiece(click);
     std::vector< vector<Coordinate> > result = p->getPossibleMoves(click);
+
     std::vector<Coordinate> moves;
     moves = filterInvalidMoves(state, result, p->getColor());
+
     switch(p->getType()) {
     case Piece::ptKing :
         getSpecialMoves((King*)p, state, moves, click);
-        break;
-    case Piece::ptQueen :
-        getSpecialMoves((Queen*)p, state, moves);
-        break;
-    case Piece::ptRook :
-        getSpecialMoves((Rook*)p, state, moves);
-        break;
-    case Piece::ptBishop :
-        getSpecialMoves((Bishop*)p, state, moves);
-        break;
-    case Piece::ptKnight :
-        getSpecialMoves((Knight*)p, state, moves);
         break;
     case Piece::ptPawn :
         getSpecialMoves((Pawn*)p, state, moves, click);
@@ -33,6 +33,17 @@ std::vector<Coordinate> SpecialMovesHandler::getValidMoves(const State& state, C
     return moves;
 }
 
+/**
+ * @brief SpecialMovesHandler::filterInvalidMoves
+ *
+ * Filters possible moves blocked by other pieces.
+ *
+ * @param state - the game state
+ * @param abstractMoves - possible moves of the piece
+ * @param attackingColor - color of the enemy pieces
+ *
+ * @return vector of filtered moves
+ */
 //cannot step on the same color, cannot jump over pieces, can step on the first of other colors
 std::vector<Coordinate> SpecialMovesHandler::filterInvalidMoves(const State& state, std::vector< std::vector<Coordinate> >& abstractMoves, const Color& attackingColor) {
     vector<Coordinate> filtered;
@@ -53,6 +64,18 @@ std::vector<Coordinate> SpecialMovesHandler::filterInvalidMoves(const State& sta
     return filtered;
 }
 
+/**
+ * @brief SpecialMovesHandler::getSpecialMoves
+ *
+ * Makes all necessary checks for castling.
+ *
+ * @param king - king piece
+ * @param state - game state
+ * @param abstractMoves - possible moves after going through filterInvalidMoves
+ * @param kingCoordinate - coordinates of the king
+ *
+ * @return vector of filtered moves
+ */
 void SpecialMovesHandler::getSpecialMoves(King *king, const State &state, std::vector<Coordinate> &abstractMoves, Coordinate kingCoordinate) {
     //if king and rook haven't been moved and there are no pieces between them
     for (std::size_t i = 0; i < abstractMoves.size(); i++) {
@@ -88,22 +111,19 @@ void SpecialMovesHandler::getSpecialMoves(King *king, const State &state, std::v
     }
 }
 
-void SpecialMovesHandler::getSpecialMoves(Queen *queen, const State &state, std::vector<Coordinate> &abstractMoves) {
-    // TO-DO
-}
-
-void SpecialMovesHandler::getSpecialMoves(Rook *rook, const State &state, std::vector<Coordinate> &abstractMoves) {
-    // TO-DO
-}
-
-void SpecialMovesHandler::getSpecialMoves(Bishop *bishop, const State &state, std::vector<Coordinate> &abstractMoves) {
-    // TO-DO
-}
-
-void SpecialMovesHandler::getSpecialMoves(Knight *knight, const State &state, std::vector<Coordinate> &abstractMoves) {
-    // TO-DO
-}
-
+/**
+ * @brief SpecialMovesHandler::getSpecialMoves
+ *
+ * Acts as filter for pawn since it cannot take enemy pieces forward
+ * and can only move diagonally when taking enemy pieces.
+ *
+ * @param pawn - pawn piece
+ * @param state - game state
+ * @param abstractMoves - possible moves of pawn
+ * @param pawnCoordinate - coordinates of the pawn
+ *
+ * @return vector of filtered moves
+ */
 void SpecialMovesHandler::getSpecialMoves(Pawn *pawn, const State &state, std::vector<Coordinate> &abstractMoves, Coordinate pawnCoordinate) {
     Coordinate move;
     for (std::size_t i = 0; i < abstractMoves.size(); i++) {

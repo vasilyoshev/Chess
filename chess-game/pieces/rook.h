@@ -3,6 +3,9 @@
 
 #include "piece.h"
 
+/**
+ * @brief The Rook class provides all possible moves for rook pieces.
+ */
 class Rook : public Piece {
 public:
     Rook(Color color);
