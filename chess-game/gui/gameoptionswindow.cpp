@@ -22,7 +22,7 @@ GameOptionsWindow::GameOptionsWindow(QWidget *parent) :
 
     srand(time(NULL));
 
-    SelectedGameType = gtNone;
+    SelectedGameType = gtNotSelected;
     isSelectedGameType = false;
     isSelectedColor = false;
 

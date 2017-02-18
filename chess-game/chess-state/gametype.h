@@ -6,7 +6,7 @@
  * Enumerates the possible game types
  */
 enum TGameType {
-    gtNone,
+    gtNotSelected,
     gtPlayerVsCPU,
     gtPlayerVsPlayer
 };
