@@ -80,7 +80,8 @@ void State::initPieces() {
 
 /**
  * @brief State::setPiece
- * Sets a piece on the provided coordinates
+ * Sets a piece on the provided coordinates.
+ * The caller is responsible for deleting any piece currently on the cell.
  *
  * @param piece the piece to set
  * @param coordinate the coordinates on which the piece should be placed
@@ -152,16 +153,6 @@ void State::setPlayer2(string name, Color color) {
 }
 
 /**
- * @brief State::setCheckStatusCurrentPlayer
- * Sets the check flag for the current player
- *
- * @param inCheck the flag to seg
- */
-void State::setCheckStatusCurrentPlayer(bool inCheck) {
-    currentPlayer->setInCheck(inCheck);
-}
-
-/**
  * @brief State::getCheckStatusCurrentPlayer
  * Returns the check status for the current player
  *
@@ -199,6 +190,16 @@ void State::setInPawnPromotion(bool inPownPromotion) {
  */
 void State::setGameType(TGameType gameType) {
     this->gameType = gameType;
+}
+
+/**
+ * @brief State::getGameType
+ * Returns the type of the game.
+ *
+ * @return the type of the game.
+ */
+TGameType State::getGameType() {
+    return this->gameType;
 }
 
 /**

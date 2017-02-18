@@ -13,9 +13,9 @@ const int BOARD_SIZE = 8;
 class State {
 private:
     vector< vector<Cell> > board;
-    int currentPlayerIndex;
     Player players[2];
     Player* currentPlayer;
+    int currentPlayerIndex;
     TGameType gameType;
     bool inPawnPromotion;
     Coordinate pawnInPromotionCoordinates;
@@ -36,9 +36,10 @@ public:
 
     void setPlayer1(string name, Color color);
     void setPlayer2(string name, Color color);
-    void setGameType(TGameType gameType);
 
-    void setCheckStatusCurrentPlayer(bool inCheck);
+    void setGameType(TGameType gameType);
+    TGameType getGameType();
+
     bool getCheckStatusCurrentPlayer() const;
 
     bool isInPawnPromotion() const;
