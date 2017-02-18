@@ -367,7 +367,7 @@ bool MainWindow::isSelected(Coordinate coordinate)
 void MainWindow::showGameOver() {
     QMessageBox msgBox;
     msgBox.setText("Game over");
-    std::string message = controller.getCurrentPlayer()->getName() + ", you won the game! Nice job!";
+    std::string message = controller.getCurrentPlayer()->getName() + ", you lost the game!";
     msgBox.setInformativeText(message.c_str());
     msgBox.setStandardButtons(QMessageBox::Ok);
     msgBox.setDefaultButton(QMessageBox::Ok);
