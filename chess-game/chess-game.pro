@@ -35,10 +35,10 @@ SOURCES += main.cpp\
     chess-logic/specialmoveshandler.cpp \
     gui/cellbutton.cpp \
     gui/gameoptionswindow.cpp \
-    gui/choosepiecedialog.cpp \
     gui/uihelperfunc.cpp \
     chess-logic/checkchecker.cpp \
-    chess-logic/ai.cpp
+    chess-logic/ai.cpp \
+    gui/choosepiecewindow.cpp
 
 HEADERS  += mainwindow.h \
     chess-state/state.h \
@@ -58,14 +58,14 @@ HEADERS  += mainwindow.h \
     gui/cellbutton.h \
     gui/gameoptionswindow.h \
     chess-state/gametype.h \
-    gui/choosepiecedialog.h \
     gui/uihelperfunc.h \
     chess-logic/checkchecker.h \
-    chess-logic/ai.h
+    chess-logic/ai.h \
+    gui/choosepiecewindow.h
 
 FORMS    += mainwindow.ui \
     gui/gameoptionswindow.ui \
-    gui/choosepiecedialog.ui
+    gui/choosepiecewindow.ui
 
 RESOURCES += \
     gui/resource_pieces_images.qrc

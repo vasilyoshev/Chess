@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "gameoptionswindow.h"
-#include "choosepiecedialog.h"
+#include "choosepiecewindow.h"
 
 #include <QDialogButtonBox>
 
@@ -275,14 +275,14 @@ void MainWindow::drawState()
     if( controller.getCurrentPlayer()->isInCheckmate() ) {
         showGameOver();
     } else if( controller.isInPownPromotion() )  {
-        ChoosePieceDialog choosePieceDialog;
-        choosePieceDialog.setModal(true);
+        ChoosePieceWindow choosePieceWindow;
+        choosePieceWindow.setModal(true);
 
-        while( choosePieceDialog.exec()!=1 ) {
+        while( choosePieceWindow.exec()!=1 ) {
             // endless
         }
 
-        controller.promotePawn( ChoosePieceDialog::getSelectedPieceType() ); // pawnPromotion should return false after this command
+        controller.promotePawn( ChoosePieceWindow::getSelectedPieceType() ); // pawnPromotion should return false after this command
 
         drawState();
     }
@@ -337,8 +337,6 @@ void MainWindow::drawCurrentPlayer()
     PlayerNameLabel.setText(text);
     PlayerNameLabel.setGeometry(QRect(boardOffsetLeft, 0, 400, playerLabelHeight));
 
-
-    // TO-DO check if check, then show/hide label
     PlayerCheckLabel.setVisible( controller.getCurrentPlayer()->isInCheck() );
 }
 

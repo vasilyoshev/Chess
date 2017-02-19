@@ -48,8 +48,6 @@ Controller controller;
 
     // help functions
     bool isSelected(Coordinate coordinate);
-    QString getBackgroundStyleSheet(QString color);
-    QString getBackgroundAndHoverStyleSheet(QString backgroundColor, QString hoverColor);
 
     // drawing functions
     void drawState();

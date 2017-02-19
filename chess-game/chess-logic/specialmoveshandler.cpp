@@ -28,6 +28,9 @@ std::vector<Coordinate> SpecialMovesHandler::getValidMoves(const State& state, C
     case Piece::ptPawn :
         getSpecialMoves((Pawn*)p, state, moves, click);
         break;
+    default:
+        // empty
+        break;
     }
 
     return moves;

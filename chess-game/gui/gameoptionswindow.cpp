@@ -104,7 +104,7 @@ void GameOptionsWindow::on_radioButton_gameType_clicked() {
 }
 
 /**
- * @brief GameOptionsWindow::on_radioButton_gameType_clicked
+ * @brief GameOptionsWindow::on_radioButton_color_clicked
  *
  * Event trigered when a button in the color radio group is clicked.
  *
@@ -161,7 +161,7 @@ void GameOptionsWindow::on_lineEdit_firstPlayer_textChanged(const QString&) {
 }
 
 /**
- * @brief GameOptionsWindow::on_lineEdit_firstPlayer_textChanged
+ * @brief GameOptionsWindow::on_lineEdit_secondPlayer_textChanged
  *
  * Fires event to check if the field is filled.
  */
