@@ -73,6 +73,15 @@ bool CheckChecker::isCellUnderAttack(const State& state, const Coordinate& cell,
             Piece* piece = state.getPiece(Coordinate(row, column));
 
             if (piece != NULL && piece->getColor() == attackingColor) {
+                // Stops cyclic castle check between the two kings.
+                // If both kings had not been moved, do not check if one atacks the other.
+                if(piece->getType()==Piece::ptKing && !piece->getMoved()) {
+                    King* currentKing = (King*) state.getPiece(locateCurrentPlayerKing(state));
+                    if(!currentKing->getMoved()) {
+                        continue;
+                    }
+                }
+
                 vector<Coordinate> attackingPositions = SpecialMovesHandler::getValidMoves(state, Coordinate(row, column));
 
                 for (std::size_t i=0; i<attackingPositions.size(); i++) {

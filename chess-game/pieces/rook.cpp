@@ -6,6 +6,7 @@
  */
 Rook::Rook(Color color)
     :Piece(color,ptRook) {
+    hasMoved = false;
 }
 
 /**
@@ -63,5 +64,7 @@ std::vector< std::vector<Coordinate> > Rook::getPossibleMoves(Coordinate current
  * @return Copy of the piece.
  */
 Piece* Rook::getCopy() const {
-    return new Rook(color);
+    Rook* newRook = new Rook(color);
+    newRook->hasMoved=this->hasMoved;
+    return newRook;
 }
