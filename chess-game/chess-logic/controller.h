@@ -19,8 +19,6 @@
 class Controller {
 private:
     State state;
-    void setPawnPieces(int row, Color color);
-    void setMajorPieces(int row, Color color);
     bool isLeftCastle(Piece::PieceType pieceType, Coordinate source, Coordinate target);
     bool isRightCastle(Piece::PieceType pieceType, Coordinate source, Coordinate target);
     void doCastle(Piece* sourcePiece, Coordinate source, Coordinate rookTarget, Coordinate target, Coordinate rookSource);
@@ -38,7 +36,7 @@ public:
     void setGameType(TGameType gameType);
     void setWhitePlayerInTurn();
     void promotePawn(Piece::PieceType pieceType);
-    bool isInPownPromotion();
+    bool isInPawnPromotion();
 
     void getAi();
 };

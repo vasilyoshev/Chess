@@ -147,8 +147,8 @@ void Controller::movePiece(Coordinate source, Coordinate target) {
 
 /**
  * @brief Controller::checkAndSetPawnPromotion
- * Checks if the provided piece is pown in promotion (in the first orr last row depending on the color).
- * If the provided piece is indeed a pown in promotion the corrsponding flag is updated.
+ * Checks if the provided piece is a pawn in promotion (in the first orr last row depending on the color).
+ * If the provided piece is indeed a pawn in promotion the corrsponding flag is updated.
  *
  * @param sourcePiece the provided piece
  * @param pieceCoordinate the coordinates of the piece
@@ -192,11 +192,11 @@ void Controller::promotePawn(Piece::PieceType pieceType) {
 }
 
 /**
- * @brief Controller::isInPownPromotion
+ * @brief Controller::isInPawnPromotion
  *
- * @return true if there is a pown in promotion (in first or last row depending on the color)
+ * @return true if there is a pawn in promotion (in first or last row depending on the color)
  */
-bool Controller::isInPownPromotion(){
+bool Controller::isInPawnPromotion(){
     return state.isInPawnPromotion();
 }
 

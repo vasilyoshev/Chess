@@ -274,7 +274,7 @@ void MainWindow::drawState()
 
     if( controller.getCurrentPlayer()->isInCheckmate() ) {
         showGameOver();
-    } else if( controller.isInPownPromotion() )  {
+    } else if( controller.isInPawnPromotion() )  {
         ChoosePieceWindow choosePieceWindow;
         choosePieceWindow.setModal(true);
 
