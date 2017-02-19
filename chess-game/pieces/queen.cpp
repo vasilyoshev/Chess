@@ -1,7 +1,5 @@
 #include "queen.h"
 
-#define min(a,b) (a<b ? a : b)
-
 /**
  * @brief Queen::Queen
  */
