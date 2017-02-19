@@ -3,26 +3,33 @@
 
 #include <vector>
 #include <QString>
+#include "controller.h"
+
+
+#include "piece.h"
+#include "rook.h"
+#include "king.h"
+#include "pawn.h"
+#include "queen.h"
+#include "bishop.h"
+#include "knight.h"
+
 
 
 class Ai{
 
     private:
 
-    // Controller controller; //error here
+    Controller controller;
 
-    void getRandomTurn();
-    void getRandomValidPiece();
-    void getAllRandomValidTurns();
+    int row;
+    int column;
 
     public:
 
     Ai();
-    // Ai(Controller controller, Color color); //error here
 
-    void getNextAiTurn();
-    void getAiTurn();
-
+   Coordinate getAllRandomValidTurns(State state, Color color);
 
 };
 

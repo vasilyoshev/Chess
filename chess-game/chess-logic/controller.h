@@ -4,13 +4,15 @@
 #include <vector>
 #include <QString>
 
-#include "ai/ai.h"
 #include "state.h"
 #include "coordinate.h"
 #include "player.h"
 #include "specialmoveshandler.h"
 #include "gametype.h"
 #include "piece.h"
+
+#include "rook.h"
+
 
 
 /**
@@ -19,8 +21,6 @@
 class Controller {
 private:
     State state;
-
-    Ai ai; // error here
 
     void initPieces();
     void initPlayers();
@@ -48,7 +48,7 @@ public:
     bool isInPawnPromotion();
 
 
-   void getAi();
+    std::vector<Coordinate> getAiTurn(State state);
 
 
 };

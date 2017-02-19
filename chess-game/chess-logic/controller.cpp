@@ -3,7 +3,7 @@
 #include "controller.h"
 #include "piece.h"
 #include "checkchecker.h"
-#include "ai.h"
+
 
 /**
  * @brief Controller::Controller
@@ -260,7 +260,23 @@ void Controller::setWhitePlayerInTurn() {
     }
 }
 
-// TODO Nasko fill in the documentation
-void Controller::getAi(){
-   // ai.getNextAiTurn(); // passes value from getAiTurn
-}
+std::vector<Coordinate> Controller::getAiTurn(State state){
+
+             vector<Coordinate> piecePositions;
+             for (int row = 0; row < 8; row++){
+                for (int column = 0; column < 8; column++){
+
+                    Piece* piece2 = state.getBoard()[row][column].getPiece(); //element.position
+
+                    Color pieceColor = piece2->getColor();
+                    Color aiPlayerColor = state.getCurrentPlayer()->getColor();
+
+                    if ( pieceColor == aiPlayerColor ){
+                    piecePositions.push_back(Coordinate(row, column));
+                    }
+                }
+            }
+
+
+            return piecePositions;
+    }

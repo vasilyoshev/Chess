@@ -5,6 +5,7 @@
 #include "player.h"
 #include "gametype.h"
 
+
 const int BOARD_SIZE = 8;
 
 /**
@@ -47,6 +48,9 @@ public:
 
     void setPawnInPromotionCoordinates(Coordinate pawnInPromotionCoordinates);
     Coordinate getPawnInPromotionCoordinates() const;
+
+    vector< vector<Cell> > getBoard();
+
 };
 
 #endif // STATE_H
