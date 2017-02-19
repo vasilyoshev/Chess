@@ -3,6 +3,9 @@
 
 #include "piece.h"
 
+/**
+ * @brief The Knight class provides all possible moves for knight pieces.
+ */
 class Knight : public Piece {
 public:
     Knight(Color color);

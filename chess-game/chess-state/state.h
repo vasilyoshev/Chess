@@ -7,19 +7,26 @@
 
 const int BOARD_SIZE = 8;
 
+/**
+ * @brief The State class contains the state of the game
+ */
 class State {
 private:
     vector< vector<Cell> > board;
-    int currentPlayerIndex;
     Player players[2];
     Player* currentPlayer;
+    int currentPlayerIndex;
     TGameType gameType;
-    bool inPownPromotion;
-    Coordinate* pownInPromotionCoordinates;
+    bool inPawnPromotion;
+    Coordinate pawnInPromotionCoordinates;
+
+    void initPieces();
+    void setPawnPieces(int row, Color color);
+    void setMajorPieces(int row, Color color);
+
 public:
     State();
-    ~State();
-    State(const State& state);
+    State(const State &state);
 
     void setPiece(Piece* piece, Coordinate coordinate);
     Piece* getPiece(Coordinate coordinate) const;
@@ -27,20 +34,19 @@ public:
     Player* getCurrentPlayer() const;
     void nextPlayer();
 
-    void initPlayer1(string name, Color color);
-    void initPlayer2(string name, Color color);
-    void initGameType(TGameType gameType);
+    void setPlayer1(string name, Color color);
+    void setPlayer2(string name, Color color);
 
-    const vector< vector<Cell> >& getBoard() const;
+    void setGameType(TGameType gameType);
+    TGameType getGameType();
 
-    void setCheckStatusCurrentPlayer(bool inCheck);
     bool getCheckStatusCurrentPlayer() const;
 
-    bool isInPownPromotion() const;
-    bool setInPownPromotion(bool inPownPromotion);
+    bool isInPawnPromotion() const;
+    void setInPawnPromotion(bool inPawnPromotion);
 
-    void setPownInPromotionCoordinates(Coordinate* pownInPromotionCoordinates);
-    Coordinate* getPownInPromotionCoordinates();
+    void setPawnInPromotionCoordinates(Coordinate pawnInPromotionCoordinates);
+    Coordinate getPawnInPromotionCoordinates() const;
 };
 
 #endif // STATE_H

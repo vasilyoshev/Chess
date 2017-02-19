@@ -3,6 +3,9 @@
 
 #include "piece.h"
 
+/**
+ * @brief The Pawn class provides all possible moves for pawn pieces.
+ */
 class Pawn : public Piece {
 
 public:

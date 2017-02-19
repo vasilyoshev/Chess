@@ -38,7 +38,7 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="layoutWidgetFirstPlayerColor">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -84,7 +84,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="layoutWidgetGameType">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -123,7 +123,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="layoutWidgetFirstPlayerName">
    <property name="geometry">
     <rect>
      <x>130</x>

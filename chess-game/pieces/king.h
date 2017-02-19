@@ -3,6 +3,9 @@
 
 #include "piece.h"
 
+/**
+ * @brief The King class provides all possible moves for king pieces.
+ */
 class King : public Piece {
 public:
     King(Color color);

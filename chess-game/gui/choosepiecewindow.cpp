@@ -1,5 +1,5 @@
-#include "choosepiecedialog.h"
-#include "ui_choosepiecedialog.h"
+#include "choosepiecewindow.h"
+#include "ui_choosepiecewindow.h"
 
 #include <memory>
 
@@ -10,11 +10,11 @@ int fieldSize;
 int boardOffsetLeft;
 int boardOffsetTop;
 
-extern Piece::PieceType ChoosePieceDialog::selectedPieceType;
+extern Piece::PieceType ChoosePieceWindow::selectedPieceType;
 
-ChoosePieceDialog::ChoosePieceDialog(QWidget *parent) :
+ChoosePieceWindow::ChoosePieceWindow(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ChoosePieceDialog)
+    ui(new Ui::ChoosePieceWindow)
 {
     ui->setupUi(this);
 
@@ -29,7 +29,7 @@ ChoosePieceDialog::ChoosePieceDialog(QWidget *parent) :
     initChooseButton();
 }
 
-ChoosePieceDialog::~ChoosePieceDialog() {
+ChoosePieceWindow::~ChoosePieceWindow() {
     delete ui;
 
     delete[] Pieces;
@@ -39,11 +39,11 @@ ChoosePieceDialog::~ChoosePieceDialog() {
 }
 
 /**
- * @brief ChoosePieceDialog::setWindowSize
+ * @brief ChoosePieceWindow::setWindowSize
  *
  * Initializes the size of the dialog.
  */
-void ChoosePieceDialog::setWindowSize() {
+void ChoosePieceWindow::setWindowSize() {
     QRect screen = QApplication::desktop()->screenGeometry();
 
     fieldSize = screen.height() / 9;
@@ -59,11 +59,11 @@ void ChoosePieceDialog::setWindowSize() {
 }
 
 /**
- * @brief ChoosePieceDialog::initCaption
+ * @brief ChoosePieceWindow::initCaption
  *
  * Initializes a Label with caption of the dialog.
  */
-void ChoosePieceDialog::initCaption() {
+void ChoosePieceWindow::initCaption() {
     LabelCaption = new QLabel();
     LabelCaption->setParent(this);
     LabelCaption->setGeometry(QRect(
@@ -77,11 +77,11 @@ void ChoosePieceDialog::initCaption() {
 }
 
 /**
- * @brief ChoosePieceDialog::initPieces
+ * @brief ChoosePieceWindow::initPieces
  *
  * Initializes the pieces on the fields.
  */
-void ChoosePieceDialog::initPieces() {
+void ChoosePieceWindow::initPieces() {
     SelectedPiece = new CellButton();
     SelectedPiece->setParent(this);
     SelectedPiece->setGeometry(QRect(
@@ -130,13 +130,13 @@ void ChoosePieceDialog::initPieces() {
 }
 
 /**
- * @brief ChoosePieceDialog::setPiece
+ * @brief ChoosePieceWindow::setPiece
  * @param piecePtr Piece type.
  * @param idx Index of field to be put.
  *
  * Sets the given piece image on the provided index.
  */
-void ChoosePieceDialog::setPiece(Piece *piecePtr, int idx) {
+void ChoosePieceWindow::setPiece(Piece *piecePtr, int idx) {
     QString piece = UIHelperFunc::getPieceFileName(piecePtr);
     QPixmap qPixmap(":/figures/Images/"+piece+".png");
     Pieces[idx].setIcon(QIcon(qPixmap));
@@ -145,11 +145,11 @@ void ChoosePieceDialog::setPiece(Piece *piecePtr, int idx) {
 }
 
 /**
- * @brief ChoosePieceDialog::initChooseButton
+ * @brief ChoosePieceWindow::initChooseButton
  *
  * Button that submits the choose action of the user.
  */
-void ChoosePieceDialog::initChooseButton() {
+void ChoosePieceWindow::initChooseButton() {
     ButtonChoose = new QPushButton();
     ButtonChoose->setParent(this);
     ButtonChoose->setGeometry(QRect(
@@ -165,11 +165,11 @@ void ChoosePieceDialog::initChooseButton() {
 }
 
 /**
- * @brief ChoosePieceDialog::handlePieceClick
+ * @brief ChoosePieceWindow::handlePieceClick
  *
  * This method highlights the piece being clicked.
  */
-void ChoosePieceDialog::handlePieceClick() {
+void ChoosePieceWindow::handlePieceClick() {
     CellButton *cellButton = (CellButton*)sender();
 
     SelectedPiece->setIcon(cellButton->icon());
@@ -184,18 +184,18 @@ void ChoosePieceDialog::handlePieceClick() {
 }
 
 /**
- * @brief ChoosePieceDialog::handleChooseClick
+ * @brief ChoosePieceWindow::handleChooseClick
  *
- * When the user clickes the submit button, the dialog closes, and the game continues.
+ * When the user clicks the submit button, the dialog closes, and the game continues.
  */
-void ChoosePieceDialog::handleChooseClick() {
+void ChoosePieceWindow::handleChooseClick() {
     QDialog::accept();
 }
 
 /**
- * @brief ChoosePieceDialog::getSelectedPieceType
+ * @brief ChoosePieceWindow::getSelectedPieceType
  * @return Returns the selected piece type for pawn promotion.
  */
-Piece::PieceType ChoosePieceDialog::getSelectedPieceType() {
+Piece::PieceType ChoosePieceWindow::getSelectedPieceType() {
     return selectedPieceType;
 }

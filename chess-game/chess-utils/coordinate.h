@@ -1,7 +1,9 @@
 #ifndef COORDINATE_H
 #define COORDINATE_H
 
-
+/**
+ * @brief The Coordinate class wraps row and column coordinates
+ */
 class Coordinate {
 private:
     int row;

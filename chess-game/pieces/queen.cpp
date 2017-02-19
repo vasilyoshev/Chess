@@ -2,16 +2,26 @@
 
 #define min(a,b) (a<b ? a : b)
 
+/**
+ * @brief Queen::Queen
+ */
 Queen::Queen(Color color)
     :Piece(color,ptQueen) {
 }
 
+/**
+ * @brief Queen::getPossibleMoves
+ *
+ * Gets all possible moves for this type of Piece.
+ *
+ * @param currentPosition - the position for which the possible moves are to be checked.
+ * @return vector of vectors, where every vector holds all moves in a given direction.
+ */
 std::vector< std::vector<Coordinate> > Queen::getPossibleMoves(Coordinate currentPosition) {
-    std::vector< std::vector<Coordinate> > result;
-    std::vector<Coordinate> upLeft;
-    std::vector<Coordinate> upRight;
-    std::vector<Coordinate> downLeft;
-    std::vector<Coordinate> downRight;
+    std::vector<Coordinate> upperLeft;
+    std::vector<Coordinate> upperRight;
+    std::vector<Coordinate> lowerLeft;
+    std::vector<Coordinate> lowerRight;
     std::vector<Coordinate> up;
     std::vector<Coordinate> down;
     std::vector<Coordinate> left;
@@ -20,24 +30,24 @@ std::vector< std::vector<Coordinate> > Queen::getPossibleMoves(Coordinate curren
     int row = currentPosition.getRow();
     int col = currentPosition.getColumn();
 
-    //Down right diagonal
+    //lower right diagonal
     for (int j = col + 1, i = row + 1; j < 8 && i < 8; j++, i++) {
-        downRight.push_back(Coordinate(i, j));
+        lowerRight.push_back(Coordinate(i, j));
     }
 
-    // Up right diagonal
+    // upper right diagonal
     for (int j = col - 1, i = row + 1; j > -1 && i < 8; j--, i++) {
-        upRight.push_back(Coordinate(i, j));
+        upperRight.push_back(Coordinate(i, j));
     }
 
-    //Up left diagonal
+    //upper left diagonal
     for (int j = col - 1, i = row - 1; j > -1 && i > -1; j--, i--) {
-        upLeft.push_back(Coordinate(i, j));
+        upperLeft.push_back(Coordinate(i, j));
     }
 
-    //Down left diagonal
+    //lower left diagonal
     for (int j = col + 1, i = row - 1; j < 8 && i > -1; j++, i--) {
-        downLeft.push_back(Coordinate(i, j));
+        lowerLeft.push_back(Coordinate(i, j));
     }
 
     //moves up
@@ -55,63 +65,32 @@ std::vector< std::vector<Coordinate> > Queen::getPossibleMoves(Coordinate curren
         right.push_back(Coordinate(row, i));
     }
 
-    //moes left
+    //moves left
     for (int i = col - 1; i > -1; i--) {
         left.push_back(Coordinate(row, i));
     }
+
+    std::vector< std::vector<Coordinate> > result;
 
     result.push_back(up);
     result.push_back(down);
     result.push_back(right);
     result.push_back(left);
-    result.push_back(upLeft);
-    result.push_back(upRight);
-    result.push_back(downLeft);
-    result.push_back(downRight);
-
-return result;
-    /*
-    std::vector<Coordinate> result;
-    int sRow;
-    int sColumn;
-
-    // LeftTop to RightBottom diagonal
-    sRow = currentPosition.getRow() - min(currentPosition.getRow(), currentPosition.getColumn());
-    sColumn = currentPosition.getColumn() - min(currentPosition.getRow(),   currentPosition.getColumn());
-    while(sRow < 8 && sColumn < 8) {
-        if(sRow != currentPosition.getRow() || sColumn != currentPosition.getColumn())
-            result.push_back(Coordinate(sRow, sColumn));
-
-        sRow++;
-        sColumn++;
-    }
-
-
-    // LeftBottom to RightTop diagonal
-    sRow = currentPosition.getRow() + min(7 - currentPosition.getRow(), currentPosition.getColumn());
-    sColumn = currentPosition.getColumn() - min(7 - currentPosition.getRow(), currentPosition.getColumn());
-    while(sRow >= 0 && sColumn < 8) {
-        if(sRow != currentPosition.getRow() || sColumn != currentPosition.getColumn())
-            result.push_back(Coordinate(sRow, sColumn));
-
-        sRow--;
-        sColumn++;
-    }
-
-    // same row and same column
-    for(int i = 0; i < 8; i++) {
-        if(currentPosition.getRow()!= i) {
-            result.push_back(Coordinate(i, currentPosition.getColumn()));
-        }
-        if(currentPosition.getColumn()!= i) {
-            result.push_back(Coordinate(currentPosition.getRow(), i));
-        }
-    }
+    result.push_back(upperLeft);
+    result.push_back(upperRight);
+    result.push_back(lowerLeft);
+    result.push_back(lowerRight);
 
     return result;
-*/
 }
 
+/**
+ * @brief Queen::getCopy
+ *
+ * Generates a copy for this piece.
+ *
+ * @return Copy of the piece.
+ */
 Piece* Queen::getCopy() const {
     return new Queen(color);
 }

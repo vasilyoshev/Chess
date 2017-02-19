@@ -1,5 +1,5 @@
-#ifndef CHOOSEPIECEDIALOG_H
-#define CHOOSEPIECEDIALOG_H
+#ifndef CHOOSEPIECEWINDOW_H
+#define CHOOSEPIECEWINDOW_H
 
 #include <QDialog>
 #include <QDesktopWidget>
@@ -15,22 +15,22 @@
 #include "king.h"
 
 namespace Ui {
-class ChoosePieceDialog;
+class ChoosePieceWindow;
 }
 
 /**
- * @brief The ChoosePieceDialog class
+ * @brief The ChoosePieceWindow class
  *
  * This class is used to show a dialog window that appears when the user wants to choose a piece
  * that will replace the pawn which has reached the end of the grid.
  */
-class ChoosePieceDialog : public QDialog {
+class ChoosePieceWindow : public QDialog {
     Q_OBJECT
 
 public:    
 
-    explicit ChoosePieceDialog(QWidget *parent = 0);
-    ~ChoosePieceDialog();
+    explicit ChoosePieceWindow(QWidget *parent = 0);
+    ~ChoosePieceWindow();
 
     static Piece::PieceType getSelectedPieceType();
 
@@ -40,7 +40,7 @@ CellButton *PiecesBackground;
 CellButton *SelectedPiece;
 QLabel *LabelCaption;
 QPushButton *ButtonChoose;
-Ui::ChoosePieceDialog *ui;
+Ui::ChoosePieceWindow *ui;
 static Piece::PieceType selectedPieceType;
 
     void setWindowSize();
@@ -54,4 +54,4 @@ private slots:
     void handleChooseClick();
 };
 
-#endif // CHOOSEPIECEDIALOG_H
+#endif // CHOOSEPIECEWINDOW_H

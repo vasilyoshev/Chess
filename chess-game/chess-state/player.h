@@ -6,6 +6,9 @@
 
 using namespace std;
 
+/**
+ * @brief The Player class stores the properties of a given player.
+ */
 class Player {
 private:
     string name;
