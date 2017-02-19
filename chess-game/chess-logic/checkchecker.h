@@ -15,8 +15,8 @@ private:
 
 public:
     static bool checkForCheck(const State& state);
-    static bool isPositionUnderAttack(const State& state, const Coordinate& position, const Color& attackingColor);
-    static bool checkForCheckmate(State &state);
+    static bool isCellUnderAttack(const State& state, const Coordinate& cell, const Color& attackingColor);
+    static bool checkForCheckmate(State& state);
     static vector<Coordinate> filterCheckMoves(State& state, const vector<Coordinate>& possibleMoves, const Coordinate& pieceCoordinates);
 };
 

@@ -87,7 +87,7 @@ void SpecialMovesHandler::getSpecialMoves(King *king, const State &state, std::v
         if (move.getColumn() == kingCoordinate.getColumn() + 2) {
             Piece* rightRook = state.getPiece(Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() + 3));
             //check if position skipped by king is controlled enemy figure
-            bool isControlled = CheckChecker::isPositionUnderAttack(state,
+            bool isControlled = CheckChecker::isCellUnderAttack(state,
                                                                     Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() + 1),
                                                                     ColorUtils::getOppositeColor(king->getColor()));
             //check if rook has moved or king is in check or isControlled
@@ -101,7 +101,7 @@ void SpecialMovesHandler::getSpecialMoves(King *king, const State &state, std::v
             Piece* leftRook = state.getPiece(Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() - 4));
             Piece* colOne = state.getPiece(Coordinate(kingCoordinate.getRow(), kingCoordinate.getColumn() - 3));
             //check if position skipped by king is controlled enemy figure
-            bool isControlled = CheckChecker::isPositionUnderAttack(state,
+            bool isControlled = CheckChecker::isCellUnderAttack(state,
                                                                     Coordinate(kingCoordinate.getRow(),kingCoordinate.getColumn() - 1),
                                                                     ColorUtils::getOppositeColor(king->getColor()));
             //check if rook has moved or king is in check or isControlled

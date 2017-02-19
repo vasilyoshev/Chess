@@ -19,7 +19,7 @@ bool CheckChecker::checkForCheck(const State& state) {
     Coordinate king = locateCurrentPlayerKing(state);
     Color otherPlayerColor = ColorUtils::getOppositeColor(state.getCurrentPlayer()->getColor());
 
-    return isPositionUnderAttack(state, king, otherPlayerColor);
+    return isCellUnderAttack(state, king, otherPlayerColor);
 }
 
 /**
@@ -58,16 +58,16 @@ bool CheckChecker::checkForCheckmate(State& state) {
 }
 
 /**
- * @brief CheckChecker::isPositionUnderAttack
+ * @brief CheckChecker::isCellUnderAttack
  *
- * Checks if the provided position is under attack.
+ * Checks if the provided cell is under attack.
  *
  * @param state the state of the game
- * @param position the position which has to be checked
+ * @param cell the cell which has to be checked
  * @param attackingColor the color of the player who is attacking
- * @return true if the position is under attack by the attackingColor, false otherwise.
+ * @return true if the cell is under attack by the attackingColor, false otherwise.
  */
-bool CheckChecker::isPositionUnderAttack(const State& state, const Coordinate& position, const Color& attackingColor) {
+bool CheckChecker::isCellUnderAttack(const State& state, const Coordinate& cell, const Color& attackingColor) {
     for (int row = 0; row < BOARD_SIZE; row++) {
         for (int column = 0; column < BOARD_SIZE; column++) {
             Piece* piece = state.getPiece(Coordinate(row, column));
@@ -76,7 +76,7 @@ bool CheckChecker::isPositionUnderAttack(const State& state, const Coordinate& p
                 vector<Coordinate> attackingPositions = SpecialMovesHandler::getValidMoves(state, Coordinate(row, column));
 
                 for (std::size_t i=0; i<attackingPositions.size(); i++) {
-                    if (attackingPositions[i] == position) {
+                    if (attackingPositions[i] == cell) {
                         return true;
                     }
                 }
