@@ -111,8 +111,8 @@ vector<Coordinate> Ai::getAllRandomValidTurns(State state, Color color)
     Coordinate sourceCoordinates = Coordinate(sourceRow, sourceColumn);
 
     vector<Coordinate> sourceTarget;
-    sourceTarget[1] = sourceCoordinates;
-    sourceTarget[2] = targetCoordinates;
+    sourceTarget[0] = sourceCoordinates;
+    sourceTarget[1] = targetCoordinates;
 
 
 
