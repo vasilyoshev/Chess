@@ -262,17 +262,20 @@ void Controller::setWhitePlayerInTurn() {
 
 std::vector<Coordinate> Controller::getAiTurn(State state){
 
-             vector<Coordinate> piecePositions;
+             vector<Coordinate> piecePositions;  // creates vector for the figure coordinates
              for (int row = 0; row < 8; row++){
                 for (int column = 0; column < 8; column++){
 
-                    Piece* piece2 = state.getBoard()[row][column].getPiece(); //element.position
+                    Coordinate piecePosition = Coordinate(row, column);
+                    Piece* piece2 = state.getPiece(piecePosition); //element.position.
+                    //Gets the piece on the board on the corresponding column and row
 
-                    Color pieceColor = piece2->getColor();
-                    Color aiPlayerColor = state.getCurrentPlayer()->getColor();
+                    Color pieceColor = piece2->getColor(); //gets the color of the piece2
+                    Color aiPlayerColor = state.getCurrentPlayer()->getColor(); //gets the color of the current player
 
-                    if ( pieceColor == aiPlayerColor ){
-                    piecePositions.push_back(Coordinate(row, column));
+
+                    if ( pieceColor == aiPlayerColor ){ // checks if the color of piece2 is the same as the current player
+                    piecePositions.push_back(Coordinate(row, column)); // pushes the coordinates in the vector
                     }
                 }
             }

@@ -49,8 +49,6 @@ public:
     void setPawnInPromotionCoordinates(Coordinate pawnInPromotionCoordinates);
     Coordinate getPawnInPromotionCoordinates() const;
 
-    vector< vector<Cell> > getBoard();
-
 };
 
 #endif // STATE_H

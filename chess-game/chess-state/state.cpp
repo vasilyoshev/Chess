@@ -221,7 +221,3 @@ Coordinate State::getPawnInPromotionCoordinates() const {
 void State::setPawnInPromotionCoordinates(Coordinate pawnInPromotionCoordinates) {
     this->pawnInPromotionCoordinates = pawnInPromotionCoordinates;
 }
-
-vector< vector<Cell> > State::getBoard() {
-   return this->board;
-}

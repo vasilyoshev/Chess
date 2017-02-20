@@ -29,7 +29,7 @@ class Ai{
 
     Ai();
 
-   Coordinate getAllRandomValidTurns(State state, Color color);
+   vector<Coordinate> getAllRandomValidTurns(State state, Color color);
 
 };
 

@@ -16,19 +16,25 @@ Ai::Ai()
     //
 }
 
-Coordinate Ai::getAllRandomValidTurns(State state, Color color)
+vector<Coordinate> Ai::getAllRandomValidTurns(State state, Color color)
 {
     vector<Coordinate> allAiMoves = controller.getAiTurn(state);
     vector<vector<Coordinate> > validAiMoves;
-
+    int sourceColumn;
+    int sourceRow;
 
     for (int i = 0; i < allAiMoves.size(); i++){
 
     column = allAiMoves[i].getColumn(); // gets Column Coordinate
     row = allAiMoves[i].getRow();       // get row coordinate
-    Piece* aiPiece = state.getBoard()[row][column].getPiece(); // piece position & type
 
-    if (Piece::ptKing == aiPiece->getType()){               //king
+    sourceColumn = column;
+    sourceRow = row;
+
+    Coordinate piecePosition2 = Coordinate(row, column);
+    Piece* aiPiece = state.getPiece(piecePosition2);      // gets the piece from the coordinates given
+
+    if (Piece::ptKing == aiPiece->getType()){               //Checks to see if the piece is a King
 
         Coordinate kingPosition = Coordinate(row, column);
         King king = King(color);
@@ -37,7 +43,7 @@ Coordinate Ai::getAllRandomValidTurns(State state, Color color)
                 break;
             }
     }
-    else if (Piece::ptRook == aiPiece->getType() ){ // if piece is a Rook type
+    else if (Piece::ptRook == aiPiece->getType() ){ // Checks to see if the piece is aRook type
 
                 Coordinate rookPosition = Coordinate(row, column);
                 Rook rook = Rook(color);
@@ -46,7 +52,7 @@ Coordinate Ai::getAllRandomValidTurns(State state, Color color)
                         break;
                     }
      }
-     else if (Piece::ptQueen == aiPiece->getType()){ // if a piece is a Queen type
+     else if (Piece::ptQueen == aiPiece->getType()){ // Checks to see if the piece is a Queen type
 
             Coordinate queenPosition = Coordinate(row, column);
             Queen queen = Queen(color);
@@ -55,7 +61,7 @@ Coordinate Ai::getAllRandomValidTurns(State state, Color color)
                     break;
                 }
      }
-     else if (Piece::ptBishop ==  aiPiece->getType()){  // if the piece is a Bishop
+     else if (Piece::ptBishop ==  aiPiece->getType()){  // Checks to see if the piece is a Bishop
 
         Coordinate bishopPosition = Coordinate(row, column);
         Bishop bishop = Bishop(color);
@@ -64,7 +70,7 @@ Coordinate Ai::getAllRandomValidTurns(State state, Color color)
                     break;
                 }
      }
-     else if (Piece::ptKnight == aiPiece->getType()){ // knight
+     else if (Piece::ptKnight == aiPiece->getType()){ //Checks to see if the piece is a Pnight
 
         Coordinate knightPosition = Coordinate(row, column);
         Knight knight = Knight(color);
@@ -73,7 +79,7 @@ Coordinate Ai::getAllRandomValidTurns(State state, Color color)
                     break;
                 }
      }
-     else if (Piece::ptPawn == aiPiece->getType()){ // pawn
+     else if (Piece::ptPawn == aiPiece->getType()){ // Checks to see if the piece is a Pawn
 
         Coordinate pawnPosition = Coordinate(row, column);
         Pawn pawn = Pawn(color);
@@ -91,17 +97,26 @@ Coordinate Ai::getAllRandomValidTurns(State state, Color color)
     int r = rand() % vectorSize;
 
     vector<Coordinate> finalCoordinateList = validAiMoves[r];
-
+    // Takes a random vector from the two dimensional vector.
     int finalListSize = finalCoordinateList.size();
     int t = rand() % finalListSize;
-
-    row = finalCoordinateList[t].getRow();
-    column = finalCoordinateList[t].getColumn();
+    // Takes a random coordinate from the finalCoordinateList vector
+    row = finalCoordinateList[t].getRow();  // gets row of the Coordinate
+    column = finalCoordinateList[t].getColumn(); // gets column of the Coordinate
 
     Coordinate targetCoordinates = Coordinate(row, column);
 
+    //
+
+    Coordinate sourceCoordinates = Coordinate(sourceRow, sourceColumn);
+
+    vector<Coordinate> sourceTarget;
+    sourceTarget[1] = sourceCoordinates;
+    sourceTarget[2] = targetCoordinates;
 
 
-    return targetCoordinates;
+
+
+    return sourceTarget; // returns the source and target coordinates for the AI
 
 }
