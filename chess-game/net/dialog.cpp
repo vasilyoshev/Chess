@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 #include "dialog.h"
-#include "fortuneserver.h"
+#include "server.h"
 
 Dialog::Dialog(QWidget *parent)
     : QWidget(parent)
@@ -35,8 +35,8 @@ Dialog::Dialog(QWidget *parent)
     // if we did not find one, use IPv4 localhost
     if (ipAddress.isEmpty())
         ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
-    statusLabel->setText(tr("The server is running on\n\nIP: %1\nport: %2\n\n"
-                            "Run the Fortune Client example now.")
+
+    statusLabel->setText(tr("The server is running on\n\nIP: %1\nport: %2")
                          .arg(ipAddress).arg(server.serverPort()));
 
     connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));

@@ -1,9 +1,9 @@
-#include "fortuneserver.h"
-#include "fortunethread.h"
+#include "server.h"
+#include "thread.h"
 
 #include <stdlib.h>
 
-FortuneServer::FortuneServer(QObject *parent)
+Server::Server(QObject *parent)
     : QTcpServer(parent)
 {
     fortunes << tr("You've been leading a dog's life. Stay off the furniture.")
@@ -15,10 +15,10 @@ FortuneServer::FortuneServer(QObject *parent)
              << tr("Computers are not intelligent. They only think they are.");
 }
 
-void FortuneServer::incomingConnection(qintptr socketDescriptor)
+void Server::incomingConnection(qintptr socketDescriptor)
 {
-    QString fortune = fortunes.at(qrand() % fortunes.size());
-    FortuneThread *thread = new FortuneThread(socketDescriptor, fortune, this);
+    QString fortune = fortunes.at(qrand() % fortunes.size()); // TODO remove
+    Thread *thread = new Thread(socketDescriptor, fortune, this);
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
     thread->start();
 }

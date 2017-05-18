@@ -41,8 +41,8 @@ SOURCES += main.cpp\
     ai/ai.cpp \
     gui/choosepiecewindow.cpp \
     net/dialog.cpp \
-    net/fortuneserver.cpp \
-    net/fortunethread.cpp
+    net/server.cpp \
+    net/thread.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -75,8 +75,8 @@ HEADERS  += mainwindow.h \
     net/myThread.h \
     net/myThreadArgument.h \
     net/dialog.h \
-    net/fortuneserver.h \
-    net/fortunethread.h
+    net/server.h \
+    net/thread.h
 
 
 FORMS    += mainwindow.ui \

@@ -8,7 +8,8 @@
 enum TGameType {
     gtNotSelected,
     gtPlayerVsCPU,
-    gtPlayerVsPlayer
+    gtPlayerVsPlayer,
+    gtNetworkGame
 };
 
 #endif // GAMETYPE_H

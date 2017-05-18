@@ -1,15 +1,15 @@
-#ifndef FORTUNESERVER_H
-#define FORTUNESERVER_H
+#ifndef SERVER_H
+#define SERVER_H
 
 #include <QStringList>
 #include <QTcpServer>
 
-class FortuneServer : public QTcpServer
+class Server : public QTcpServer
 {
     Q_OBJECT
 
 public:
-    FortuneServer(QObject *parent = 0);
+    Server(QObject *parent = 0);
 
 protected:
     void incomingConnection(qintptr socketDescriptor) override;

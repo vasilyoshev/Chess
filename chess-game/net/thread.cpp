@@ -1,13 +1,15 @@
-#include "fortunethread.h"
+#include "thread.h"
+#include "mainwindow.h"
+#include "controller.h"
 
 #include <QtNetwork>
 
-FortuneThread::FortuneThread(int socketDescriptor, const QString &fortune, QObject *parent)
+Thread::Thread(int socketDescriptor, const QString &fortune, QObject *parent)
     : QThread(parent), socketDescriptor(socketDescriptor), text(fortune)
 {
 }
 
-void FortuneThread::run()
+void Thread::run()
 {
     QTcpSocket tcpSocket;
     if (!tcpSocket.setSocketDescriptor(socketDescriptor)) {
@@ -21,6 +23,7 @@ void FortuneThread::run()
     out << text;
 
     tcpSocket.write(block);
+
     tcpSocket.disconnectFromHost();
     tcpSocket.waitForDisconnected();
 }
