@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT += network widgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -38,7 +39,10 @@ SOURCES += main.cpp\
     gui/uihelperfunc.cpp \
     chess-logic/checkchecker.cpp \
     ai/ai.cpp \
-    gui/choosepiecewindow.cpp
+    gui/choosepiecewindow.cpp \
+    net/dialog.cpp \
+    net/fortuneserver.cpp \
+    net/fortunethread.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -62,7 +66,17 @@ HEADERS  += mainwindow.h \
     gui/uihelperfunc.h \
     chess-logic/checkchecker.h \
     ai/ai.h \
-    gui/choosepiecewindow.h
+    gui/choosepiecewindow.h \
+    net/myEvent.h \
+    net/myException.h \
+    net/myHostInfo.h \
+    net/mySemaphore.h \
+    net/mySocket.h \
+    net/myThread.h \
+    net/myThreadArgument.h \
+    net/dialog.h \
+    net/fortuneserver.h \
+    net/fortunethread.h
 
 
 FORMS    += mainwindow.ui \
@@ -74,3 +88,6 @@ RESOURCES += \
 
 DISTFILES += \
     ai/placeholder.txt
+
+SUBDIRS += \
+    net/ChessServer.pro
