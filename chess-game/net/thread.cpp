@@ -1,6 +1,7 @@
 #include "thread.h"
 #include "mainwindow.h"
 #include "controller.h"
+#include "server.h"
 
 #include <QtNetwork>
 
@@ -23,6 +24,14 @@ void Thread::run()
     out << text;
 
     tcpSocket.write(block);
+
+    if (waiting) {
+
+    }
+
+
+
+
 
     tcpSocket.disconnectFromHost();
     tcpSocket.waitForDisconnected();

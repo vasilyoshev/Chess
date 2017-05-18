@@ -42,7 +42,8 @@ SOURCES += main.cpp\
     gui/choosepiecewindow.cpp \
     net/dialog.cpp \
     net/server.cpp \
-    net/thread.cpp
+    net/thread.cpp \
+    net/gamethread.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -76,7 +77,8 @@ HEADERS  += mainwindow.h \
     net/myThreadArgument.h \
     net/dialog.h \
     net/server.h \
-    net/thread.h
+    net/thread.h \
+    net/gamethread.h
 
 
 FORMS    += mainwindow.ui \

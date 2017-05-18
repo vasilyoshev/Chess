@@ -13,12 +13,18 @@ Server::Server(QObject *parent)
              << tr("You might have mail.")
              << tr("You cannot kill time without injuring eternity.")
              << tr("Computers are not intelligent. They only think they are.");
+
+    waiting = false;
 }
 
 void Server::incomingConnection(qintptr socketDescriptor)
 {
-    QString fortune = fortunes.at(qrand() % fortunes.size()); // TODO remove
+    //QString fortune = fortunes.at(qrand() % fortunes.size()); // TODO remove
+
+
     Thread *thread = new Thread(socketDescriptor, fortune, this);
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
     thread->start();
+
 }
+

@@ -13,6 +13,7 @@ public:
 
 protected:
     void incomingConnection(qintptr socketDescriptor) override;
+    bool waiting;
 
 private:
     QStringList fortunes;
