@@ -12,12 +12,12 @@ Thread::Thread(int socketDescriptor, const QString &fortune, QObject *parent)
 
 void Thread::run()
 {
+
     QTcpSocket tcpSocket;
     if (!tcpSocket.setSocketDescriptor(socketDescriptor)) {
         emit error(tcpSocket.error());
         return;
     }
-
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_4_0);
@@ -25,7 +25,9 @@ void Thread::run()
 
     tcpSocket.write(block);
 
-    if (waiting) {
+    if (!waiting) { // no one waiting
+
+    } else { // 1 waiting
 
     }
 

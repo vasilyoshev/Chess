@@ -2,8 +2,9 @@
 #define GAMETHREAD_H
 
 
-class GameThread
+class GameThread : public QThread
 {
+    Q_OBJECT
 public:
     GameThread();
 };
