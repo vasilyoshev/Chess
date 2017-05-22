@@ -21,6 +21,7 @@ void Thread::run()
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_4_0);
+    out << "Hello Otter";
 
     tcpSocket.write(block);
 
