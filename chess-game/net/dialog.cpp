@@ -50,5 +50,5 @@ Dialog::Dialog(QWidget *parent)
     mainLayout->addWidget(statusLabel);
     mainLayout->addLayout(buttonLayout);
     setLayout(mainLayout);
-    setWindowTitle(tr("Threaded Fortune Server"));
+    setWindowTitle(tr("Threaded Server"));
 }

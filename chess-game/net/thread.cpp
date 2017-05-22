@@ -5,8 +5,8 @@
 
 #include <QtNetwork>
 
-Thread::Thread(int socketDescriptor, const QString &fortune, QObject *parent)
-    : QThread(parent), socketDescriptor(socketDescriptor), text(fortune)
+Thread::Thread(int socketDescriptor, QObject *parent)
+    : QThread(parent), socketDescriptor(socketDescriptor) /*text(fortune)*/
 {
 }
 
@@ -21,15 +21,9 @@ void Thread::run()
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_4_0);
-    out << text;
 
     tcpSocket.write(block);
 
-    if (!waiting) { // no one waiting
-
-    } else { // 1 waiting
-
-    }
 
 
 

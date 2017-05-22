@@ -3,9 +3,8 @@
 
 #include <QWidget>
 #include "server.h"
-
-class QLabel;
-class QPushButton;
+#include <QPushButton>
+#include <QLabel>
 
 class Dialog : public QWidget
 {
