@@ -10,12 +10,14 @@ class Thread : public QThread
 public:
     Thread(int socketDescriptor, QObject *parent);
     void run() override;
+    QString playerName;
 
 signals:
     void error(QTcpSocket::SocketError socketError);
 
 private:
     int socketDescriptor;
+    void receiveName();
 };
 
 #endif

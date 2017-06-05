@@ -18,18 +18,21 @@ void Thread::run()
         emit error(tcpSocket.error());
         return;
     }
-    QByteArray block;
-    QDataStream out(&block, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_4_0);
-    out << "Hello Otter";
 
-    tcpSocket.write(block);
+    receiveName();
 
+//    QByteArray block;
+//    QDataStream out(&block, QIODevice::WriteOnly);
+//    out.setVersion(QDataStream::Qt_4_0);
+//    out << "Hello Otter";
 
-
-
-
+//    tcpSocket.write(block);
 
     tcpSocket.disconnectFromHost();
     tcpSocket.waitForDisconnected();
+}
+
+void Thread::receiveName()
+{
+
 }
