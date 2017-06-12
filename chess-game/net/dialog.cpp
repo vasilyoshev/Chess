@@ -14,8 +14,9 @@ Dialog::Dialog(QWidget *parent)
     quitButton = new QPushButton(tr("Quit"));
     quitButton->setAutoDefault(false);
 
+    // listen for requests
     if (!server.listen()) {
-        QMessageBox::critical(this, tr("Threaded Fortune Server"),
+        QMessageBox::critical(this, tr("Threaded Server"),
                               tr("Unable to start the server: %1.")
                               .arg(server.errorString()));
         close();
@@ -36,6 +37,7 @@ Dialog::Dialog(QWidget *parent)
     if (ipAddress.isEmpty())
         ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
 
+    // set status
     statusLabel->setText(tr("The server is running on\n\nIP: %1\nport: %2")
                          .arg(ipAddress).arg(server.serverPort()));
 

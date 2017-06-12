@@ -1,8 +1,10 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#include <QStringList>
+#include <QString>
 #include <QTcpServer>
+#include <QMap>
+#include <QTcpSocket>
 
 class Server : public QTcpServer
 {
@@ -13,6 +15,7 @@ public:
 
 protected:
     void incomingConnection(qintptr socketDescriptor) override;
+    QMap<QString, int> players;
 };
 
 #endif

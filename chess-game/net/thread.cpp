@@ -1,6 +1,4 @@
 #include "thread.h"
-#include "mainwindow.h"
-#include "controller.h"
 #include "server.h"
 
 #include <QtNetwork>
