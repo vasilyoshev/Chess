@@ -5,6 +5,7 @@
 #include <QTcpServer>
 #include <QMap>
 #include <QTcpSocket>
+#include <QDataStream>
 
 class Server : public QTcpServer
 {
@@ -15,7 +16,8 @@ public:
 
 protected:
     void incomingConnection(qintptr socketDescriptor) override;
-    QMap<QString, int> players;
+    QMap<QString, QTcpSocket*> players;
+    QDataStream in;
 };
 
 #endif
