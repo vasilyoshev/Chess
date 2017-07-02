@@ -22,6 +22,8 @@ protected:
     QMap<QString, QTcpSocket*> players;
     QDataStream in;
     QTcpSocket *tcpSocket;
+    QTcpSocket *player;
+    QByteArray data;
 };
 
 #endif

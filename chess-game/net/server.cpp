@@ -5,6 +5,7 @@
 #include <QMap>
 #include <QString>
 #include <iostream>
+#include "gamethread.h"
 
 Server::Server(QObject *parent)
     : QTcpServer(parent)
@@ -15,14 +16,17 @@ void Server::incomingConnection(qintptr socketDescriptor)
 {
     tcpSocket = new QTcpSocket();
     tcpSocket->setSocketDescriptor(socketDescriptor);
-    connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readyRead()), Qt::DirectConnection);
-}
 
-void Server::readyRead()
-{
-    QByteArray block;
-    QDataStream out(&block, QIODevice::ReadOnly);
-    out << tcpSocket->readAll();
-    QString name(block);
-    players.insert(name, tcpSocket);
+    if (player == NULL)
+    {
+        player = tcpSocket;
+    }
+    else
+    {
+        GameThread *thread = new GameThread(player, tcpSocket, this);
+        connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
+        thread->start();
+
+        player = NULL;
+    }
 }
