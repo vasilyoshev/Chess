@@ -24,6 +24,7 @@ protected:
     QTcpSocket *tcpSocket;
     QTcpSocket *player;
     QByteArray data;
+    qintptr playerSocketDescriptor;
 };
 
 #endif

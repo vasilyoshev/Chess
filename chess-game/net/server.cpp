@@ -17,16 +17,17 @@ void Server::incomingConnection(qintptr socketDescriptor)
     tcpSocket = new QTcpSocket();
     tcpSocket->setSocketDescriptor(socketDescriptor);
 
-    if (player == NULL)
+    if (playerSocketDescriptor == NULL)
     {
-        player = tcpSocket;
+        playerSocketDescriptor = socketDescriptor;
+        //player = tcpSocket;
     }
     else
     {
-        GameThread *thread = new GameThread(player, tcpSocket, this);
+        GameThread *thread = new GameThread(playerSocketDescriptor, socketDescriptor);
         connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
         thread->start();
 
-        player = NULL;
+        playerSocketDescriptor = NULL;
     }
 }
