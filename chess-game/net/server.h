@@ -15,10 +15,10 @@ public:
     Server(QObject *parent = 0);
 
 public slots:
-    void readyRead();
+    //void readyRead();
 
 protected:
-    void incomingConnection(qintptr socketDescriptor) override;
+    void incomingConnection(QTcpSocket ts);
     QMap<QString, QTcpSocket*> players;
     QDataStream in;
     QTcpSocket *tcpSocket;

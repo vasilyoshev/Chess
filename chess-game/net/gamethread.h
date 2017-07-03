@@ -8,7 +8,8 @@ class GameThread : public QThread
 {
     Q_OBJECT
 public:
-    GameThread();
+    GameThread(QTcpSocket *p1, QTcpSocket *p2, QObject *parent);
+    void run();
 
 protected:
     QTcpSocket player1;

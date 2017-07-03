@@ -12,22 +12,21 @@ Server::Server(QObject *parent)
 {
 }
 
-void Server::incomingConnection(qintptr socketDescriptor)
+void Server::incomingConnection(QTcpSocket ts)
 {
     tcpSocket = new QTcpSocket();
-    tcpSocket->setSocketDescriptor(socketDescriptor);
 
-    if (playerSocketDescriptor == NULL)
+    if (player == NULL)
     {
-        playerSocketDescriptor = socketDescriptor;
-        //player = tcpSocket;
+        //playerSocketDescriptor = socketDescriptor;
+        player = tcpSocket;
     }
     else
     {
-        GameThread *thread = new GameThread(playerSocketDescriptor, socketDescriptor);
+        GameThread *thread = new GameThread(player, tcpSocket, this);
         connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
         thread->start();
 
-        playerSocketDescriptor = NULL;
+        player = NULL;
     }
 }

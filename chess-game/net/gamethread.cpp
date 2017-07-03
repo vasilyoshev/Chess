@@ -1,6 +1,6 @@
 #include "gamethread.h"
 
-GameThread::GameThread(qintptr &player1Descriptor, qintptr &player2Descriptor, QObject *parent) : QThread(parent)
+GameThread::GameThread(QTcpSocket *p1, QTcpSocket *p2, QObject *parent) : QThread(parent)
 {
 }
 
